@@ -76,7 +76,6 @@ export class DefaultService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -119,7 +118,6 @@ export class DefaultService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -161,7 +159,6 @@ export class DefaultService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearerAuth) required
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DefaultService, UserLoginApiModel } from '../api';
 
 @Component({
   selector: 'app-login-form',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private apiService: DefaultService) { }
 
   ngOnInit() {
+    const user: UserLoginApiModel = {
+      email: 'admin@admin.com',
+      password: 'password'
+    };
+
+    this.apiService.getAllUsers().subscribe(val => console.log(val));
   }
 
 }
