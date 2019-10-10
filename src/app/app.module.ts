@@ -8,13 +8,6 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { BASE_PATH, ApiModule, Configuration, ConfigurationParameters, DefaultService } from './api';
 import { AuthService } from './auth.service';
 
-export function apiConfigFactory(): Configuration {
-  const params: ConfigurationParameters = {
-    accessToken: 'Bearer '
-  }
-  return new Configuration(params);
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +16,6 @@ export function apiConfigFactory(): Configuration {
   imports: [
     BrowserModule,
     HttpClientModule
-    // ApiModule.forRoot(apiConfigFactory)
   ],
   providers: [
     {
@@ -32,7 +24,7 @@ export function apiConfigFactory(): Configuration {
     },
     {
       provide: Configuration,
-      useFactory: (authSvc: AuthService) => new Configuration({accessToken: authSvc.getAccessToken.bind(authSvc)}),
+      useFactory: (authService: AuthService) => new Configuration({accessToken: authService.getAccessToken.bind(authService)}),
       deps: [AuthService],
       multi: false
     },
