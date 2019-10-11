@@ -9,11 +9,14 @@ import { AppComponent } from './app.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { BASE_PATH, ApiModule, Configuration, ConfigurationParameters, DefaultService } from './api';
 import { AuthService } from './auth.service';
+import { NavigationComponent } from './navigation/navigation.component';
+import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,17 @@ import { AuthService } from './auth.service';
     MatFormFieldModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forRoot([
+      {
+        path: '',
+        component: NavigationComponent
+      },
+      {
+        path: 'login-form',
+        component: LoginFormComponent
+      }
+    ])
   ],
   providers: [
     {
