@@ -49,7 +49,8 @@ import { RouterModule } from '@angular/router'
       deps: [AuthService],
       multi: false
     },
-    DefaultService
+    DefaultService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

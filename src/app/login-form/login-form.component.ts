@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DefaultService, UserLoginApiModel } from '../api';
 import { FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -13,7 +14,7 @@ export class LoginFormComponent implements OnInit {
 
   passwordFormControl = new FormControl('', [Validators.required]);
 
-  constructor(private apiService: DefaultService) { }
+  constructor(private apiService: DefaultService, private authService: AuthService) { }
 
   ngOnInit() {
     const user: UserLoginApiModel = {
@@ -29,13 +30,22 @@ export class LoginFormComponent implements OnInit {
     if (!this.emailFormControl.valid || !this.passwordFormControl) {
       return;
     }
-    const target = event.target;
-    const email = target.email.value;
-    const password = target.password.value;
 
-    this.apiService.loginUser(email, password);
-    
-    console.log(email, password);
+    const user: UserLoginApiModel = {
+      email: event.target.email.value,
+      password: event.target.password.value
+    };
+
+    this.apiService.loginUser(user, 'body', true).subscribe(
+      response => {
+        // save response.token
+        this.authService.saveLoginSession(response.token, response.user);
+      },
+      error => {
+        console.log(error);
+        console.log(error.status);
+      }
+    );
   }
 
 }
