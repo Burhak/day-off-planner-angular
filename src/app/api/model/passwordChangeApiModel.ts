@@ -10,11 +10,7 @@
  * Do not edit the class manually.
  */
 
-export interface UserApiModel { 
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    supervisor?: number;
-    admin: boolean;
+export interface PasswordChangeApiModel { 
+    oldPassword: string;
+    newPassword: string;
 }

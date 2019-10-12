@@ -12,6 +12,6 @@
 
 
 export interface UserLoginResponseApiModel { 
-    token?: string;
-    user?: UserApiModel;
+    token: string;
+    user: UserApiModel;
 }
