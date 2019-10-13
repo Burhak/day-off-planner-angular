@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DefaultService, UserLoginApiModel } from '../api';
+import { AuthService as LoginService, UserLoginApiModel } from '../api';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
@@ -14,7 +14,7 @@ export class LoginFormComponent implements OnInit {
 
   passwordFormControl = new FormControl('', [Validators.required]);
 
-  constructor(private apiService: DefaultService, private authService: AuthService) { }
+  constructor(private apiService: LoginService, private authService: AuthService) { }
 
   ngOnInit() {
     const user: UserLoginApiModel = {
@@ -22,7 +22,7 @@ export class LoginFormComponent implements OnInit {
       password: 'password'
     };
 
-    this.apiService.getAllUsers().subscribe(val => console.log(val));
+    //this.apiService.getAllUsers().subscribe(val => console.log(val));
   }
 
   loginUser(event) {
