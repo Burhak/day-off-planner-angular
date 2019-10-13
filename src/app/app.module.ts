@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { BASE_PATH, ApiModule, Configuration, ConfigurationParameters, DefaultService } from './api';
+import { BASE_PATH, ApiModule, Configuration, ConfigurationParameters, AuthService as LoginService } from './api';
 import { AuthService } from './auth.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router'
@@ -49,7 +49,7 @@ import { RouterModule } from '@angular/router'
       deps: [AuthService],
       multi: false
     },
-    DefaultService,
+    LoginService,
     AuthService
   ],
   bootstrap: [AppComponent]

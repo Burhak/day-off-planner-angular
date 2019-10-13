@@ -11,16 +11,10 @@
  */
 
 export interface UserApiModel { 
-    id?: number;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    roles?: Array<UserApiModel.RolesEnum>;
-}
-export namespace UserApiModel {
-    export type RolesEnum = 'USER' | 'ADMIN';
-    export const RolesEnum = {
-        USER: 'USER' as RolesEnum,
-        ADMIN: 'ADMIN' as RolesEnum
-    };
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    supervisor?: number;
+    admin: boolean;
 }
