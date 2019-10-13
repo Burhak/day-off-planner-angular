@@ -58,9 +58,9 @@ export class UserService {
 
 
     /**
-     * Change user&#x27;s password
+     * Change user password
      * 
-     * @param body User&#x27;s old and new password
+     * @param body User old and new password
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -160,7 +160,7 @@ export class UserService {
     /**
      * Get user by ID
      * 
-     * @param id User&#x27;s ID
+     * @param id User ID
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -208,9 +208,9 @@ export class UserService {
     }
 
     /**
-     * Reset user&#x27;s password
+     * Reset user password
      * 
-     * @param body User&#x27;s email
+     * @param body User email
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
