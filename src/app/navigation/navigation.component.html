@@ -1,1 +1,9 @@
-<a routerLink="/login-form">Login</a>
+<mat-toolbar>
+  <mat-toolbar-row>
+
+    <a routerLink="/login" *ngIf="!auth.isLoggedIn">Login</a>
+    <a routerLink="" *ngIf="auth.isLoggedIn">Logout</a>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<!-- color="primary" 'accent' 'warn' -->

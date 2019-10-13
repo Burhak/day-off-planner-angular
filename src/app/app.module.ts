@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -10,15 +10,19 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { BASE_PATH, ApiModule, Configuration, ConfigurationParameters, AuthService as LoginService } from './api';
 import { AuthService } from './auth.service';
 import { NavigationComponent } from './navigation/navigation.component';
-import { RouterModule } from '@angular/router'
+import { RouterModule } from '@angular/router';
+import { AdminComponent } from './admin/admin.component';
+import { AuthGuard } from './auth.guard'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
-    NavigationComponent
+    NavigationComponent,
+    AdminComponent
   ],
   imports: [
+    MatToolbarModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -33,8 +37,13 @@ import { RouterModule } from '@angular/router'
         component: NavigationComponent
       },
       {
-        path: 'login-form',
+        path: 'login',
         component: LoginFormComponent
+      },
+      {
+        path: 'admin',
+        component: AdminComponent,
+        canActivate: [AuthGuard]
       }
     ])
   ],
@@ -50,7 +59,8 @@ import { RouterModule } from '@angular/router'
       multi: false
     },
     LoginService,
-    AuthService
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

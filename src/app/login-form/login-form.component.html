@@ -1,6 +1,6 @@
-<form class="login-form" (submit)="loginUser($event)">
+<form class="login-form container" (submit)="loginUser($event)">
 
-  <mat-form-field class="">
+  <mat-form-field class="mat-input-wrapper">
     <input matInput
            placeholder="Email"
            [formControl]="emailFormControl"
@@ -15,7 +15,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field class="">
+  <mat-form-field class="mat-input-wrapper">
     <input matInput
            type="password"
            placeholder="Password"

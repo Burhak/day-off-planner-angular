@@ -6,6 +6,17 @@ import { UserApiModel } from './api';
 })
 export class AuthService {
   //Beta verzia :D
+
+  private loggedInStatus: boolean = false;
+
+  setLoggedIn(value: boolean) {
+    this.loggedInStatus = value;
+  }
+
+  get isLoggedIn() {
+    return this.loggedInStatus;
+  }
+
   constructor() { }
 
   saveLoginSession(token: string, user: UserApiModel) {

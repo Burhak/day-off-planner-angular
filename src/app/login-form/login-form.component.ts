@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService as LoginService, UserLoginApiModel } from '../api';
 import { FormControl, Validators } from '@angular/forms';
+import { AuthService as LoginService, UserLoginApiModel } from '../api';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -14,7 +15,9 @@ export class LoginFormComponent implements OnInit {
 
   passwordFormControl = new FormControl('', [Validators.required]);
 
-  constructor(private apiService: LoginService, private authService: AuthService) { }
+  constructor(private apiService: LoginService,
+    private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit() {
     const user: UserLoginApiModel = {
@@ -40,8 +43,10 @@ export class LoginFormComponent implements OnInit {
       response => {
         // save response.token
         this.authService.saveLoginSession(response.token, response.user);
+        this.router.navigate(['']);
       },
       error => {
+        window.alert(error.message)
         console.log(error);
         console.log(error.status);
       }
