@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-export interface UserApiModel { 
+export interface LeaveTypeApiModel { 
     readonly id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    supervisor?: number;
-    admin: boolean;
+    name: string;
+    approvalNeeded: boolean;
+    limited: boolean;
+    halfDayAllowed: boolean;
 }
