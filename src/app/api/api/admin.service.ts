@@ -17,6 +17,8 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { LeaveTypeApiModel } from '../model/leaveTypeApiModel';
+import { LeaveTypeCreateApiModel } from '../model/leaveTypeCreateApiModel';
 import { UserApiModel } from '../model/userApiModel';
 import { UserCreateApiModel } from '../model/userCreateApiModel';
 
@@ -57,9 +59,65 @@ export class AdminService {
 
 
     /**
+     * Create new leave type
+     * 
+     * @param body Object of leave type to be created
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createLeaveType(body: LeaveTypeCreateApiModel, observe?: 'body', reportProgress?: boolean): Observable<LeaveTypeApiModel>;
+    public createLeaveType(body: LeaveTypeCreateApiModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveTypeApiModel>>;
+    public createLeaveType(body: LeaveTypeCreateApiModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveTypeApiModel>>;
+    public createLeaveType(body: LeaveTypeCreateApiModel, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createLeaveType.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // authentication (oAuthNoScopes) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<LeaveTypeApiModel>(`${this.basePath}/admin/leaveType`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Create new user
      * 
-     * @param body Name and email of new user
+     * @param body Object of user to be created
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -113,9 +171,58 @@ export class AdminService {
     }
 
     /**
+     * Delete existing leave type
+     * 
+     * @param id ID of the leave type to be deleted
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteLeaveType(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteLeaveType(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteLeaveType(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteLeaveType(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deleteLeaveType.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // authentication (oAuthNoScopes) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.delete<any>(`${this.basePath}/admin/leaveType/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Delete existing user
      * 
-     * @param id 
+     * @param id ID of the user to be deleted
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -152,6 +259,128 @@ export class AdminService {
         ];
 
         return this.httpClient.delete<any>(`${this.basePath}/admin/user/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Update existing leave type
+     * 
+     * @param body Object of leave type to be updated
+     * @param id ID of the leave type to be updated
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe?: 'body', reportProgress?: boolean): Observable<LeaveTypeApiModel>;
+    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveTypeApiModel>>;
+    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveTypeApiModel>>;
+    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateLeaveType.');
+        }
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling updateLeaveType.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // authentication (oAuthNoScopes) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.put<LeaveTypeApiModel>(`${this.basePath}/admin/leaveType/${encodeURIComponent(String(id))}`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Update existing user
+     * 
+     * @param body Object of user to be updated
+     * @param id ID of the user to be updated
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateUser(body: UserCreateApiModel, id: number, observe?: 'body', reportProgress?: boolean): Observable<UserApiModel>;
+    public updateUser(body: UserCreateApiModel, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserApiModel>>;
+    public updateUser(body: UserCreateApiModel, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserApiModel>>;
+    public updateUser(body: UserCreateApiModel, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateUser.');
+        }
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling updateUser.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // authentication (oAuthNoScopes) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.put<UserApiModel>(`${this.basePath}/admin/user/${encodeURIComponent(String(id))}`,
+            body,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

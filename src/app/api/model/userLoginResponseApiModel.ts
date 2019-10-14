@@ -11,7 +11,7 @@
  */import { UserApiModel } from './userApiModel';
 
 
-export interface UserLoginResponseApiModel {
-  token: string;
-  user: UserApiModel;
+export interface UserLoginResponseApiModel { 
+    readonly token: string;
+    user: UserApiModel;
 }

@@ -10,10 +10,9 @@
  * Do not edit the class manually.
  */
 
-export interface UserCreateApiModel { 
-    firstName: string;
-    lastName: string;
-    email: string;
-    supervisor?: number;
-    admin: boolean;
+export interface LeaveRequestCreateApiModel { 
+    leaveType: number;
+    user: number;
+    fromDate: Date;
+    toDate: Date;
 }
