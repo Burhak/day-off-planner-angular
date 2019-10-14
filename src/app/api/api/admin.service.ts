@@ -18,9 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { LeaveTypeApiModel } from '../model/leaveTypeApiModel';
-import { LeaveTypeCreateApiModel } from '../model/leaveTypeCreateApiModel';
 import { UserApiModel } from '../model/userApiModel';
-import { UserCreateApiModel } from '../model/userCreateApiModel';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -65,10 +63,10 @@ export class AdminService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createLeaveType(body: LeaveTypeCreateApiModel, observe?: 'body', reportProgress?: boolean): Observable<LeaveTypeApiModel>;
-    public createLeaveType(body: LeaveTypeCreateApiModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveTypeApiModel>>;
-    public createLeaveType(body: LeaveTypeCreateApiModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveTypeApiModel>>;
-    public createLeaveType(body: LeaveTypeCreateApiModel, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createLeaveType(body: LeaveTypeApiModel, observe?: 'body', reportProgress?: boolean): Observable<LeaveTypeApiModel>;
+    public createLeaveType(body: LeaveTypeApiModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveTypeApiModel>>;
+    public createLeaveType(body: LeaveTypeApiModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveTypeApiModel>>;
+    public createLeaveType(body: LeaveTypeApiModel, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createLeaveType.');
@@ -121,10 +119,10 @@ export class AdminService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createUser(body: UserCreateApiModel, observe?: 'body', reportProgress?: boolean): Observable<UserApiModel>;
-    public createUser(body: UserCreateApiModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserApiModel>>;
-    public createUser(body: UserCreateApiModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserApiModel>>;
-    public createUser(body: UserCreateApiModel, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createUser(body: UserApiModel, observe?: 'body', reportProgress?: boolean): Observable<UserApiModel>;
+    public createUser(body: UserApiModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserApiModel>>;
+    public createUser(body: UserApiModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserApiModel>>;
+    public createUser(body: UserApiModel, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUser.');
@@ -276,10 +274,10 @@ export class AdminService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe?: 'body', reportProgress?: boolean): Observable<LeaveTypeApiModel>;
-    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveTypeApiModel>>;
-    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveTypeApiModel>>;
-    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateLeaveType(body: LeaveTypeApiModel, id: number, observe?: 'body', reportProgress?: boolean): Observable<LeaveTypeApiModel>;
+    public updateLeaveType(body: LeaveTypeApiModel, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveTypeApiModel>>;
+    public updateLeaveType(body: LeaveTypeApiModel, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveTypeApiModel>>;
+    public updateLeaveType(body: LeaveTypeApiModel, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateLeaveType.');
@@ -337,10 +335,10 @@ export class AdminService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUser(body: UserCreateApiModel, id: number, observe?: 'body', reportProgress?: boolean): Observable<UserApiModel>;
-    public updateUser(body: UserCreateApiModel, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserApiModel>>;
-    public updateUser(body: UserCreateApiModel, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserApiModel>>;
-    public updateUser(body: UserCreateApiModel, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateUser(body: UserApiModel, id: number, observe?: 'body', reportProgress?: boolean): Observable<UserApiModel>;
+    public updateUser(body: UserApiModel, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserApiModel>>;
+    public updateUser(body: UserApiModel, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserApiModel>>;
+    public updateUser(body: UserApiModel, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateUser.');

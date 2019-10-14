@@ -11,7 +11,7 @@
  */
 
 export interface LeaveTypeApiModel { 
-    id: number;
+    readonly id: number;
     name: string;
     approvalNeeded: boolean;
     limited: boolean;

@@ -11,7 +11,7 @@
  */
 
 export interface UserApiModel { 
-    id: number;
+    readonly id: number;
     firstName: string;
     lastName: string;
     email: string;
