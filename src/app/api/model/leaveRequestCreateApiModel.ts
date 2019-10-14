@@ -10,10 +10,9 @@
  * Do not edit the class manually.
  */
 
-export interface LeaveTypeApiModel { 
-    readonly id: number;
-    readonly name: string;
-    readonly approvalNeeded: boolean;
-    readonly limited: boolean;
-    readonly halfDayAllowed: boolean;
+export interface LeaveRequestCreateApiModel { 
+    leaveType: number;
+    user: number;
+    fromDate: Date;
+    toDate: Date;
 }
