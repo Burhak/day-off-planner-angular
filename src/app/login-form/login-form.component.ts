@@ -20,12 +20,6 @@ export class LoginFormComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    const user: UserLoginApiModel = {
-      email: 'admin@admin.com',
-      password: 'password'
-    };
-
-    //this.apiService.getAllUsers().subscribe(val => console.log(val));
   }
 
   loginUser(event) {
@@ -39,7 +33,7 @@ export class LoginFormComponent implements OnInit {
       password: event.target.password.value
     };
 
-    this.apiService.loginUser(user, 'body', true).subscribe(
+    this.apiService.loginUser(user).subscribe(
       response => {
         // save response.token
         this.authService.saveLoginSession(response.token, response.user);

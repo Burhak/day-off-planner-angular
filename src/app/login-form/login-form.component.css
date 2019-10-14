@@ -1,17 +1,25 @@
-form {
-  min-height:500px;
+div {
+  height: 100%
 }
+
 
 .container {
   display: flex;
-  top:50%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
   border-radius: 20px;
 }
 
 .mat-input-wrapper {
   min-width: 300px;
+}
+
+img {
+  max-height:30%;
+  max-width:30%;
+}
+
+:host {
+  height: 100%
 }

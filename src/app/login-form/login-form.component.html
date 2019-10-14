@@ -1,34 +1,37 @@
-<form class="login-form container" (submit)="loginUser($event)">
+<div class="container">
+  <img src="..\assets\images\800px-Evolveum_logo.png" alt="Logo image">
+  <form class="login-form container" (submit)="loginUser($event)">
 
-  <mat-form-field class="mat-input-wrapper">
-    <input matInput
-           placeholder="Email"
-           [formControl]="emailFormControl"
-           [errorStateMatcher]="matcher"
-           id="email">
-    <mat-hint></mat-hint>
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="mat-input-wrapper">
+      <input matInput
+             placeholder="Email"
+             [formControl]="emailFormControl"
+             [errorStateMatcher]="matcher"
+             id="email">
+      <mat-hint></mat-hint>
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="mat-input-wrapper">
-    <input matInput
-           type="password"
-           placeholder="Password"
-           [formControl]="passwordFormControl"
-           [errorStateMatcher]="matcher"
-           id="password" />
-    <mat-hint></mat-hint>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Password is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="mat-input-wrapper">
+      <input matInput
+             type="password"
+             placeholder="Password"
+             [formControl]="passwordFormControl"
+             [errorStateMatcher]="matcher"
+             id="password" />
+      <mat-hint></mat-hint>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
 
 
-  <button mat-raised-button type="submit">Login</button>
+    <button mat-raised-button type="submit">Login</button>
 
-</form>
+  </form>
+</div>
