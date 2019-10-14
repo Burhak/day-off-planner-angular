@@ -42,7 +42,7 @@ export class LoginFormComponent implements OnInit {
     this.apiService.loginUser(user, 'body', true).subscribe(
       response => {
         // save response.token
-        this.authService.saveLoginSession(response.token, response.user);
+        this.authService.saveToken(response.token);
         this.router.navigate(['']);
       },
       error => {

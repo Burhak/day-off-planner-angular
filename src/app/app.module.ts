@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { BASE_PATH, ApiModule, Configuration, ConfigurationParameters, AuthService as LoginService } from './api';
+import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService } from './api';
 import { AuthService } from './auth.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
@@ -60,6 +60,7 @@ import { AuthGuard } from './auth.guard'
     },
     LoginService,
     AuthService,
+    AdminService,
     AuthGuard
   ],
   bootstrap: [AppComponent]
