@@ -1,6 +1,6 @@
 <mat-toolbar>
   <mat-toolbar-row>
-
+    <div>{{this.user.name}}</div>
     <a routerLink="/login" *ngIf="!auth.isLoggedIn">Login</a>
     <a routerLink="" *ngIf="auth.isLoggedIn">Logout</a>
   </mat-toolbar-row>

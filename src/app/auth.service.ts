@@ -5,7 +5,6 @@ import { UserApiModel } from './api';
   providedIn: 'root'
 })
 export class AuthService {
-  //Beta verzia :D
 
   get isLoggedIn(): boolean {
     console.log(this.getAccessToken());
@@ -20,7 +19,6 @@ export class AuthService {
 
   removeToken() {
     localStorage.removeItem('token');
-    // redirect perhaps
   }
 
   getAccessToken(): string {

@@ -12,7 +12,8 @@ import { AuthService } from './auth.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
-import { AuthGuard } from './auth.guard'
+import { AuthGuard } from './auth.guard';
+import { UserInfoService } from './user-info.service'
 
 @NgModule({
   declarations: [
@@ -58,8 +59,10 @@ import { AuthGuard } from './auth.guard'
       deps: [AuthService],
       multi: false
     },
-    LoginService,
     AuthService,
+    LoginService,
+    UserService,
+    UserInfoService,
     AdminService,
     AuthGuard
   ],
