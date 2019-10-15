@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
-import { UserApiModel } from './api';
-import { UserService } from './api';
+import { UserService, UserApiModel } from './api';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserInfoService {
 
-  public name: string = 'Initial';
+  private user: Observable<UserApiModel> = null;
 
   constructor(private userService: UserService) { }
 
-  updateUserInfo() {
+  get currentUser() {
+    if (this.user === null) {
+      this.user = this.userService.getLoggedUser();
+    }
+    return this.user;
+  }
 
-    this.userService.getLoggedUser().subscribe(
-      response => {
-        this.name = response.firstName;
-      },
-      error => {
-        console.log(error);
-        this.name = 'Can\'t get name';
-      }
-    );
+  removeCurrentUser() {
+    this.user = null;
   }
 }

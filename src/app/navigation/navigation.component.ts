@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 import { UserInfoService } from '../user-info.service';
 
 @Component({
@@ -8,10 +9,10 @@ import { UserInfoService } from '../user-info.service';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor(private user: UserInfoService) { }
+  constructor(private auth: AuthService, private userService: UserInfoService) { }
 
   ngOnInit() {
-    this.user.updateUserInfo();
+
   }
 
 }
