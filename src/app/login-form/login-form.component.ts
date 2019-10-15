@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { AuthService as LoginService, UserLoginApiModel } from '../api';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { UserInfoService } from '../user-info.service';
 
 @Component({
   selector: 'app-login-form',
@@ -17,6 +18,7 @@ export class LoginFormComponent implements OnInit {
 
   constructor(private apiService: LoginService,
     private authService: AuthService,
+    private userService: UserInfoService,
     private router: Router) { }
 
   ngOnInit() {
@@ -37,6 +39,7 @@ export class LoginFormComponent implements OnInit {
       response => {
         // save response.token
         this.authService.saveToken(response.token);
+        this.userService.setUser(response.user);
         this.router.navigate(['']);
       },
       error => {

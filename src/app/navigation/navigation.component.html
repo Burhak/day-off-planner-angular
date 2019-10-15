@@ -1,6 +1,6 @@
 <mat-toolbar>
   <mat-toolbar-row>
-    <div *ngIf="userService.currentUser | async as user">{{user.firstName}}</div>
+    <div>{{userService.currentUser?.firstName}}</div>
     <a routerLink="/login" *ngIf="!auth.isLoggedIn">Login</a>
     <a routerLink="" *ngIf="auth.isLoggedIn">Logout</a>
   </mat-toolbar-row>
