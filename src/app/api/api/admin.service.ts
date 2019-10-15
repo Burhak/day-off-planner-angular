@@ -177,10 +177,10 @@ export class AdminService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteLeaveType(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteLeaveType(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteLeaveType(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteLeaveType(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteLeaveType(id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteLeaveType(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteLeaveType(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteLeaveType(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteLeaveType.');
@@ -226,10 +226,10 @@ export class AdminService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteUser(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteUser(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteUser(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteUser(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteUser(id: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteUser(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteUser(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteUser(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteUser.');
@@ -276,10 +276,10 @@ export class AdminService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe?: 'body', reportProgress?: boolean): Observable<LeaveTypeApiModel>;
-    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveTypeApiModel>>;
-    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveTypeApiModel>>;
-    public updateLeaveType(body: LeaveTypeCreateApiModel, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateLeaveType(body: LeaveTypeCreateApiModel, id: string, observe?: 'body', reportProgress?: boolean): Observable<LeaveTypeApiModel>;
+    public updateLeaveType(body: LeaveTypeCreateApiModel, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveTypeApiModel>>;
+    public updateLeaveType(body: LeaveTypeCreateApiModel, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveTypeApiModel>>;
+    public updateLeaveType(body: LeaveTypeCreateApiModel, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateLeaveType.');
@@ -337,10 +337,10 @@ export class AdminService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUser(body: UserCreateApiModel, id: number, observe?: 'body', reportProgress?: boolean): Observable<UserApiModel>;
-    public updateUser(body: UserCreateApiModel, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserApiModel>>;
-    public updateUser(body: UserCreateApiModel, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserApiModel>>;
-    public updateUser(body: UserCreateApiModel, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateUser(body: UserCreateApiModel, id: string, observe?: 'body', reportProgress?: boolean): Observable<UserApiModel>;
+    public updateUser(body: UserCreateApiModel, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserApiModel>>;
+    public updateUser(body: UserCreateApiModel, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserApiModel>>;
+    public updateUser(body: UserCreateApiModel, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateUser.');
