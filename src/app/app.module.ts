@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule,MatCheckboxModule} from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule, MatCheckboxModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -15,6 +15,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './auth.guard';
 import { UserInfoService } from './user-info.service';
 import { AddUserFormComponent } from './add-user-form/add-user-form.component';
+import { ResetPasswordComponent} from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AddUserFormComponent } from './add-user-form/add-user-form.component';
     LoginFormComponent,
     NavigationComponent,
     AdminComponent,
-    AddUserFormComponent
+    AddUserFormComponent,
+    ResetPasswordComponent
   ],
   imports: [
     MatToolbarModule,
@@ -50,6 +52,10 @@ import { AddUserFormComponent } from './add-user-form/add-user-form.component';
         path: '',
         component: AdminComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'resetPassword',
+        component: ResetPasswordComponent
       }
     ])
   ],
