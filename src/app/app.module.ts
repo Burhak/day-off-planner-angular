@@ -40,19 +40,16 @@ import { AddUserFormComponent } from './add-user-form/add-user-form.component';
       {
         path: 'addUser',
         component: AddUserFormComponent,
-      },
-      {
-        path: '',
-        component: NavigationComponent,
         canActivate: [AuthGuard]
       },
       {
         path: 'login',
-        component: LoginFormComponent
+        component: LoginFormComponent,
       },
       {
-        path: 'admin',
-        component: AdminComponent
+        path: '',
+        component: AdminComponent,
+        canActivate: [AuthGuard]
       }
     ])
   ],

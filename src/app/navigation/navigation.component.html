@@ -1,6 +1,6 @@
 <header>
   <nav>
-    <img src="../../assets/logo2.png" class="logo" routerLink="/admin">
+    <img src="../../assets/logo2.png" class="logo" routerLink="">
     <ul>
       <li>{{userService.currentUser?.firstName}} {{userService.currentUser?.lastName}}</li>
       <li><a routerLink="/addUser" *ngIf="userService.hasAdminPrivileges">AddUser</a></li>

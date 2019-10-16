@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AdminService, UserCreateApiModel} from '../api';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UserInfoService} from '../user-info.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-user-form',
@@ -12,10 +14,13 @@ export class AddUserFormComponent implements OnInit {
   private form: FormGroup;
   private buttonDisabled: boolean;
 
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private userService: UserInfoService, private router: Router) {
   }
 
   ngOnInit() {
+    if (!this.userService.hasAdminPrivileges) {
+      this.router.navigate(['']);
+    }
     this.form = new FormGroup({
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
