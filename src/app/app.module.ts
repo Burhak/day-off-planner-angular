@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule} from '@angular/material';
@@ -15,6 +15,9 @@ import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './auth.guard';
 import { UserInfoService } from './user-info.service';
 import { AddUserFormComponent } from './add-user-form/add-user-form.component';
+import { ErrorComponent } from './error/error.component';
+import { ErrorHandlerService } from './error-handler.service';
+import { AdminGuard } from './admin.guard';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { AddUserFormComponent } from './add-user-form/add-user-form.component';
     LoginFormComponent,
     NavigationComponent,
     AdminComponent,
-    AddUserFormComponent
+    AddUserFormComponent,
+    ErrorComponent
   ],
   imports: [
     MatToolbarModule,
@@ -51,7 +55,12 @@ import { AddUserFormComponent } from './add-user-form/add-user-form.component';
       },
       {
         path: 'admin',
-        component: AdminComponent
+        component: AdminComponent,
+        canActivate: [AuthGuard, AdminGuard]
+      },
+      {
+        path: 'error',
+        component: ErrorComponent
       }
     ])
   ],
@@ -66,6 +75,7 @@ import { AddUserFormComponent } from './add-user-form/add-user-form.component';
       deps: [AuthService],
       multi: false
     },
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
     AuthService,
     LoginService,
     UserService,
