@@ -11,7 +11,7 @@ import { UserInfoService } from '../user-info.service';
 })
 export class LoginFormComponent implements OnInit {
 
-  private form: FormGroup;
+  public form: FormGroup;
 
   constructor(private apiService: LoginService, private userService: UserInfoService, private router: Router) { }
 

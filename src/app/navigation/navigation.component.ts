@@ -8,7 +8,7 @@ import { UserInfoService } from '../user-info.service';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor(private userService: UserInfoService) { }
+  constructor(public userService: UserInfoService) { }
 
 
   ngOnInit() {
