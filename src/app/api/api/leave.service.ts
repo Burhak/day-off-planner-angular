@@ -17,14 +17,15 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { LeaveTypeApiModel } from '../model/leaveTypeApiModel';
+import { LeaveRequestApiModel } from '../model/leaveRequestApiModel';
+import { LeaveRequestCreateApiModel } from '../model/leaveRequestCreateApiModel';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class LeaveTypeService {
+export class LeaveService {
 
     protected basePath = 'https://virtserver.swaggerhub.com/Burhak/DayOffPlanner/1.0.0';
     public defaultHeaders = new HttpHeaders();
@@ -56,15 +57,20 @@ export class LeaveTypeService {
 
 
     /**
-     * Get all leave types
+     * Create new leave request
      * 
+     * @param body Object of leave request to be created
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllLeaveTypes(observe?: 'body', reportProgress?: boolean): Observable<Array<LeaveTypeApiModel>>;
-    public getAllLeaveTypes(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LeaveTypeApiModel>>>;
-    public getAllLeaveTypes(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LeaveTypeApiModel>>>;
-    public getAllLeaveTypes(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createLeaveRequest(body: LeaveRequestCreateApiModel, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestApiModel>;
+    public createLeaveRequest(body: LeaveRequestCreateApiModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestApiModel>>;
+    public createLeaveRequest(body: LeaveRequestCreateApiModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestApiModel>>;
+    public createLeaveRequest(body: LeaveRequestCreateApiModel, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createLeaveRequest.');
+        }
 
         let headers = this.defaultHeaders;
 
@@ -88,9 +94,15 @@ export class LeaveTypeService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
-        return this.httpClient.get<Array<LeaveTypeApiModel>>(`${this.basePath}/leaveType/getAll`,
+        return this.httpClient.post<LeaveRequestApiModel>(`${this.basePath}/leave`,
+            body,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -101,19 +113,19 @@ export class LeaveTypeService {
     }
 
     /**
-     * Get leave type by ID
+     * Get leave request by ID
      * 
-     * @param id Leave type ID
+     * @param id Leave request ID
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getLeaveTypeById(id: string, observe?: 'body', reportProgress?: boolean): Observable<LeaveTypeApiModel>;
-    public getLeaveTypeById(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveTypeApiModel>>;
-    public getLeaveTypeById(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveTypeApiModel>>;
-    public getLeaveTypeById(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getLeaveRequestById(id: string, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestApiModel>;
+    public getLeaveRequestById(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestApiModel>>;
+    public getLeaveRequestById(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestApiModel>>;
+    public getLeaveRequestById(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getLeaveTypeById.');
+            throw new Error('Required parameter id was null or undefined when calling getLeaveRequestById.');
         }
 
         let headers = this.defaultHeaders;
@@ -140,7 +152,7 @@ export class LeaveTypeService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<LeaveTypeApiModel>(`${this.basePath}/leaveType/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<LeaveRequestApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

@@ -11,9 +11,9 @@
  */
 
 export interface LeaveRequestApiModel { 
-    readonly id: number;
-    readonly leaveType: number;
-    readonly user: number;
+    readonly id: string;
+    readonly leaveType: string;
+    readonly user: string;
     readonly fromDate: Date;
     readonly toDate: Date;
     readonly status: LeaveRequestApiModel.StatusEnum;
