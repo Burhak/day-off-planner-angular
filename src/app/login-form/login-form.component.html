@@ -1,8 +1,7 @@
-<div class="container">
-  <img src="..\assets\images\800px-Evolveum_logo.png" alt="Logo image">
-  <form class="login-form container" (submit)="loginUser($event)">
-
-    <mat-form-field class="mat-input-wrapper">
+<div class="login-form">
+  <img class="logo" src="../../assets/logo.png">
+  <form (submit)="loginUser($event)">
+    <mat-form-field class="login-element">
       <input matInput
              placeholder="Email"
              [formControl]="emailFormControl"
@@ -17,7 +16,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="mat-input-wrapper">
+    <mat-form-field class="login-element">
       <input matInput
              type="password"
              placeholder="Password"
@@ -31,7 +30,11 @@
     </mat-form-field>
 
 
-    <button mat-raised-button type="submit">Login</button>
+    <button mat-raised-button type="submit" class="submitBtn">Login</button>
+
+    <div class="form-footer">
+      <a href="#">Forgot password?</a>
+    </div>
 
   </form>
 </div>

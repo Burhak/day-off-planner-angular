@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UserApiModel } from './api';
 
 @Injectable({
   providedIn: 'root'

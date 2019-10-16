@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -13,14 +13,16 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './auth.guard';
-import { UserInfoService } from './user-info.service'
+import { UserInfoService } from './user-info.service';
+import { AddUserFormComponent } from './add-user-form/add-user-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
     NavigationComponent,
-    AdminComponent
+    AdminComponent,
+    AddUserFormComponent
   ],
   imports: [
     MatToolbarModule,
@@ -30,9 +32,14 @@ import { UserInfoService } from './user-info.service'
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
+      {
+        path: 'addUser',
+        component: AddUserFormComponent,
+      },
       {
         path: '',
         component: NavigationComponent,

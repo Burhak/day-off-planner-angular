@@ -1,9 +1,10 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-    <div>{{userService.currentUser?.firstName}}</div>
-    <a routerLink="/login" *ngIf="!auth.isLoggedIn">Login</a>
-    <a routerLink="" *ngIf="auth.isLoggedIn">Logout</a>
-  </mat-toolbar-row>
-</mat-toolbar>
-
-<!-- color="primary" 'accent' 'warn' -->
+<header>
+  <nav>
+    <img src="../../assets/logo2.png" class="logo" routerLink="/admin">
+    <ul>
+      <!--<li><a routerLink="/addUser" >AddUser</a></li>-->
+      <li>{{userService.currentUser?.firstName}} {{userService.currentUser?.lastName}}</li>
+      <li><a routerLink="/login" *ngIf="userService.isLoggedIn" (click)="logOut()">Logout</a></li>
+    </ul>
+  </nav>
+</header>

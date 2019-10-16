@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService as LoginService, UserLoginApiModel } from '../api';
-import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../user-info.service';
 
@@ -16,10 +15,7 @@ export class LoginFormComponent implements OnInit {
 
   passwordFormControl = new FormControl('', [Validators.required]);
 
-  constructor(private apiService: LoginService,
-    private authService: AuthService,
-    private userService: UserInfoService,
-    private router: Router) { }
+  constructor(private apiService: LoginService, private userService: UserInfoService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -38,12 +34,12 @@ export class LoginFormComponent implements OnInit {
     this.apiService.loginUser(user).subscribe(
       response => {
         // save response.token
-        this.authService.saveToken(response.token);
-        this.userService.setUser(response.user);
+        this.userService.saveToken(response.token);
+        this.userService.saveUser(response.user);
         this.router.navigate(['']);
       },
       error => {
-        window.alert(error.message)
+        window.alert(error.message);
         console.log(error);
         console.log(error.status);
       }
