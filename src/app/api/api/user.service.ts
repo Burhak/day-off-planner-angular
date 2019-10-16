@@ -58,9 +58,9 @@ export class UserService {
 
 
     /**
-     * Change user&#x27;s password
+     * Change user password
      * 
-     * @param body User&#x27;s old and new password
+     * @param body User old and new password
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -158,16 +158,61 @@ export class UserService {
     }
 
     /**
-     * Get user by id
+     * Get currently logged user
      * 
-     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserById(id: number, observe?: 'body', reportProgress?: boolean): Observable<UserApiModel>;
-    public getUserById(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserApiModel>>;
-    public getUserById(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserApiModel>>;
-    public getUserById(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getLoggedUser(observe?: 'body', reportProgress?: boolean): Observable<UserApiModel>;
+    public getLoggedUser(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserApiModel>>;
+    public getLoggedUser(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserApiModel>>;
+    public getLoggedUser(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // authentication (oAuthNoScopes) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<UserApiModel>(`${this.basePath}/user/me`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get user by ID
+     * 
+     * @param id User ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUserById(id: string, observe?: 'body', reportProgress?: boolean): Observable<UserApiModel>;
+    public getUserById(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserApiModel>>;
+    public getUserById(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserApiModel>>;
+    public getUserById(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getUserById.');
@@ -208,9 +253,9 @@ export class UserService {
     }
 
     /**
-     * Reset user&#x27;s password
+     * Reset user password
      * 
-     * @param body User&#x27;s email
+     * @param body User email
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

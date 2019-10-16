@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { AdminService } from './api/admin.service';
 import { AuthService } from './api/auth.service';
+import { LeaveService } from './api/leave.service';
+import { LeaveTypeService } from './api/leaveType.service';
 import { UserService } from './api/user.service';
 
 @NgModule({
@@ -14,6 +16,8 @@ import { UserService } from './api/user.service';
   providers: [
     AdminService,
     AuthService,
+    LeaveService,
+    LeaveTypeService,
     UserService ]
 })
 export class ApiModule {

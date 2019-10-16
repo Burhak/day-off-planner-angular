@@ -11,10 +11,10 @@
  */
 
 export interface UserApiModel { 
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    supervisor?: number;
-    admin: boolean;
+    readonly id: string;
+    readonly firstName: string;
+    readonly lastName: string;
+    readonly email: string;
+    readonly supervisor?: string;
+    readonly admin: boolean;
 }

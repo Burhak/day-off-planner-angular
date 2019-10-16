@@ -2,39 +2,56 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { BASE_PATH, ApiModule, Configuration, ConfigurationParameters, AuthService as LoginService } from './api';
+import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService } from './api';
 import { AuthService } from './auth.service';
 import { NavigationComponent } from './navigation/navigation.component';
-import { RouterModule } from '@angular/router'
+import { RouterModule } from '@angular/router';
+import { AdminComponent } from './admin/admin.component';
+import { AuthGuard } from './auth.guard';
+import { UserInfoService } from './user-info.service';
+import { AddUserFormComponent } from './add-user-form/add-user-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
-    NavigationComponent
+    NavigationComponent,
+    AdminComponent,
+    AddUserFormComponent
   ],
   imports: [
+    MatToolbarModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
       {
-        path: '',
-        component: NavigationComponent
+        path: 'addUser',
+        component: AddUserFormComponent,
       },
       {
-        path: 'login-form',
+        path: '',
+        component: NavigationComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'login',
         component: LoginFormComponent
+      },
+      {
+        path: 'admin',
+        component: AdminComponent
       }
     ])
   ],
@@ -49,8 +66,12 @@ import { RouterModule } from '@angular/router'
       deps: [AuthService],
       multi: false
     },
+    AuthService,
     LoginService,
-    AuthService
+    UserService,
+    UserInfoService,
+    AdminService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

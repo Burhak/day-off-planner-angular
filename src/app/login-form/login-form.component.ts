@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService as LoginService, UserLoginApiModel } from '../api';
-import { FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { UserInfoService } from '../user-info.service';
 
 @Component({
   selector: 'app-login-form',
@@ -10,24 +11,20 @@ import { AuthService } from '../auth.service';
 })
 export class LoginFormComponent implements OnInit {
 
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  private form: FormGroup;
 
-  passwordFormControl = new FormControl('', [Validators.required]);
-
-  constructor(private apiService: LoginService, private authService: AuthService) { }
+  constructor(private apiService: LoginService, private userService: UserInfoService, private router: Router) { }
 
   ngOnInit() {
-    const user: UserLoginApiModel = {
-      email: 'admin@admin.com',
-      password: 'password'
-    };
-
-    //this.apiService.getAllUsers().subscribe(val => console.log(val));
+    this.form = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required])
+    }, {updateOn: 'submit'});
   }
 
   loginUser(event) {
     event.preventDefault();
-    if (!this.emailFormControl.valid || !this.passwordFormControl) {
+    if (!this.form.valid) {
       return;
     }
 
@@ -36,12 +33,15 @@ export class LoginFormComponent implements OnInit {
       password: event.target.password.value
     };
 
-    this.apiService.loginUser(user, 'body', true).subscribe(
+    this.apiService.loginUser(user).subscribe(
       response => {
         // save response.token
-        this.authService.saveLoginSession(response.token, response.user);
+        this.userService.saveToken(response.token);
+        this.userService.saveUser(response.user);
+        this.router.navigate(['']);
       },
       error => {
+        window.alert(error.message);
         console.log(error);
         console.log(error.status);
       }

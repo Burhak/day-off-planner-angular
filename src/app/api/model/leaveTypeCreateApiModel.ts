@@ -10,10 +10,9 @@
  * Do not edit the class manually.
  */
 
-export interface UserCreateApiModel { 
-    firstName: string;
-    lastName: string;
-    email: string;
-    supervisor?: string;
-    admin: boolean;
+export interface LeaveTypeCreateApiModel { 
+    name: string;
+    approvalNeeded: boolean;
+    limited: boolean;
+    halfDayAllowed: boolean;
 }
