@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService as LoginService, UserLoginApiModel } from '../api';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../user-info.service';
@@ -11,18 +11,20 @@ import { UserInfoService } from '../user-info.service';
 })
 export class LoginFormComponent implements OnInit {
 
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-
-  passwordFormControl = new FormControl('', [Validators.required]);
+  private form: FormGroup;
 
   constructor(private apiService: LoginService, private userService: UserInfoService, private router: Router) { }
 
   ngOnInit() {
+    this.form = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required])
+    }, {updateOn: 'submit'});
   }
 
   loginUser(event) {
     event.preventDefault();
-    if (!this.emailFormControl.valid || !this.passwordFormControl) {
+    if (!this.form.valid) {
       return;
     }
 
