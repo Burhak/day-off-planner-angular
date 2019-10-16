@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-
-export interface Option {
-  value: boolean;
-  viewValue: string;
-}
+import {AdminService, UserCreateApiModel} from '../api';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-add-user-form',
@@ -13,14 +9,40 @@ export interface Option {
 })
 export class AddUserFormComponent implements OnInit {
 
-  options: Option[] = [
-    {value: true, viewValue: 'Yes'},
-    {value: false, viewValue: 'No'},
-  ];
+  private form: FormGroup;
+  private buttonDisabled: boolean;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private adminService: AdminService) {
   }
 
+  ngOnInit() {
+    this.form = new FormGroup({
+      firstname: new FormControl('', [Validators.required]),
+      lastname: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email])
+    }, {updateOn: 'submit'});
+    this.buttonDisabled = false;
+  }
+
+  createNewUser(event) {
+    event.preventDefault();
+    if (!this.form.valid) {
+      console.log(this.form.valid);
+      return;
+    }
+    const newUser: UserCreateApiModel = {
+      firstName: event.target.firstname.value,
+      lastName: event.target.lastname.value,
+      email: event.target.email.value,
+      admin: event.target.admin.checked
+    };
+    this.buttonDisabled = true;
+    this.adminService.createUser(newUser).subscribe(
+      response => {
+        console.log(response);
+        this.buttonDisabled = false;
+      }
+    );
+    console.log(newUser);
+  }
 }

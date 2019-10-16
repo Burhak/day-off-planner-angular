@@ -38,4 +38,10 @@ export class UserInfoService {
   removeToken() {
     this.authService.removeToken();
   }
+
+  get hasAdminPrivileges() {
+    if (this.user)  {
+      return this.user.admin;
+    }
+  }
 }

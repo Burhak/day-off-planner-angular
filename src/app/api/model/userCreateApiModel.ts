@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-export interface UserCreateApiModel { 
+export interface UserCreateApiModel {
     firstName: string;
     lastName: string;
     email: string;
