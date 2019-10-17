@@ -19,14 +19,14 @@ import { AdminComponent } from './component/admin/admin.component';
 import { AddUserFormComponent } from './component/add-user-form/add-user-form.component';
 import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
 import { HomeComponent } from './component/home/home.component';
-import { ErrorComponent } from './error/error.component';
+import { ErrorComponent } from './component/error/error.component';
 
 import { AuthGuad } from './guard/auth.guard';
-import { AdminGuard } from './admin.guard';
+import { AdminGuard } from './guard/admin.guard';
 
 import { AuthService } from './service/auth.service';
 import { UserInfoService } from './service/user-info.service';
-import { ErrorHandlerService } from './error-handler.service';
+import { ErrorHandlerService } from './service/error-handler.service';
 
 @NgModule({
   declarations: [

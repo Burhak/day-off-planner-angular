@@ -1,5 +1,5 @@
 import { Component, OnInit, Injector, ErrorHandler, NgZone } from '@angular/core';
-import { ErrorHandlerService } from '../error-handler.service';
+import { ErrorHandlerService } from '../../service/error-handler.service';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
