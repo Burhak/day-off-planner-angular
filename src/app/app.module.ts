@@ -1,23 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule} from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule, MatCheckboxModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { environment } from '../environments/environment';
-import { AppComponent } from './app.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService } from './api';
-import { AuthService } from './auth.service';
-import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
-import { AdminComponent } from './admin/admin.component';
-import { AuthGuard } from './auth.guard';
-import { UserInfoService } from './user-info.service';
-import { AddUserFormComponent } from './add-user-form/add-user-form.component';
-import { ErrorComponent } from './error/error.component';
-import { ErrorHandlerService } from './error-handler.service';
-import { AdminGuard } from './admin.guard';
+
+import { environment } from '../environments/environment';
+
+import { TokenInterceptor } from './interceptor/token.interceptor';
+
+import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService } from './api';
+
+import { AppComponent } from './app.component';
+import { LoginFormComponent } from './component/login-form/login-form.component';
+import { NavigationComponent } from './component/navigation/navigation.component';
+import { AdminComponent } from './component/admin/admin.component';
+import { AddUserFormComponent } from './component/add-user-form/add-user-form.component';
+import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
+import { HomeComponent } from './component/home/home.component';
+import { ErrorComponent } from './component/error/error.component';
+
+import { AuthGuad } from './guard/auth.guard';
+import { AdminGuard } from './guard/admin.guard';
+
+import { AuthService } from './service/auth.service';
+import { UserInfoService } from './service/user-info.service';
+import { ErrorHandlerService } from './service/error-handler.service';
 
 @NgModule({
   declarations: [
@@ -26,10 +35,13 @@ import { AdminGuard } from './admin.guard';
     NavigationComponent,
     AdminComponent,
     AddUserFormComponent,
-    ErrorComponent
+    ErrorComponent,
+    ResetPasswordComponent,
+    HomeComponent
   ],
   imports: [
     MatToolbarModule,
+    MatCheckboxModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -41,30 +53,36 @@ import { AdminGuard } from './admin.guard';
     ReactiveFormsModule,
     RouterModule.forRoot([
       {
-        path: 'addUser',
-        component: AddUserFormComponent,
+        path: 'admin',
+        component: AdminComponent,
+        canActivate: [AuthGuad, AdminGuard]
       },
       {
-        path: '',
-        component: NavigationComponent,
-        canActivate: [AuthGuard]
+        path: 'admin/addUser',
+        component: AddUserFormComponent,
+        canActivate: [AuthGuad]
       },
       {
         path: 'login',
-        component: LoginFormComponent
-      },
-      {
-        path: 'admin',
-        component: AdminComponent,
-        canActivate: [AuthGuard, AdminGuard]
+        component: LoginFormComponent,
       },
       {
         path: 'error',
         component: ErrorComponent
+      },
+      {
+        path: '',
+        component: HomeComponent,
+        canActivate: [AuthGuad]
+      },
+      {
+        path: 'resetPassword',
+        component: ResetPasswordComponent
       }
     ])
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     {
       provide: BASE_PATH,
       useValue: environment.API_BASE_PATH
@@ -76,12 +94,12 @@ import { AdminGuard } from './admin.guard';
       multi: false
     },
     { provide: ErrorHandler, useClass: ErrorHandlerService },
-    AuthService,
     LoginService,
     UserService,
-    UserInfoService,
     AdminService,
-    AuthGuard
+    AuthService,
+    UserInfoService,
+    AuthGuad
   ],
   bootstrap: [AppComponent]
 })
