@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule, MatCheckboxModule} from '@angular/material';
@@ -19,11 +19,14 @@ import { AdminComponent } from './component/admin/admin.component';
 import { AddUserFormComponent } from './component/add-user-form/add-user-form.component';
 import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
 import { HomeComponent } from './component/home/home.component';
+import { ErrorComponent } from './error/error.component';
 
 import { AuthGuad } from './guard/auth.guard';
+import { AdminGuard } from './admin.guard';
 
 import { AuthService } from './service/auth.service';
 import { UserInfoService } from './service/user-info.service';
+import { ErrorHandlerService } from './error-handler.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { UserInfoService } from './service/user-info.service';
     NavigationComponent,
     AdminComponent,
     AddUserFormComponent,
+    ErrorComponent
     ResetPasswordComponent,
     HomeComponent
   ],
@@ -51,7 +55,7 @@ import { UserInfoService } from './service/user-info.service';
       {
         path: 'admin',
         component: AdminComponent,
-        canActivate: [AuthGuad]
+        canActivate: [AuthGuad, AdminGuard]
       },
       {
         path: 'admin/addUser',
@@ -61,6 +65,10 @@ import { UserInfoService } from './service/user-info.service';
       {
         path: 'login',
         component: LoginFormComponent,
+      },
+      {
+        path: 'error',
+        component: ErrorComponent
       },
       {
         path: '',
@@ -85,6 +93,7 @@ import { UserInfoService } from './service/user-info.service';
       deps: [AuthService],
       multi: false
     },
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
     LoginService,
     UserService,
     AdminService,
