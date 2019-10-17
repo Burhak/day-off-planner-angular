@@ -7,6 +7,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ErrorHandlerService implements ErrorHandler{
 
+  private error: Error;
+
+  get lastError(): Error {
+    return this.error;
+  }
+
   constructor(private injector: Injector) { }
 
   handleError(error: any) {
@@ -19,6 +25,7 @@ export class ErrorHandlerService implements ErrorHandler{
       console.error('An error occurred: ', (<Error>error).message);
     }
 
+    this.error = error;
     router.navigate(['error']);
   }
 }

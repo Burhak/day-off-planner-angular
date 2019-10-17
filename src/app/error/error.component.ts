@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector, ErrorHandler, NgZone } from '@angular/core';
 import { ErrorHandlerService } from '../error-handler.service';
-import { Subscription } from 'rxjs';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-error',
@@ -9,10 +9,22 @@ import { Subscription } from 'rxjs';
 })
 export class ErrorComponent implements OnInit {
 
-  constructor(private errorService: ErrorHandlerService) {
+  errorMsg: string = '';
+
+  constructor(private errorService: ErrorHandler, private zone: NgZone, private router: Router) {
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.ngOnInit();
+      }
+      // Instance of should be: 
+      // NavigationEnd
+      // NavigationCancel
+      // NavigationError
+      // RoutesRecognized
+    });
   }
 
   ngOnInit() {
+    this.zone.run(() => { this.errorMsg = (<ErrorHandlerService>this.errorService).lastError.message.split('\n')[0]; });
   }
-
 }
