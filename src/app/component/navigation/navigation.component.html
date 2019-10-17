@@ -3,7 +3,7 @@
     <img src="../../assets/logo2.png" class="logo" routerLink="">
     <ul>
       <li>{{userService.currentUser?.firstName}} {{userService.currentUser?.lastName}}</li>
-      <li><a routerLink="/addUser" *ngIf="userService.hasAdminPrivileges">AddUser</a></li>
+      <li><a routerLink="/admin/addUser" *ngIf="userService.hasAdminPrivileges">AddUser</a></li>
       <li><a routerLink="/login" *ngIf="userService.isLoggedIn" (click)="logOut()">Logout</a></li>
     </ul>
   </nav>

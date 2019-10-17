@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AdminService, UserCreateApiModel} from '../api';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserInfoService} from '../user-info.service';
-import {Router} from '@angular/router';
+import { AdminService, UserCreateApiModel } from '../../api';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserInfoService } from 'src/app/service/user-info.service';
 
 @Component({
   selector: 'app-add-user-form',
