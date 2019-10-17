@@ -11,8 +11,8 @@ import {Router} from '@angular/router';
 })
 export class AddUserFormComponent implements OnInit {
 
-  private form: FormGroup;
-  private buttonDisabled: boolean;
+  public form: FormGroup;
+  public buttonDisabled: boolean;
 
   constructor(private adminService: AdminService, private userService: UserInfoService, private router: Router) {
   }
