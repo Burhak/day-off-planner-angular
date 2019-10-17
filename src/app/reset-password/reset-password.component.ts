@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {UserService} from '../api';
+import {UserService} from "../api";
 
 @Component({
   selector: 'app-reset-password',
@@ -33,6 +33,7 @@ export class ResetPasswordComponent implements OnInit {
     const newPassword: any = {
       email: event.target.email.value
     };
+    console.log(newPassword);
 
     this.userService.resetPassword(newPassword).subscribe(
       response => {
