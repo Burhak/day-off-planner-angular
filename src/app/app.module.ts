@@ -35,7 +35,7 @@ import { ErrorHandlerService } from './error-handler.service';
     NavigationComponent,
     AdminComponent,
     AddUserFormComponent,
-    ErrorComponent,
+    ErrorComponent
     ResetPasswordComponent,
     HomeComponent
   ],
