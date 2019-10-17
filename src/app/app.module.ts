@@ -1,20 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule,MatCheckboxModule} from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule, MatCheckboxModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { environment } from '../environments/environment';
-import { AppComponent } from './app.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService } from './api';
-import { AuthService } from './auth.service';
-import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
-import { AdminComponent } from './admin/admin.component';
-import { AuthGuard } from './auth.guard';
-import { UserInfoService } from './user-info.service';
-import { AddUserFormComponent } from './add-user-form/add-user-form.component';
+
+import { environment } from '../environments/environment';
+
+import { TokenInterceptor } from './interceptor/token.interceptor';
+
+import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService } from './api';
+
+import { AppComponent } from './app.component';
+import { LoginFormComponent } from './component/login-form/login-form.component';
+import { NavigationComponent } from './component/navigation/navigation.component';
+import { AdminComponent } from './component/admin/admin.component';
+import { AddUserFormComponent } from './component/add-user-form/add-user-form.component';
+import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
+import { HomeComponent } from './component/home/home.component';
+
+import { AuthGuad } from './guard/auth.guard';
+
+import { AuthService } from './service/auth.service';
+import { UserInfoService } from './service/user-info.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +31,9 @@ import { AddUserFormComponent } from './add-user-form/add-user-form.component';
     LoginFormComponent,
     NavigationComponent,
     AdminComponent,
-    AddUserFormComponent
+    AddUserFormComponent,
+    ResetPasswordComponent,
+    HomeComponent
   ],
   imports: [
     MatToolbarModule,
@@ -38,9 +49,14 @@ import { AddUserFormComponent } from './add-user-form/add-user-form.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       {
-        path: 'addUser',
+        path: 'admin',
+        component: AdminComponent,
+        canActivate: [AuthGuad]
+      },
+      {
+        path: 'admin/addUser',
         component: AddUserFormComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuad]
       },
       {
         path: 'login',
@@ -48,12 +64,17 @@ import { AddUserFormComponent } from './add-user-form/add-user-form.component';
       },
       {
         path: '',
-        component: AdminComponent,
-        canActivate: [AuthGuard]
+        component: HomeComponent,
+        canActivate: [AuthGuad]
+      },
+      {
+        path: 'resetPassword',
+        component: ResetPasswordComponent
       }
     ])
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     {
       provide: BASE_PATH,
       useValue: environment.API_BASE_PATH
@@ -64,12 +85,12 @@ import { AddUserFormComponent } from './add-user-form/add-user-form.component';
       deps: [AuthService],
       multi: false
     },
-    AuthService,
     LoginService,
     UserService,
-    UserInfoService,
     AdminService,
-    AuthGuard
+    AuthService,
+    UserInfoService,
+    AuthGuad
   ],
   bootstrap: [AppComponent]
 })

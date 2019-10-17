@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { UserService, UserApiModel } from './api';
-import {AuthService} from './auth.service';
+import { AuthService } from './auth.service';
+import { UserService, UserApiModel } from '../api';
 
 @Injectable({
   providedIn: 'root'

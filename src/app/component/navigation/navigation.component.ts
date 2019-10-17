@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserInfoService } from '../user-info.service';
+import { UserInfoService } from 'src/app/service/user-info.service';
 
 @Component({
   selector: 'app-navigation',

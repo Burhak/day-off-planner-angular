@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService as LoginService, UserLoginApiModel } from '../api';
+import { AuthService as LoginService, UserLoginApiModel } from '../../api';
 import { Router } from '@angular/router';
-import { UserInfoService } from '../user-info.service';
+import { UserInfoService } from 'src/app/service/user-info.service';
 
 @Component({
   selector: 'app-login-form',
