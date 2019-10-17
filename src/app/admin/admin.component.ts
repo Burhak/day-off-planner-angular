@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from 'src/app/api';
 
+import { AdminService, UserApiModel, UserCreateApiModel } from '../api';
 
 
 @Component({

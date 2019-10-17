@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService as LoginService, UserLoginApiModel } from '../../api';
+import { AuthService as LoginService, UserLoginApiModel } from '../api';
 import { Router } from '@angular/router';
-import { UserInfoService } from 'src/app/service/user-info.service';
+import { UserInfoService } from '../user-info.service';
 
 @Component({
   selector: 'app-login-form',
@@ -16,9 +16,6 @@ export class LoginFormComponent implements OnInit {
   constructor(private apiService: LoginService, private userService: UserInfoService, private router: Router) { }
 
   ngOnInit() {
-    if (this.userService.isLoggedIn) {
-      this.router.navigate(['']);
-    }
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])

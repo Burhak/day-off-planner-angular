@@ -76,6 +76,14 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        // authentication (oAuthNoScopes) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
         ];
@@ -118,6 +126,14 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        // authentication (oAuthNoScopes) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -155,6 +171,14 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        // authentication (oAuthNoScopes) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -197,6 +221,14 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        // authentication (oAuthNoScopes) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -239,6 +271,14 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        // authentication (oAuthNoScopes) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
         ];
