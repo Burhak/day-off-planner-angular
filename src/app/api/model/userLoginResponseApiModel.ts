@@ -13,7 +13,7 @@
 
 export interface UserLoginResponseApiModel { 
     readonly token: string;
-    readonly expiresAt?: Date;
-    readonly tokenType?: string;
+    readonly expiresAt: Date;
+    readonly tokenType: string;
     user: UserApiModel;
 }
