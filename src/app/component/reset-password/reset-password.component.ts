@@ -11,6 +11,8 @@ import { UserService } from '../../api'
 export class ResetPasswordComponent implements OnInit {
 
   private form: FormGroup;
+  private isPasswordReset: boolean;
+  private buttonDisabled: boolean;
 
   constructor(private router: Router, private userService: UserService) { }
 
@@ -18,6 +20,8 @@ export class ResetPasswordComponent implements OnInit {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email])
     }, {updateOn: 'submit'});
+    this.isPasswordReset = false;
+    this.buttonDisabled = false;
   }
 
   goBack() {
@@ -27,17 +31,17 @@ export class ResetPasswordComponent implements OnInit {
   resetPassword(event) {
     event.preventDefault();
     if (!this.form.valid) {
-      console.log(this.form.valid);
       return;
     }
+    this.buttonDisabled = true;
     const newPassword: any = {
       email: event.target.email.value
     };
-    console.log(newPassword);
 
     this.userService.resetPassword(newPassword).subscribe(
       response => {
-        console.log(response);
+        this.isPasswordReset = true;
+        this.buttonDisabled = false;
       }
     );
   }
