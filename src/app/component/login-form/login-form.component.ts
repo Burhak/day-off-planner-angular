@@ -44,6 +44,7 @@ export class LoginFormComponent implements OnInit {
         this.router.navigate(['']);
       },
       error => {
+        // error.status == 401 invalid name or password
         window.alert(error.message);
         console.log(error);
         console.log(error.status);
