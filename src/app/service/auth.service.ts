@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
 
   get isLoggedIn(): boolean {
-    console.log(this.getAccessToken());
+    //console.log(this.getAccessToken());
     return this.getAccessToken() !== null;
   }
 

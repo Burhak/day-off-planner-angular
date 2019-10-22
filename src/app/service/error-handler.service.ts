@@ -1,4 +1,4 @@
-import { Injectable, ErrorHandler, Injector } from '@angular/core';
+import { Injectable, ErrorHandler, Injector, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from './auth.service';
@@ -19,6 +19,7 @@ export class ErrorHandlerService implements ErrorHandler{
   handleError(error: any) {
     const router = this.injector.get(Router);
     const auth = this.injector.get(AuthService);
+    const ngZone = this.injector.get(NgZone);
 
     if (error instanceof HttpErrorResponse) {
       console.error('Backend returned status code: ', error.status);
@@ -35,6 +36,6 @@ export class ErrorHandlerService implements ErrorHandler{
     }
 
     this.error = error;
-    //router.navigate(['error']);
+    ngZone.run(() => router.navigate(['error']));
   }
 }
