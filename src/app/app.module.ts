@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule, MatCheckboxModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 import { environment } from '../environments/environment';
 
@@ -99,7 +100,8 @@ import { ErrorHandlerService } from './service/error-handler.service';
     AdminService,
     AuthService,
     UserInfoService,
-    AuthGuad
+    AuthGuad,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

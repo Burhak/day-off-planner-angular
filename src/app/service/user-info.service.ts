@@ -31,8 +31,8 @@ export class UserInfoService {
     this.user = null;
   }
 
-  saveToken(token: string) {
-    this.authService.saveToken(token);
+  saveToken(token: string, expireDate: Date) {
+    this.authService.saveToken(token, expireDate);
   }
 
   removeToken() {
