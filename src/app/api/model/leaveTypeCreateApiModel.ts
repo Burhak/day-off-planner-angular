@@ -14,5 +14,4 @@ export interface LeaveTypeCreateApiModel {
     name: string;
     approvalNeeded: boolean;
     limited: boolean;
-    halfDayAllowed: boolean;
 }
