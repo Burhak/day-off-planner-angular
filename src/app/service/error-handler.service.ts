@@ -35,6 +35,6 @@ export class ErrorHandlerService implements ErrorHandler{
     }
 
     this.error = error;
-    router.navigate(['error']);
+    //router.navigate(['error']);
   }
 }

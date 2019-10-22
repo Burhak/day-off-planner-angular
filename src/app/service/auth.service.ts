@@ -30,6 +30,10 @@ export class AuthService {
 
   getAccessToken(): string {
     //return localStorage.getItem('token');
-    return this.cookieService.get('token');
+    if (this.cookieService.check('token')) {
+      return this.cookieService.get('token');
+    } else {
+      return null;
+    }
   }
 }
