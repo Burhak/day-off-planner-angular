@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {UserInfoService} from "../service/user-info.service";
+import {UserApiModel, UserService} from '../api';
+import {UserInfoService} from '../service/user-info.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,9 +9,16 @@ import {UserInfoService} from "../service/user-info.service";
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor(public userService: UserInfoService) { }
+  private array: Array<UserApiModel> = [];
+
+  constructor(private userInfoService: UserInfoService, private userService: UserService) {
+    this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
+      this.array = user;
+    });
+  }
 
   ngOnInit() {
+
   }
 
 }

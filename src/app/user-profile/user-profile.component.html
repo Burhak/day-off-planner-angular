@@ -1,9 +1,30 @@
-<app-navigation></app-navigation>
-<div class="userProfile">
-  <h1>User profile</h1>
-  <h3><strong>Firstname:</strong> {{userService.currentUser?.firstName}}</h3>
-  <h3><strong>Lastname:</strong> {{userService.currentUser?.lastName}}</h3>
-  <h3><strong>Email:</strong> {{userService.currentUser?.email}}</h3>
-  <h3><strong>Admin privileges:</strong> {{userService.currentUser?.admin}}</h3>
+
+<div class="page">
+  <app-navigation></app-navigation>
+  <div class="pageContent">
+    <div class="userProfileCard">
+      <div class="title">
+        <h1>User profile</h1>
+      </div>
+      <div class="userProfileInfo">
+        <div class="mainUserInfo">
+          <img src="../../assets/images/userIcon_dark.png">
+          <h2><strong>{{userInfoService.currentUser?.firstName}} {{userInfoService.currentUser?.lastName}}</strong></h2>
+          <h3>Junior Frontend Developer</h3>
+        </div>
+        <div class="otherUserInfo">
+          <h3><strong>Email: </strong> {{userInfoService.currentUser?.email}}</h3>
+          <h3><strong>Phone number:</strong> 0904028981</h3>
+        </div>
+        <div class="userRoles">
+          <h3><strong>Admin privileges: </strong> {{userInfoService.currentUser?.admin}}</h3>
+          <h3><strong>Supervisor: </strong> {{userInfoService.currentUser?.supervisor}}</h3>
+          <div class="userSupervisors">
+            <h5 *ngFor="let element of array">{{element.firstName}} {{element.lastName}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
