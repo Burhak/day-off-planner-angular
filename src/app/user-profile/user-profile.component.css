@@ -1,4 +1,4 @@
-.addUser-form {
+.userProfile {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -7,7 +7,7 @@
   width: 20vw;
 }
 
-.addUser-element {
+.userProfile-element {
   width: 100%;
 }
 
@@ -41,5 +41,5 @@ a:hover{
 }
 
 h1,h2,h3,h4,h5,h6{
- color: rgb(44,62,80);
+  color: rgb(44,62,80);
 }

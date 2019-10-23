@@ -27,6 +27,7 @@ import { AdminGuard } from './guard/admin.guard';
 import { AuthService } from './service/auth.service';
 import { UserInfoService } from './service/user-info.service';
 import { ErrorHandlerService } from './service/error-handler.service';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ErrorHandlerService } from './service/error-handler.service';
     AddUserFormComponent,
     ErrorComponent,
     ResetPasswordComponent,
-    HomeComponent
+    HomeComponent,
+    UserProfileComponent
   ],
   imports: [
     MatToolbarModule,
@@ -78,6 +80,11 @@ import { ErrorHandlerService } from './service/error-handler.service';
       {
         path: 'resetPassword',
         component: ResetPasswordComponent
+      },
+      {
+        path: 'userProfile',
+        component: UserProfileComponent,
+        canActivate: [AuthGuad]
       }
     ])
   ],

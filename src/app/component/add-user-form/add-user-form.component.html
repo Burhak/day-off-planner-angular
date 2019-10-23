@@ -1,5 +1,5 @@
 <app-navigation></app-navigation>
-<div class="login-form">
+<div class="addUser-form">
   <h2>Add user</h2>
   <form [formGroup]="form" (submit)="createNewUser($event)">
     <mat-form-field class="login-element">
@@ -11,7 +11,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="login-element">
+    <mat-form-field class="addUser-element">
       <input matInput
              placeholder="Lastname"
              id="lastname" formControlName="lastname">
@@ -20,7 +20,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="login-element">
+    <mat-form-field class="addUser-element">
       <input matInput
              placeholder="Email"
              id="email" formControlName="email">
@@ -33,7 +33,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="login-element">
+    <mat-form-field class="addUser-element">
       <input matInput
              placeholder="Supervisor"
              id="supervisor">
