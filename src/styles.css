@@ -14,3 +14,34 @@ app-root {
   left: 0;
   right: 0;
 }
+
+button:focus {outline:0;}
+
+.mat-menu-panel{
+  position: relative;
+  top: 1.8em;
+  left: 0;
+  width: 15em;
+  padding: 0.3em 0.6em !important;
+  background-color: rgb(44,62,80);
+  border-radius: 2em !important;
+}
+
+.mat-menu-content{
+  padding: 0 !important;
+}
+
+.mat-menu-item{
+  background-color: rgb(52,73,94);
+  color: rgb(255,255,255);
+  border-radius: 2em;
+  margin: 0.5em 0;
+  font-weight: bold;
+  text-align: right !important;
+}
+
+.mat-menu-item:hover:not([disabled]) {
+  background: rgb(49,67,85);
+}
+
+
