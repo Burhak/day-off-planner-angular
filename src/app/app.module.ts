@@ -27,7 +27,7 @@ import { AdminGuard } from './guard/admin.guard';
 import { AuthService } from './service/auth.service';
 import { UserInfoService } from './service/user-info.service';
 import { ErrorHandlerService } from './service/error-handler.service';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileComponent } from './component/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
