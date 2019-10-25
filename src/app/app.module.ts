@@ -29,6 +29,7 @@ import { UserInfoService } from './service/user-info.service';
 import { ErrorHandlerService } from './service/error-handler.service';
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ChangePasswordComponent } from './component/change-password/change-pass
     ResetPasswordComponent,
     HomeComponent,
     UserProfileComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    UserListComponent
   ],
   imports: [
     MatToolbarModule,
