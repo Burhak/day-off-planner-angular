@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule, MatCheckboxModule, MatMenuModule} from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule,
+  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -30,6 +31,7 @@ import { ErrorHandlerService } from './service/error-handler.service';
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
 import { UserListComponent } from './component/user-list/user-list.component';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,9 @@ import { UserListComponent } from './component/user-list/user-list.component';
     MatButtonModule,
     MatSelectModule,
     MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -97,9 +102,9 @@ import { UserListComponent } from './component/user-list/user-list.component';
         canActivate: [AuthGuad]
       },
       {
-        path: 'userList',
+        path: 'admin/userList',
         component: UserListComponent,
-        canActivate: [AuthGuad, AdminGuard]
+        canActivate: [AuthGuad]
       }
     ])
   ],

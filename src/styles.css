@@ -45,7 +45,7 @@ button:focus {outline:0;}
   background: rgb(49, 67, 85);
 }
 
-app-change-password{
+app-change-password, app-user-list{
   height: 100vh;
   width: 100%;
   display:flex;
@@ -53,3 +53,14 @@ app-change-password{
   background-color: rgb(245,245,245);
 }
 
+th{
+  padding: 1em 2em!important;
+  text-align: center!important;
+  font-weight: bold!important;
+  font-size: 1em!important;
+}
+
+td{
+  text-align: center!important;
+  padding: 1em 2em!important;
+}
