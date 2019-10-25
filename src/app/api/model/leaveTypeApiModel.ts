@@ -15,4 +15,5 @@ export interface LeaveTypeApiModel {
     readonly name: string;
     readonly approvalNeeded: boolean;
     readonly limited: boolean;
+    readonly defaultLimitHours: number;
 }
