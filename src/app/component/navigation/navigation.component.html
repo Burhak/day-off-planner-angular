@@ -2,7 +2,14 @@
   <nav>
     <img src="../../assets/images/logo_dark.png" class="logo" routerLink="">
     <mat-menu #appMenu="matMenu" xPosition="before">
-      <button mat-menu-item routerLink="/admin/addUser" *ngIf="userService.hasAdminPrivileges">Add user</button>
+      <div class="userInfo">
+        <img src="../../assets/images/userIcon_light.png" class="userImg">
+        <h3>{{userService.currentUser?.firstName}} {{userService.currentUser?.lastName}}</h3>
+        <h5>{{userService.currentUser?.email}}</h5>
+      </div>
+      <div class="adminOptions">
+        <button mat-menu-item routerLink="/admin/addUser" *ngIf="userService.hasAdminPrivileges">Add user</button>
+      </div>
       <button mat-menu-item routerLink="/userProfile">User profile</button>
       <button mat-menu-item routerLink="/login" *ngIf="userService.isLoggedIn" (click)="logOut()">Logout</button>
     </mat-menu>

@@ -21,7 +21,7 @@ button:focus {outline:0;}
   position: relative;
   top: 1.8em;
   left: 0;
-  width: 15em;
+  max-width: fit-content !important;
   padding: 0.3em 0.6em !important;
   background-color: rgb(44,62,80);
   border-radius: 2em !important;
@@ -29,6 +29,7 @@ button:focus {outline:0;}
 
 .mat-menu-content{
   padding: 0 !important;
+  width: fit-content !important;
 }
 
 .mat-menu-item{
@@ -37,11 +38,11 @@ button:focus {outline:0;}
   border-radius: 2em;
   margin: 0.5em 0;
   font-weight: bold;
-  text-align: right !important;
+  text-align: center !important;
 }
 
 .mat-menu-item:hover:not([disabled]) {
-  background: rgb(49,67,85);
+  background: rgb(49, 67, 85);
 }
 
 
