@@ -95,6 +95,11 @@ import { UserListComponent } from './user-list/user-list.component';
         path: 'changePassword',
         component: ChangePasswordComponent,
         canActivate: [AuthGuad]
+      },
+      {
+        path: 'userList',
+        component: UserListComponent,
+        canActivate: [AuthGuad, AdminGuard]
       }
     ])
   ],
