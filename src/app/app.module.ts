@@ -28,6 +28,7 @@ import { AuthService } from './service/auth.service';
 import { UserInfoService } from './service/user-info.service';
 import { ErrorHandlerService } from './service/error-handler.service';
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
+import { ChangePasswordComponent } from './component/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
     ErrorComponent,
     ResetPasswordComponent,
     HomeComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ChangePasswordComponent
   ],
   imports: [
     MatToolbarModule,
@@ -85,6 +87,11 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
       {
         path: 'userProfile',
         component: UserProfileComponent,
+        canActivate: [AuthGuad]
+      },
+      {
+        path: 'changePassword',
+        component: ChangePasswordComponent,
         canActivate: [AuthGuad]
       }
     ])
