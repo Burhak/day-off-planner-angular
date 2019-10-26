@@ -3,7 +3,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule,
-  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule} from '@angular/material';
+  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -32,6 +32,7 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
 import { UserListComponent } from './component/user-list/user-list.component';
 import {MatSortModule} from '@angular/material/sort';
+import { DeleteUserDialogComponent } from './component/user-list/delete-user-dialog/delete-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,8 +46,10 @@ import {MatSortModule} from '@angular/material/sort';
     HomeComponent,
     UserProfileComponent,
     ChangePasswordComponent,
-    UserListComponent
+    UserListComponent,
+    DeleteUserDialogComponent
   ],
+  entryComponents: [DeleteUserDialogComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,
@@ -61,6 +64,8 @@ import {MatSortModule} from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatIconModule,
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([

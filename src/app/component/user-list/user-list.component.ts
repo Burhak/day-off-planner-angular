@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {AdminService, UserApiModel, UserService} from '../../api';
-import {UserInfoService} from '../../service/user-info.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog} from "@angular/material";
+import {DeleteUserDialogComponent} from "./delete-user-dialog/delete-user-dialog.component";
 
 @Component({
   selector: 'app-user-list',
@@ -12,7 +13,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class UserListComponent implements OnInit {
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private adminService: AdminService, public dialog: MatDialog) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
       this.array = user;
       this.fillData();
@@ -20,7 +21,7 @@ export class UserListComponent implements OnInit {
   }
 
   private array: Array<UserApiModel> = [];
-  private displayedColumns: string[] = ['firstName', 'lastName', 'email', 'admin', 'supervisor'];
+  private displayedColumns: string[] = ['firstName', 'lastName', 'email', 'admin', 'supervisor', 'edit', 'delete'];
   private dataSource: MatTableDataSource<UserApiModel>;
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
@@ -30,10 +31,27 @@ export class UserListComponent implements OnInit {
 
   }
 
-  fillData(){
+  fillData() {
     this.dataSource = new MatTableDataSource<UserApiModel>(this.array);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  openDialogDeleteUser(user) {
+    let dialogRef = this.dialog.open(DeleteUserDialogComponent, {data: {userName: user.firstName + ' ' +  user.lastName}});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result === 'true') {
+        this.deleteUser(user);
+      }
+    });
+  }
+
+  deleteUser(user) {
+    this.adminService.deleteUser(user.id).subscribe(
+      response => {
+        console.log(response);
+      });
   }
 }
 

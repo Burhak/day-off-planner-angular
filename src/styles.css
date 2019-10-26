@@ -70,3 +70,28 @@ tr{
   height: fit-content!important;
 }
 
+mat-dialog-container{
+  border-radius: 2em!important;
+  padding: 2em!important;
+  color: rgb(44,62,80)!important;
+  width: fit-content!important;
+  height: fit-content!important;
+}
+
+.mat-dialog-title{
+  margin: 0!important;
+}
+
+.mat-dialog-content{
+  padding: 0 !important;
+  margin: 0 0 0.8em!important;
+}
+
+mat-icon{
+  color: rgb(44,62,80);
+}
+
+.mat-sort-header-arrow{
+  color: rgb(255,255,255)!important;
+}
+
