@@ -13,6 +13,6 @@
 export interface LeaveTypeCreateApiModel { 
     name: string;
     approvalNeeded: boolean;
-    limited: boolean;
-    defaultLimitHours?: number;
+    limit?: number;
+    carryover?: number;
 }
