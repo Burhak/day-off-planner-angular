@@ -5,6 +5,8 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from "@angular/material";
 import {DeleteUserDialogComponent} from "./delete-user-dialog/delete-user-dialog.component";
+import {Router} from "@angular/router";
+import {UserInfoService} from "../../service/user-info.service";
 
 @Component({
   selector: 'app-user-list',
@@ -13,11 +15,8 @@ import {DeleteUserDialogComponent} from "./delete-user-dialog/delete-user-dialog
 })
 export class UserListComponent implements OnInit {
 
-  constructor(private userService: UserService, private adminService: AdminService, public dialog: MatDialog) {
-    this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
-      this.array = user;
-      this.fillData();
-    });
+  constructor(private userInfoService: UserInfoService, private userService: UserService, private adminService: AdminService, public dialog: MatDialog, private router: Router) {
+    this.getDataAllUser();
   }
 
   private array: Array<UserApiModel> = [];
@@ -29,6 +28,13 @@ export class UserListComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  getDataAllUser() {
+    this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
+      this.array = user;
+      this.fillData();
+    });
   }
 
   fillData() {
@@ -51,7 +57,9 @@ export class UserListComponent implements OnInit {
     this.adminService.deleteUser(user.id).subscribe(
       response => {
         console.log(response);
+        this.getDataAllUser();
       });
   }
+
 }
 
