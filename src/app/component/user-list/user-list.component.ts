@@ -24,6 +24,7 @@ export class UserListComponent implements OnInit {
   private dataSource: MatTableDataSource<UserApiModel>;
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   ngOnInit() {
 
@@ -32,6 +33,7 @@ export class UserListComponent implements OnInit {
   fillData(){
     this.dataSource = new MatTableDataSource<UserApiModel>(this.array);
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 }
 
