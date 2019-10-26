@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService, UserCreateApiModel } from '../../api';
+import {AdminService, UserApiModel, UserCreateApiModel, UserService} from '../../api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserInfoService } from 'src/app/service/user-info.service';
@@ -13,12 +13,20 @@ export class AddUserFormComponent implements OnInit {
 
   public form: FormGroup;
   public buttonDisabled: boolean;
+  private posibleUserSupervisors: Array<UserApiModel> = [];
 
-  constructor(private adminService: AdminService, private userService: UserInfoService, private router: Router) {
+  constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router) {
+    this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
+      const allUsers: Array<UserApiModel> = user;
+      const index = allUsers.findIndex(allUsers => allUsers.id === userInfoService.currentUser.id); //find currentUser in allUsers
+      allUsers.splice(index, 1); //delete currentUser from allUsers
+      this.posibleUserSupervisors = allUsers;
+    });
   }
 
+
   ngOnInit() {
-    if (!this.userService.hasAdminPrivileges) {
+    if (!this.userInfoService.hasAdminPrivileges) {
       this.router.navigate(['']);
     }
     this.form = new FormGroup({
