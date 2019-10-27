@@ -1,0 +1,50 @@
+<app-navigation></app-navigation>
+  <div class="pageContent">
+    <div class="userList">
+      <h2 class="title">User list</h2>
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Firstname </th>
+          <td mat-cell *matCellDef="let user"> {{user.firstName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Lastname </th>
+          <td mat-cell *matCellDef="let user"> {{user.lastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+          <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="admin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Admin </th>
+          <td mat-cell *matCellDef="let user"> {{user.admin}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supervisor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header > Supervisor </th>
+          <td mat-cell *matCellDef="let user"> {{user.supervisor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="edit" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let user">
+            <a><mat-icon>edit</mat-icon></a>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="delete" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let user">
+            <a *ngIf="(userInfoService.currentUser.id!=user.id)" (click)="openDialogDeleteUser(user)"><mat-icon>delete</mat-icon></a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5,10]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

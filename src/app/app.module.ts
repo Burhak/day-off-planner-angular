@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule, MatCheckboxModule, MatMenuModule} from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule,
+  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -29,6 +30,10 @@ import { AuthService } from './service/auth.service';
 import { UserInfoService } from './service/user-info.service';
 import { ErrorHandlerService } from './service/error-handler.service';
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
+import { ChangePasswordComponent } from './component/change-password/change-password.component';
+import { UserListComponent } from './component/user-list/user-list.component';
+import {MatSortModule} from '@angular/material/sort';
+import { DeleteUserDialogComponent } from './component/user-list/delete-user-dialog/delete-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,8 +45,12 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
     ErrorComponent,
     ResetPasswordComponent,
     HomeComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ChangePasswordComponent,
+    UserListComponent,
+    DeleteUserDialogComponent
   ],
+  entryComponents: [DeleteUserDialogComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,
@@ -53,6 +62,11 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
     MatButtonModule,
     MatSelectModule,
     MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule,
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -86,6 +100,16 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
       {
         path: 'userProfile',
         component: UserProfileComponent,
+        canActivate: [AuthGuad]
+      },
+      {
+        path: 'changePassword',
+        component: ChangePasswordComponent,
+        canActivate: [AuthGuad]
+      },
+      {
+        path: 'admin/userList',
+        component: UserListComponent,
         canActivate: [AuthGuad]
       }
     ])
