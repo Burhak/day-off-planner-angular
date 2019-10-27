@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService, UserCreateApiModel } from '../../api';
+import {AdminService, UserApiModel, UserCreateApiModel, UserService} from '../../api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserInfoService } from 'src/app/service/user-info.service';
+import {MatSelectChange} from "@angular/material";
 
 @Component({
   selector: 'app-add-user-form',
@@ -13,12 +14,18 @@ export class AddUserFormComponent implements OnInit {
 
   public form: FormGroup;
   public buttonDisabled: boolean;
+  private posibleUserSupervisors: Array<UserApiModel> = [];
+  selectControl: FormControl = new FormControl();
 
-  constructor(private adminService: AdminService, private userService: UserInfoService, private router: Router) {
+  constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router) {
+    this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
+      this.posibleUserSupervisors = user;
+    });
   }
 
+
   ngOnInit() {
-    if (!this.userService.hasAdminPrivileges) {
+    if (!this.userInfoService.hasAdminPrivileges) {
       this.router.navigate(['']);
     }
     this.form = new FormGroup({
@@ -39,7 +46,8 @@ export class AddUserFormComponent implements OnInit {
       firstName: event.target.firstname.value,
       lastName: event.target.lastname.value,
       email: event.target.email.value,
-      admin: event.target.admin.checked
+      admin: event.target.admin.checked,
+      supervisor: this.selectControl.value
     };
     this.buttonDisabled = true;
     this.adminService.createUser(newUser).subscribe(
