@@ -16,4 +16,6 @@ export interface UserCreateApiModel {
     email: string;
     supervisor?: string;
     admin: boolean;
+    jobDescription: string;
+    phone?: string;
 }

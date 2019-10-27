@@ -12,7 +12,6 @@
 
 export interface LeaveRequestCreateApiModel { 
     leaveType: string;
-    user: string;
     fromDate: Date;
     toDate: Date;
 }
