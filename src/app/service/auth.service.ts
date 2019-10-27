@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private cookieService: CookieService) { }
 
   saveToken(token: string, expireDate: Date) {
-      this.cookieService.set('token', token, expireDate);
+    this.cookieService.set('token', token, expireDate);
   }
 
   /*
