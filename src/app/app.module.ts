@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule, MatCheckboxModule} from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule, MatCheckboxModule, MatMenuModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -28,6 +28,7 @@ import { AdminGuard } from './guard/admin.guard';
 import { AuthService } from './service/auth.service';
 import { UserInfoService } from './service/user-info.service';
 import { ErrorHandlerService } from './service/error-handler.service';
+import { UserProfileComponent } from './component/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ErrorHandlerService } from './service/error-handler.service';
     AddUserFormComponent,
     ErrorComponent,
     ResetPasswordComponent,
-    HomeComponent
+    HomeComponent,
+    UserProfileComponent
   ],
   imports: [
     MatToolbarModule,
@@ -50,6 +52,7 @@ import { ErrorHandlerService } from './service/error-handler.service';
     MatFormFieldModule,
     MatButtonModule,
     MatSelectModule,
+    MatMenuModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -79,6 +82,11 @@ import { ErrorHandlerService } from './service/error-handler.service';
       {
         path: 'resetPassword',
         component: ResetPasswordComponent
+      },
+      {
+        path: 'userProfile',
+        component: UserProfileComponent,
+        canActivate: [AuthGuad]
       }
     ])
   ],

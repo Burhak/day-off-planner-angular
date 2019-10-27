@@ -1,0 +1,90 @@
+.page {
+  height: 100vh;
+  background-color: rgb(245,245,245);
+}
+
+.pageContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.userProfileCard {
+  margin: 2em ;
+  padding: 2em 0;
+  background-color: rgb(255,255,255);
+  box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
+  width: fit-content;
+  border-radius: 2em;
+}
+
+.userProfileInfo {
+  padding: 2em;
+}
+
+.title{
+  background-color: rgb(44,62,80);
+  color: rgb(255,255,255);
+  padding: 0.4em 2em;
+}
+
+.title h1{
+  color: rgb(255,255,255);
+}
+
+.mainUserInfo{
+  text-align: center;
+}
+
+.mainUserInfo img{
+  display:block;
+  margin:auto;
+}
+
+img{
+  width: 12em;
+}
+
+.otherUserInfo{
+  padding: 2em 2em 1em;
+}
+
+.userRoles{
+  padding: 1em 2em;
+}
+
+.userSupervisors{
+  padding: 0.5em 1em 0;
+}
+
+.userSupervisors h5{
+  padding: 0.1em;
+}
+
+
+.submitBtn{
+  width: 100%;
+  background: rgb(52,73,94);
+  color: white;
+  font-weight: bold;
+  padding: 1em 0;
+}
+
+button:hover{
+  background: rgb(44,62,80);
+}
+
+a {
+  color: rgb(44,62,80);
+}
+
+a:hover{
+  font-weight: bold;
+  text-decoration: none;
+}
+
+h1,h2,h3,h4,h5,h6{
+  color: rgb(44,62,80);
+  margin: 0;
+}

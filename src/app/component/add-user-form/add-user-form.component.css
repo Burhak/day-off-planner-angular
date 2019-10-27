@@ -1,4 +1,4 @@
-.login-form {
+.addUser-form {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -7,7 +7,7 @@
   width: 20vw;
 }
 
-.login-element {
+.addUser-element {
   width: 100%;
 }
 
@@ -17,6 +17,8 @@
   color: white;
   font-weight: bold;
   margin: 1em 0;
+  padding: 0.5em 0;
+  border-radius: 2em;
 }
 
 button:hover{
