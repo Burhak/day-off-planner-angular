@@ -39,11 +39,12 @@ export class LoginFormComponent implements OnInit {
     this.apiService.loginUser(user).subscribe(
       response => {
         // save response.token
-        this.userService.saveToken(response.token);
+        this.userService.saveToken(response.token, new Date(response.expiresAt));
         this.userService.saveUser(response.user);
         this.router.navigate(['']);
       },
       error => {
+        // error.status == 401 invalid name or password
         window.alert(error.message);
         console.log(error);
         console.log(error.status);

@@ -2,9 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatSelectModule, MatCheckboxModule, MatMenuModule} from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule,
+  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 import { environment } from '../environments/environment';
 
@@ -27,8 +29,11 @@ import { AdminGuard } from './guard/admin.guard';
 import { AuthService } from './service/auth.service';
 import { UserInfoService } from './service/user-info.service';
 import { ErrorHandlerService } from './service/error-handler.service';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileComponent } from './component/user-profile/user-profile.component';
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
+import { UserListComponent } from './component/user-list/user-list.component';
+import {MatSortModule} from '@angular/material/sort';
+import { DeleteUserDialogComponent } from './component/user-list/delete-user-dialog/delete-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -41,8 +46,11 @@ import { ChangePasswordComponent } from './component/change-password/change-pass
     ResetPasswordComponent,
     HomeComponent,
     UserProfileComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    UserListComponent,
+    DeleteUserDialogComponent
   ],
+  entryComponents: [DeleteUserDialogComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,
@@ -54,6 +62,11 @@ import { ChangePasswordComponent } from './component/change-password/change-pass
     MatButtonModule,
     MatSelectModule,
     MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule,
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -93,6 +106,11 @@ import { ChangePasswordComponent } from './component/change-password/change-pass
         path: 'changePassword',
         component: ChangePasswordComponent,
         canActivate: [AuthGuad]
+      },
+      {
+        path: 'admin/userList',
+        component: UserListComponent,
+        canActivate: [AuthGuad]
       }
     ])
   ],
@@ -114,7 +132,8 @@ import { ChangePasswordComponent } from './component/change-password/change-pass
     AdminService,
     AuthService,
     UserInfoService,
-    AuthGuad
+    AuthGuad,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

@@ -9,6 +9,7 @@
       </div>
       <div class="adminOptions">
         <button mat-menu-item routerLink="/admin/addUser" *ngIf="userService.hasAdminPrivileges">Add user</button>
+        <button mat-menu-item routerLink="/admin/userList" *ngIf="userService.hasAdminPrivileges">User list</button>
       </div>
       <button mat-menu-item routerLink="/userProfile">User profile</button>
       <button mat-menu-item routerLink="/changePassword">Change password</button>
