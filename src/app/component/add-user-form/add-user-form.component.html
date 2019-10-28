@@ -22,7 +22,7 @@
 
     <mat-form-field class="addUser-element">
       <input matInput
-             placeholder="JobDescription"
+             placeholder="Job description"
              id="jobdescription" formControlName="jobdescription">
       <mat-error *ngIf="form.hasError('required', ['jobdescription'])">
         Job description is <strong>required</strong>
@@ -45,7 +45,7 @@
     <mat-form-field class="addUser-element">
       <input matInput
              placeholder="phone"
-             id="phone" formControlName="phone">
+             id="phone">
       <mat-hint></mat-hint>
     </mat-form-field>
 
