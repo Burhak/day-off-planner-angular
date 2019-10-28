@@ -14,6 +14,7 @@ export class AddUserFormComponent implements OnInit {
 
   public form: FormGroup;
   public buttonDisabled: boolean;
+  private isUserAdded: boolean;
   private posibleUserSupervisors: Array<UserApiModel> = [];
   selectControl: FormControl = new FormControl();
 
@@ -34,8 +35,14 @@ export class AddUserFormComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       jobdescription: new FormControl('', [Validators.required])
     }, {updateOn: 'submit'});
+    this.isUserAdded = false;
     this.buttonDisabled = false;
   }
+
+  goBack() {
+    this.router.navigate(['']);
+  }
+
 
   createNewUser(event) {
     event.preventDefault();
@@ -59,6 +66,7 @@ export class AddUserFormComponent implements OnInit {
       response => {
         console.log(response);
         this.buttonDisabled = false;
+        this.isUserAdded = true;
       }
     );
     console.log(newUser);
