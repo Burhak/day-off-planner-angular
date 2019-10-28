@@ -22,6 +22,15 @@
 
     <mat-form-field class="addUser-element">
       <input matInput
+             placeholder="Job description"
+             id="jobdescription" formControlName="jobdescription">
+      <mat-error *ngIf="form.hasError('required', ['jobdescription'])">
+        Job description is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="addUser-element">
+      <input matInput
              placeholder="Email"
              id="email" formControlName="email">
       <mat-hint></mat-hint>
@@ -31,6 +40,13 @@
       <mat-error *ngIf="form.hasError('email', ['email'])">
         Please enter a valid email address
       </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="addUser-element">
+      <input matInput
+             placeholder="phone"
+             id="phone">
+      <mat-hint></mat-hint>
     </mat-form-field>
 
     <mat-form-field>

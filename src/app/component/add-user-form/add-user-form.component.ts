@@ -31,7 +31,8 @@ export class AddUserFormComponent implements OnInit {
     this.form = new FormGroup({
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email])
+      email: new FormControl('', [Validators.required, Validators.email]),
+      jobdescription: new FormControl('', [Validators.required])
     }, {updateOn: 'submit'});
     this.buttonDisabled = false;
   }
@@ -47,8 +48,12 @@ export class AddUserFormComponent implements OnInit {
       lastName: event.target.lastname.value,
       email: event.target.email.value,
       admin: event.target.admin.checked,
-      supervisor: this.selectControl.value
+      supervisor: this.selectControl.value,
+      jobDescription: event.target.jobdescription.value,
+      phone: event.target.phone.value
+
     };
+
     this.buttonDisabled = true;
     this.adminService.createUser(newUser).subscribe(
       response => {
