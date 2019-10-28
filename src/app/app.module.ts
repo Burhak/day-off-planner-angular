@@ -6,6 +6,7 @@ import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule,
   MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 import { environment } from '../environments/environment';
 
@@ -131,7 +132,8 @@ import { DeleteUserDialogComponent } from './component/user-list/delete-user-dia
     AdminService,
     AuthService,
     UserInfoService,
-    AuthGuad
+    AuthGuad,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
