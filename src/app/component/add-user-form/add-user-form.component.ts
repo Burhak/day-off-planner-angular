@@ -14,8 +14,8 @@ export class AddUserFormComponent implements OnInit {
 
   public form: FormGroup;
   public buttonDisabled: boolean;
-  private posibleUserSupervisors: Array<UserApiModel> = [];
-  selectControl: FormControl = new FormControl();
+  public posibleUserSupervisors: Array<UserApiModel> = [];
+  public selectControl: FormControl = new FormControl();
 
   constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {

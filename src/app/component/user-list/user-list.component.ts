@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AdminService, UserApiModel, UserService} from '../../api';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
@@ -15,13 +15,13 @@ import {UserInfoService} from "../../service/user-info.service";
 })
 export class UserListComponent implements OnInit {
 
-  constructor(private userInfoService: UserInfoService, private userService: UserService, private adminService: AdminService, public dialog: MatDialog, private router: Router) {
+  constructor(public userInfoService: UserInfoService, private userService: UserService, private adminService: AdminService, public dialog: MatDialog, private router: Router) {
     this.getDataAllUser();
   }
 
   private array: Array<UserApiModel> = [];
-  private displayedColumns: string[] = ['firstName', 'lastName', 'email', 'admin', 'supervisor', 'edit', 'delete'];
-  private dataSource: MatTableDataSource<UserApiModel>;
+  public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'admin', 'supervisor', 'edit', 'delete'];
+  public dataSource: MatTableDataSource<UserApiModel>;
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
