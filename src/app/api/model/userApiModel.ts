@@ -17,4 +17,6 @@ export interface UserApiModel {
     readonly email: string;
     readonly supervisor?: string;
     readonly admin: boolean;
+    readonly jobDescription: string;
+    readonly phone?: string;
 }
