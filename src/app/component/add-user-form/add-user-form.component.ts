@@ -16,6 +16,7 @@ export class AddUserFormComponent implements OnInit {
   public buttonDisabled: boolean;
   public posibleUserSupervisors: Array<UserApiModel> = [];
   public selectControl: FormControl = new FormControl();
+  public isUserAdded: boolean;
 
   constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
@@ -34,8 +35,14 @@ export class AddUserFormComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       jobdescription: new FormControl('', [Validators.required])
     }, {updateOn: 'submit'});
+    this.isUserAdded = false;
     this.buttonDisabled = false;
   }
+
+  goBack() {
+    this.router.navigate(['']);
+  }
+
 
   createNewUser(event) {
     event.preventDefault();
@@ -59,6 +66,7 @@ export class AddUserFormComponent implements OnInit {
       response => {
         console.log(response);
         this.buttonDisabled = false;
+        this.isUserAdded = true;
       }
     );
     console.log(newUser);
