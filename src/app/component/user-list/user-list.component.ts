@@ -44,7 +44,7 @@ export class UserListComponent implements OnInit {
   }
 
   openDialogDeleteUser(user) {
-    let dialogRef = this.dialog.open(DeleteUserDialogComponent, {data: {userName: user.firstName + ' ' +  user.lastName}});
+    let dialogRef = this.dialog.open(DeleteUserDialogComponent, {data: {userName: user.firstName + ' ' + user.lastName}});
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result === 'true') {

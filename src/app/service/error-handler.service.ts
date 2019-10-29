@@ -28,6 +28,7 @@ export class ErrorHandlerService implements ErrorHandler{
       if (error.status == 401) {
         //invalid token or invalid name or password
         auth.removeToken();
+        ngZone.run(() => router.navigate(['error']));
       }
       // status 403 no admin rights
 

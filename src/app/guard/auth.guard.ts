@@ -13,10 +13,8 @@ export class AuthGuad implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (!this.auth.isLoggedIn) {
-      this.router.navigate(['login']);
-    }
-    return this.auth.isLoggedIn;
+      if (this.auth.isLoggedIn) return true;
+      return this.router.parseUrl('login');
   }
 
 }
