@@ -10,9 +10,9 @@ import { UserService } from '../../api'
 })
 export class ResetPasswordComponent implements OnInit {
 
-  private form: FormGroup;
-  private isPasswordReset: boolean;
-  private buttonDisabled: boolean;
+  public form: FormGroup;
+  public isPasswordReset: boolean;
+  public buttonDisabled: boolean;
 
   constructor(private router: Router, private userService: UserService) { }
 

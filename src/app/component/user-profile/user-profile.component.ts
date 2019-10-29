@@ -10,13 +10,14 @@ import {NavigationEnd, Router} from "@angular/router";
 })
 export class UserProfileComponent implements OnInit{
 
-  private userSupervisor: UserApiModel;
+  public userSupervisor: UserApiModel;
 
-  constructor(private userInfoService: UserInfoService, private userService: UserService, private router: Router) {
+  constructor(public userInfoService: UserInfoService, private userService: UserService, private router: Router) {
+
     if (this.userInfoService.currentUser) {
-      if  (this.userInfoService.currentUser.supervisor) {
-        this.userService.getUserById(this.userInfoService.currentUser.supervisor).subscribe((user: UserApiModel) => {
-          this.userSupervisor = user;
+      if (this.userInfoService.currentUser.supervisor) {
+        this.userService.getUserById(this.userInfoService.currentUser.supervisor).subscribe((supervisor: UserApiModel) => {
+          this.userSupervisor = supervisor;
         });
       }
     }
