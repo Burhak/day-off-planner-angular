@@ -16,12 +16,6 @@ export class ErrorHandlerService implements ErrorHandler{
     this.errorMsg.next(msg);
   }
 
-  private error: Error;
-
-  get lastError(): Error {
-    return this.error;
-  }
-
   constructor(private injector: Injector) { }
 
   handleError(error: any) {
@@ -29,23 +23,32 @@ export class ErrorHandlerService implements ErrorHandler{
     const auth = this.injector.get(AuthService);
     //const ngZone = this.injector.get(NgZone);
 
+    let errorMsg: string = error.message;
+
     if (error instanceof HttpErrorResponse) {
+
       console.error('Backend returned status code: ', error.status);
       console.error('Response body: ', error.message);
+
       //Specific error status
-      if (error.status == 401) {
-        //invalid token or invalid name or password
-        auth.removeToken();
-        //ngZone.run(() => router.navigate(['error']));
+      switch (error.status) {
+        case 401: {
+          auth.removeToken();
+          errorMsg = '401: Invalid credentials'
+          //ngZone.run(() => router.navigate(['error']));
+          break;
+        }
+        case 403: {
+          //errorMsg = '403: No admin rights'
+          break;
+        }
       }
-      // status 403 no admin rights
 
     } else {
       console.error('An error occurred: ', (<Error>error).message);
     }
 
-    this.error = error;
-    this.updateMsg(error.message);
+    this.updateMsg(errorMsg);
     //ngZone.run(() => router.navigate(['error']));
   }
 }
