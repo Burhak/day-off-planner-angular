@@ -50,7 +50,7 @@ export class ChangePasswordComponent implements OnInit {
         console.log(error);
         console.log(error.status);
         if (error.status == 403) {
-          error.message = '403: Invalid current password';
+          error.message = 'Invalid current password';
         }
         this.buttonDisabled = false;
         throw error;

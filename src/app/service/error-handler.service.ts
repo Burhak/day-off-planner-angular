@@ -23,7 +23,7 @@ export class ErrorHandlerService implements ErrorHandler{
     const auth = this.injector.get(AuthService);
     //const ngZone = this.injector.get(NgZone);
 
-    let errorMsg: string = error.message;
+    let errorMsg: string = 'An unexpected error has occured';
 
     if (error instanceof HttpErrorResponse) {
 
@@ -34,7 +34,7 @@ export class ErrorHandlerService implements ErrorHandler{
       switch (error.status) {
         case 401: {
           auth.removeToken();
-          errorMsg = '401: Invalid credentials'
+          errorMsg = 'Invalid credentials'
           //ngZone.run(() => router.navigate(['error']));
           break;
         }
