@@ -44,6 +44,16 @@ export class ChangePasswordComponent implements OnInit {
       response => {
         this.isPasswordChanged = true;
         this.buttonDisabled = false;
+      },
+      error => {
+        // error.status == 403 invalid current password
+        console.log(error);
+        console.log(error.status);
+        if (error.status == 403) {
+          error.message = 'invalid current password';
+        }
+        this.buttonDisabled = false;
+        throw error;
       }
     );
   }
