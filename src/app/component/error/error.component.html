@@ -1,6 +1,8 @@
-<div class="text-danger text-center">
+<div class="white-text red-background text-center">
   {{this.errorMsg}}
-  <button class="float-right btn btn-outline-danger btn-sm" *ngIf="errorShown" (click)="clearMsg()">x</button>
+  <button class="float-right close" aria-label="Close" *ngIf="errorShown" (click)="clearMsg()">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 
 
