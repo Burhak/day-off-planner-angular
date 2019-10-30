@@ -14,8 +14,9 @@ export class AddUserFormComponent implements OnInit {
 
   public form: FormGroup;
   public buttonDisabled: boolean;
-  private posibleUserSupervisors: Array<UserApiModel> = [];
-  selectControl: FormControl = new FormControl();
+  public posibleUserSupervisors: Array<UserApiModel> = [];
+  public selectControl: FormControl = new FormControl();
+  public isUserAdded: boolean;
 
   constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
@@ -31,10 +32,17 @@ export class AddUserFormComponent implements OnInit {
     this.form = new FormGroup({
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email])
+      email: new FormControl('', [Validators.required, Validators.email]),
+      jobdescription: new FormControl('', [Validators.required])
     }, {updateOn: 'submit'});
+    this.isUserAdded = false;
     this.buttonDisabled = false;
   }
+
+  goBack() {
+    this.router.navigate(['']);
+  }
+
 
   createNewUser(event) {
     event.preventDefault();
@@ -47,13 +55,18 @@ export class AddUserFormComponent implements OnInit {
       lastName: event.target.lastname.value,
       email: event.target.email.value,
       admin: event.target.admin.checked,
-      supervisor: this.selectControl.value
+      supervisor: this.selectControl.value,
+      jobDescription: event.target.jobdescription.value,
+      phone: event.target.phone.value
+
     };
+
     this.buttonDisabled = true;
     this.adminService.createUser(newUser).subscribe(
       response => {
         console.log(response);
         this.buttonDisabled = false;
+        this.isUserAdded = true;
       }
     );
     console.log(newUser);

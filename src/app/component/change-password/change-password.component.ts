@@ -10,9 +10,9 @@ import {UserService} from "../../api";
 })
 export class ChangePasswordComponent implements OnInit {
 
-  private form: FormGroup;
-  private isPasswordChanged: boolean;
-  private buttonDisabled: boolean;
+  public form: FormGroup;
+  public isPasswordChanged: boolean;
+  public buttonDisabled: boolean;
 
   constructor(private router: Router, private userService: UserService) { }
 

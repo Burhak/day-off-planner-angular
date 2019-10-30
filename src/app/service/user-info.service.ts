@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { UserService, UserApiModel } from '../api';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +9,21 @@ import { UserService, UserApiModel } from '../api';
 export class UserInfoService {
 
   private user: UserApiModel;
+  private userPromise: Promise<UserApiModel>;
 
   constructor(private authService: AuthService, private userService: UserService) {
     if (this.authService.isLoggedIn) {
-      this.userService.getLoggedUser().subscribe(user => this.user = user);
+      this.userPromise = this.userService.getLoggedUser().toPromise();
+      this.userPromise.then(user => this.user = user);
     }
   }
 
   get currentUser(): UserApiModel {
     return this.user;
+  }
+
+  get currentUserPromise(): Promise<UserApiModel> {
+    return this.userPromise;
   }
 
   get isLoggedIn(): boolean {

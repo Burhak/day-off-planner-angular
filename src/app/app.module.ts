@@ -110,7 +110,7 @@ import { DeleteUserDialogComponent } from './component/user-list/delete-user-dia
       {
         path: 'admin/userList',
         component: UserListComponent,
-        canActivate: [AuthGuad]
+        canActivate: [AuthGuad, AdminGuard]
       }
     ])
   ],
