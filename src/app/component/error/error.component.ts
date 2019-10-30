@@ -9,22 +9,25 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class ErrorComponent implements OnInit {
 
-  errorMsg: string = '';
+  public errorMsg: string = '';
+  public errorShown = false;
 
-  constructor(private errorService: ErrorHandler, private zone: NgZone, private router: Router) {
-    router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.ngOnInit();
-      }
-      // Instance of should be: 
-      // NavigationEnd
-      // NavigationCancel
-      // NavigationError
-      // RoutesRecognized
-    });
+  constructor(private errorService: ErrorHandler, private ngZone: NgZone) {
   }
 
   ngOnInit() {
-    this.zone.run(() => { this.errorMsg = (<ErrorHandlerService>this.errorService).lastError.message.split('\n')[0]; });
+    (<ErrorHandlerService>this.errorService).errorUpdate$.subscribe((msg) => this.updateMsg(msg));
+  }
+
+  private updateMsg(msg: string) {
+    this.ngZone.run(() => {
+      this.errorMsg = msg.split('\n')[0];
+      this.errorShown = true;
+    })
+  }
+
+  private clearMsg() {
+    this.errorMsg = '';
+    this.errorShown = false;
   }
 }

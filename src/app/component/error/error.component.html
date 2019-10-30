@@ -1,7 +1,6 @@
-<app-navigation></app-navigation>
-<div class="mx-2">
-  <h2 class="text-danger">Error</h2>
-  <p class="text-danger">An error occurred while processing your request</p>
-  <p class="text-danger">{{this.errorMsg}}</p>
-  <p>You might want to get back to <a routerLink="">Home Page.</a></p>
+<div class="text-danger">
+  {{this.errorMsg}}
+  <button class="float-right btn btn-outline-danger btn-sm" *ngIf="errorShown" (click)="clearMsg()">x</button>
 </div>
+
+
