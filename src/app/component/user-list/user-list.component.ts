@@ -22,6 +22,8 @@ export class UserListComponent implements OnInit {
   private array: Array<UserApiModel> = [];
   public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'admin', 'supervisor', 'edit', 'delete'];
   public dataSource: MatTableDataSource<UserApiModel>;
+  public editingUser: boolean = false;
+  public focusedUser: UserApiModel;
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -61,5 +63,17 @@ export class UserListComponent implements OnInit {
       });
   }
 
+  openEditUser(user) {
+    this.focusedUser = user;
+    this.editingUser = true;
+  }
+
+  receiveMessage($event) {
+    this.editingUser = false;
+    if ($event == true) {
+      this.getDataAllUser();
+    }
+    //console.log('response: ' + $event);
+  }
 }
 
