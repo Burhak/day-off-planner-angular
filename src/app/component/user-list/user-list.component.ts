@@ -1,12 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AdminService, UserApiModel, UserService} from '../../api';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatDialog} from "@angular/material";
-import {DeleteUserDialogComponent} from "./delete-user-dialog/delete-user-dialog.component";
-import {Router} from "@angular/router";
-import {UserInfoService} from "../../service/user-info.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AdminService, UserApiModel, UserService } from '../../api';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from "@angular/material";
+import { DeleteUserDialogComponent } from "./delete-user-dialog/delete-user-dialog.component";
+import { Router } from "@angular/router";
+import { UserInfoService } from "../../service/user-info.service";
 
 @Component({
   selector: 'app-user-list',
@@ -20,13 +20,11 @@ export class UserListComponent implements OnInit {
   }
 
   private array: Array<UserApiModel> = [];
-  public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'admin', 'supervisor', 'edit', 'delete'];
+  public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'jobDescription', 'info'];
   public dataSource: MatTableDataSource<UserApiModel>;
-  public editingUser: boolean = false;
-  public focusedUser: UserApiModel;
 
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   ngOnInit() {
 
@@ -45,35 +43,8 @@ export class UserListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  openDialogDeleteUser(user) {
-    let dialogRef = this.dialog.open(DeleteUserDialogComponent, {data: {userName: user.firstName + ' ' + user.lastName}});
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      if (result === 'true') {
-        this.deleteUser(user);
-      }
-    });
+  openUserProfile(user) {
+    this.router.navigate(['userProfile'], { state: { userId: user.id } });
   }
 
-  deleteUser(user) {
-    this.adminService.deleteUser(user.id).subscribe(
-      response => {
-        console.log(response);
-        this.getDataAllUser();
-      });
-  }
-
-  openEditUser(user) {
-    this.focusedUser = user;
-    this.editingUser = true;
-  }
-
-  receiveMessage($event) {
-    this.editingUser = false;
-    if ($event == true) {
-      this.getDataAllUser();
-    }
-    //console.log('response: ' + $event);
-  }
 }
-
