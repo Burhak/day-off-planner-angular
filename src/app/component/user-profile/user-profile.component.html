@@ -1,7 +1,7 @@
-
 <div class="page">
   <app-navigation></app-navigation>
-  <div class="pageContent">
+
+  <div *ngIf="!editingUser" class="pageContent">
     <div class="userProfileCard">
       <div class="title">
         <h1>User profile</h1>
@@ -17,7 +17,8 @@
           <h3><strong>Phone number: </strong>{{user?.phone}}</h3>
         </div>
         <div class="userRoles">
-          <h3><strong>Supervisor: </strong>
+          <h3>
+            <strong>Supervisor: </strong>
             <span *ngIf="userSupervisor; else noSupervisor">
               {{userSupervisor?.firstName}} {{userSupervisor?.lastName}}
             </span>
@@ -29,9 +30,14 @@
       </div>
     </div>
     <div class="admin-options" *ngIf="userInfoService?.hasAdminPrivileges">
-      <button mat-menu-item>Edit</button>
+      <button mat-menu-item (click)="openEditUser()">Edit</button>
       <button mat-menu-item class="deleteBtn" (click)="openDialogDeleteUser(user)" disabled="{{deleteBtnDisabled}}">Delete</button>
     </div>
   </div>
+
+  <app-update-user *ngIf="editingUser" class="pageContent" (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-update-user>
+
 </div>
+
+
 

@@ -15,6 +15,7 @@ export class UserProfileComponent implements OnInit{
   public user: UserApiModel;
   public userSupervisor: UserApiModel;
   public deleteBtnDisabled: boolean;
+  public editingUser: boolean = false;
 
   constructor(public userInfoService: UserInfoService, private userService: UserService, private activatedRoute: ActivatedRoute, private  adminService: AdminService, public dialog: MatDialog, private  router: Router) {
     this.deleteBtnDisabled = true;
@@ -66,4 +67,25 @@ export class UserProfileComponent implements OnInit{
       });
   }
 
+  openEditUser(user) {
+    this.editingUser = true;
+  }
+
+  receiveMessage($event) {
+    this.editingUser = false;
+    if ($event == true) {
+      this.reloadUser();
+    }
+    //console.log('response: ' + $event);
+  }
+
+  reloadUser() {
+    this.userService.getUserById(this.user.id).subscribe((user: UserApiModel) => {
+      this.user = user;
+      this.getUserSupervisor(this.user.supervisor);
+      if (this.user.id !== this.userInfoService.currentUser.id) {
+        this.deleteBtnDisabled = false;
+      }
+    });
+  }
 }
