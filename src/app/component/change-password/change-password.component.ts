@@ -21,7 +21,7 @@ export class ChangePasswordComponent implements OnInit {
   public form: FormGroup;
   public isPasswordChanged: boolean;
   public buttonDisabled: boolean;
-  errorMatcher = new CrossFieldErrorMatcher();
+  public errorMatcher = new CrossFieldErrorMatcher();
 
   constructor(private router: Router, private userService: UserService) { }
 
