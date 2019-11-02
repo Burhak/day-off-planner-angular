@@ -82,7 +82,11 @@ export class UserProfileComponent implements OnInit{
   reloadUser() {
     this.userService.getUserById(this.user.id).subscribe((user: UserApiModel) => {
       this.user = user;
-      this.getUserSupervisor(this.user.supervisor);
+      if (this.user.supervisor !== null) {
+        this.getUserSupervisor(this.user.supervisor);
+      } else {
+        this.userSupervisor = null;
+      }
       if (this.user.id !== this.userInfoService.currentUser.id) {
         this.deleteBtnDisabled = false;
       }
