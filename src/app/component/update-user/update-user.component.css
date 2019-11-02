@@ -1,17 +1,7 @@
-.pageContent {
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  flex:1;
-  display:flex;
-  flex-direction:column;
-}
-
 .addUser-form {
   margin: 0 auto;
   display: block;
   width: 33vw;
-
   padding: 2em 2em 1em;
   background-color: rgb(255,255,255);
   box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
@@ -22,17 +12,11 @@
   width: 100%;
 }
 
-.submitBtn{
-  width: 100%;
-  background: rgb(52,73,94);
-  color: white;
-  font-weight: bold;
-  margin: 1em 0;
-  padding: 0.5em 0;
-  border-radius: 2em;
+.title{
+  margin: 0 0 1.5em;
 }
 
-button:hover{
+button:hover {
   background: rgb(44,62,80);
 }
 
@@ -42,17 +26,23 @@ button {
   color: white;
   font-weight: bold;
   border-radius: 2em;
+  margin: 1em 0;
+  padding: 0.5em 0;
 }
 
-.backBtn{
+.submitBtn {
+  margin: 1.5em 0 0;
+}
+
+.backBtn {
   margin: 0;
 }
 
-.logo{
+.logo {
   width: 100%;
 }
 
-.form-footer{
+.form-footer {
   text-align: center;
 }
 
@@ -60,11 +50,11 @@ a {
   color: rgb(44,62,80);
 }
 
-a:hover{
-  font-weight: bold;
-  text-decoration: none;
-}
+  a:hover {
+    font-weight: bold;
+    text-decoration: none;
+  }
 
-h1,h2,h3,h4,h5,h6{
- color: rgb(44,62,80);
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(44,62,80);
 }
