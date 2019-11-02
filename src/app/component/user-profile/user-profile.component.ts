@@ -64,6 +64,7 @@ export class UserProfileComponent implements OnInit{
     this.adminService.deleteUser(user.id).subscribe(
       response => {
         console.log(response);
+        this.router.navigate(['admin/userList']);
       });
   }
 
