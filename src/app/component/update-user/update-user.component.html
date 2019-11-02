@@ -1,10 +1,12 @@
-<div class="pageContent">
   <div class="addUser-form">
     <ng-template *ngIf="isUserUpdated; then addUserMessage; else addUserForm">
     </ng-template>
 
     <ng-template #addUserForm>
-      <h2>Update user {{user.firstName}} {{user.lastName}}</h2>
+      <div class="title">
+        <h2>Update user</h2>
+        <h5>{{user.firstName}} {{user.lastName}}</h5>
+      </div>
       <form [formGroup]="form" (submit)="createNewUser($event)">
         <mat-form-field class="addUser-element">
           <input matInput
@@ -72,7 +74,7 @@
         <button disabled="{{buttonDisabled}}" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
 
       </form>
-      <button mat-raised-button (click)="userUpdatedNotify()" class="submitBtn">Cancel</button>
+      <button mat-raised-button (click)="userUpdatedNotify()" class="cancelBtn">Cancel</button>
     </ng-template>
 
     <ng-template #addUserMessage>
@@ -81,4 +83,4 @@
       <button mat-raised-button id="backBtn" type="button" (click)="goBack()" class="backBtn">Back</button>
     </ng-template>
   </div>
-</div>
+
