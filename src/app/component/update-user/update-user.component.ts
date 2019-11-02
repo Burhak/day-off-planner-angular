@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, NgZone } from '@angular/core';
 import { AdminService, UserApiModel, UserCreateApiModel, UserService } from '../../api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,12 +16,13 @@ export class UpdateUserComponent implements OnInit {
   public posibleUserSupervisors: Array<UserApiModel> = [];
   public selectControl: FormControl = new FormControl();
   public isUserUpdated: boolean;
+  public errorMsg: string = '';
 
   @Input() public user: UserApiModel;
 
   @Output() userUpdatedEvent = new EventEmitter<boolean>();
 
-  constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router) {
+  constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router, private ngZone: NgZone) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
       this.posibleUserSupervisors = user;
     });
@@ -72,6 +73,16 @@ export class UpdateUserComponent implements OnInit {
         console.log(response);
         this.buttonDisabled = false;
         this.isUserUpdated = true;
+      },
+      error => {
+        this.buttonDisabled = false;
+        console.log(error);
+        console.log(error.status);
+        if (error.status == 409) {
+          this.ngZone.run(() => {
+            this.errorMsg = 'Email already taken'
+          })
+        } else throw error;
       }
     );
     console.log(newUser);
