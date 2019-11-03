@@ -42,6 +42,9 @@ export class ResetPasswordComponent implements OnInit {
       response => {
         this.isPasswordReset = true;
         this.buttonDisabled = false;
+      }, error => {
+        this.buttonDisabled = false;
+        throw error;
       }
     );
   }
