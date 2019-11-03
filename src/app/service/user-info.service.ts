@@ -11,7 +11,9 @@ export class UserInfoService {
   private user: UserApiModel;
   private userPromise: Promise<UserApiModel>;
 
-  constructor(private authService: AuthService, private userService: UserService) {}
+  constructor(private authService: AuthService, private userService: UserService) {
+    this.initializeFields();
+  }
 
   get currentUser(): UserApiModel {
     return this.user;
