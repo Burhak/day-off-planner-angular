@@ -11,12 +11,7 @@ export class UserInfoService {
   private user: UserApiModel;
   private userPromise: Promise<UserApiModel>;
 
-  constructor(private authService: AuthService, private userService: UserService) {
-    if (this.authService.isLoggedIn) {
-      this.userPromise = this.userService.getLoggedUser().toPromise();
-      this.userPromise.then(user => this.user = user);
-    }
-  }
+  constructor(private authService: AuthService, private userService: UserService) {}
 
   get currentUser(): UserApiModel {
     return this.user;
@@ -40,6 +35,7 @@ export class UserInfoService {
 
   saveToken(token: string, expireDate: Date) {
     this.authService.saveToken(token, expireDate);
+    this.initializeFields();
   }
 
   removeToken() {
@@ -49,6 +45,13 @@ export class UserInfoService {
   get hasAdminPrivileges() {
     if (this.user)  {
       return this.user.admin;
+    }
+  }
+
+  initializeFields() {
+    if (this.authService.isLoggedIn) {
+      this.userPromise = this.userService.getLoggedUser().toPromise();
+      this.userPromise.then(user => this.user = user);
     }
   }
 }
