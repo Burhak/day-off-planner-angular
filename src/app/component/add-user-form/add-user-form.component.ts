@@ -68,15 +68,17 @@ export class AddUserFormComponent implements OnInit {
         console.log(response);
         this.buttonDisabled = false;
         this.isUserAdded = true;
+        this.errorMsg = '';
       },
       error => {
         this.buttonDisabled = false;
+        this.isUserAdded = false;
         console.log(error);
         console.log(error.status);
-        if (error.status == 409) {
+        if (error.status === 409) {
           this.ngZone.run(() => {
-            this.errorMsg = 'Email already taken'
-          })
+            this.errorMsg = 'Email already taken';
+          });
         } else throw error;
       }
     );

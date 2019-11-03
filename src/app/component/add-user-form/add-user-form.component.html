@@ -2,12 +2,6 @@
 <app-error></app-error>
 <div class="pageContent">
   <div class="addUser-form">
-
-    <ng-template
-      *ngIf="isUserAdded; then addUserMessage; else addUserForm">
-    </ng-template>
-
-    <ng-template #addUserForm>
       <h2>Add user</h2>
       <form [formGroup]="form" (submit)="createNewUser($event)">
         <mat-form-field class="addUser-element">
@@ -30,7 +24,7 @@
 
         <mat-form-field class="addUser-element">
           <input matInput
-                 placeholder="Job description"
+                 placeholder="Job title"
                  id="jobdescription" formControlName="jobdescription">
           <mat-error *ngIf="form.hasError('required', ['jobdescription'])">
             Job description is <strong>required</strong>
@@ -67,19 +61,19 @@
         </mat-form-field>
 
         <br>
+
         <mat-checkbox id="admin" name="admin" class="example-margin">Admin privileges</mat-checkbox>
 
-        <div class="text-danger text-center">{{errorMsg}}</div>
+        <div class="text-danger text-center">
+          {{errorMsg}}
+        </div>
+
+        <div class="text-center" *ngIf="isUserAdded">
+          <h5 class="message">New user has been added successfully!</h5>
+        </div>
 
         <button disabled="{{buttonDisabled}}" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
-
       </form>
-    </ng-template>
 
-    <ng-template #addUserMessage>
-      <h2>User added!</h2>
-      <h5>New user has been added successfully.</h5>
-      <button mat-raised-button id="backBtn" type="button" (click)="goBack()" class="backBtn">Back</button>
-    </ng-template>
   </div>
 </div>

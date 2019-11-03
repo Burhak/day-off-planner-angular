@@ -30,7 +30,7 @@
 
         <mat-form-field class="addUser-element">
           <input matInput
-                 placeholder="Job description"
+                 placeholder="Job title"
                  id="jobdescription" formControlName="jobdescription"
                  value="{{user.jobDescription}}">
           <mat-error *ngIf="form.hasError('required', ['jobdescription'])">
