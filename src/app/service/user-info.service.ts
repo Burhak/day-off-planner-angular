@@ -12,10 +12,7 @@ export class UserInfoService {
   private userPromise: Promise<UserApiModel>;
 
   constructor(private authService: AuthService, private userService: UserService) {
-    if (this.authService.isLoggedIn) {
-      this.userPromise = this.userService.getLoggedUser().toPromise();
-      this.userPromise.then(user => this.user = user);
-    }
+    this.initializeFields();
   }
 
   get currentUser(): UserApiModel {
@@ -40,6 +37,7 @@ export class UserInfoService {
 
   saveToken(token: string, expireDate: Date) {
     this.authService.saveToken(token, expireDate);
+    this.initializeFields();
   }
 
   removeToken() {
@@ -49,6 +47,13 @@ export class UserInfoService {
   get hasAdminPrivileges() {
     if (this.user)  {
       return this.user.admin;
+    }
+  }
+
+  initializeFields() {
+    if (this.authService.isLoggedIn) {
+      this.userPromise = this.userService.getLoggedUser().toPromise();
+      this.userPromise.then(user => this.user = user);
     }
   }
 }
