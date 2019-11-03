@@ -32,10 +32,12 @@ export class UserInfoService {
 
   saveUser(user: UserApiModel) {
     this.user = user;
+    this.userPromise = new Promise<UserApiModel>((resolve, _) => resolve(user));
   }
 
   removeUser() {
     this.user = null;
+    this.userPromise = null;
   }
 
   saveToken(token: string, expireDate: Date) {
