@@ -1,23 +1,26 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import {AdminService, UserApiModel, UserCreateApiModel, UserService} from '../../api';
+import { Component, OnInit, Output, EventEmitter, Input, NgZone } from '@angular/core';
+import { AdminService, UserApiModel, UserCreateApiModel, UserService } from '../../api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserInfoService } from 'src/app/service/user-info.service';
-import {MatSelectChange} from "@angular/material";
 
 @Component({
-  selector: 'app-add-user-form',
-  templateUrl: './add-user-form.component.html',
-  styleUrls: ['./add-user-form.component.css']
+  selector: 'app-update-user',
+  templateUrl: './update-user.component.html',
+  styleUrls: ['./update-user.component.css']
 })
-export class AddUserFormComponent implements OnInit {
+export class UpdateUserComponent implements OnInit {
 
   public form: FormGroup;
   public buttonDisabled: boolean;
   public posibleUserSupervisors: Array<UserApiModel> = [];
   public selectControl: FormControl = new FormControl();
-  public isUserAdded: boolean;
+  public isUserUpdated: boolean;
   public errorMsg: string = '';
+
+  @Input() public user: UserApiModel;
+
+  @Output() userUpdatedEvent = new EventEmitter<boolean>();
 
   constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router, private ngZone: NgZone) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
@@ -31,26 +34,28 @@ export class AddUserFormComponent implements OnInit {
       this.router.navigate(['']);
     }
     this.form = new FormGroup({
-      firstname: new FormControl('', [Validators.required]),
-      lastname: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      jobdescription: new FormControl('', [Validators.required])
-    }, {updateOn: 'submit'});
-    this.isUserAdded = false;
+      firstname: new FormControl('x', [Validators.required]),
+      lastname: new FormControl('x', [Validators.required]),
+      email: new FormControl('x@x', [Validators.required, Validators.email]),
+      jobdescription: new FormControl('x', [Validators.required])
+    }, { updateOn: 'submit' });
+    this.isUserUpdated = false;
     this.buttonDisabled = false;
   }
 
   goBack() {
-    this.router.navigate(['']);
+    this.userUpdatedNotify()
   }
 
 
   createNewUser(event) {
     event.preventDefault();
+    this.form.updateValueAndValidity();
     if (!this.form.valid) {
       console.log(this.form.valid);
       return;
     }
+    
     const newUser: UserCreateApiModel = {
       firstName: event.target.firstname.value,
       lastName: event.target.lastname.value,
@@ -63,25 +68,27 @@ export class AddUserFormComponent implements OnInit {
     };
 
     this.buttonDisabled = true;
-    this.adminService.createUser(newUser).subscribe(
+    this.adminService.updateUser(newUser, this.user.id).subscribe(
       response => {
         console.log(response);
         this.buttonDisabled = false;
-        this.isUserAdded = true;
-        this.errorMsg = '';
+        this.isUserUpdated = true;
       },
       error => {
         this.buttonDisabled = false;
-        this.isUserAdded = false;
         console.log(error);
         console.log(error.status);
-        if (error.status === 409) {
+        if (error.status == 409) {
           this.ngZone.run(() => {
-            this.errorMsg = 'Email already taken';
-          });
+            this.errorMsg = 'Email already taken'
+          })
         } else throw error;
       }
     );
     console.log(newUser);
+  }
+
+  userUpdatedNotify() {
+    this.userUpdatedEvent.emit(this.isUserUpdated);
   }
 }

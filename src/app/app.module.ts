@@ -34,6 +34,7 @@ import { ChangePasswordComponent } from './component/change-password/change-pass
 import { UserListComponent } from './component/user-list/user-list.component';
 import {MatSortModule} from '@angular/material/sort';
 import { DeleteUserDialogComponent } from './component/user-list/delete-user-dialog/delete-user-dialog.component';
+import { UpdateUserComponent } from './component/update-user/update-user.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { DeleteUserDialogComponent } from './component/user-list/delete-user-dia
     UserProfileComponent,
     ChangePasswordComponent,
     UserListComponent,
-    DeleteUserDialogComponent
+    DeleteUserDialogComponent,
+    UpdateUserComponent
   ],
   entryComponents: [DeleteUserDialogComponent],
   imports: [

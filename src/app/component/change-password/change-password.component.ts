@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {UserService} from '../../api';
@@ -21,9 +21,10 @@ export class ChangePasswordComponent implements OnInit {
   public form: FormGroup;
   public isPasswordChanged: boolean;
   public buttonDisabled: boolean;
+  public errorMsg: string = '';
   public errorMatcher = new CrossFieldErrorMatcher();
 
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService, private ngZone: NgZone) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -41,6 +42,7 @@ export class ChangePasswordComponent implements OnInit {
 
   changePassword(event) {
     event.preventDefault();
+    this.errorMsg = '';
     if (!this.form.valid) {
       return;
     }
@@ -54,10 +56,18 @@ export class ChangePasswordComponent implements OnInit {
       response => {
         this.isPasswordChanged = true;
         this.buttonDisabled = false;
+      },
+      error => {
+        this.buttonDisabled = false;
+        console.log(error);
+        console.log(error.status);
+        if (error.status == 403) {
+          this.ngZone.run(() => {
+            this.errorMsg = 'Invalid current password'
+          })
+        } else throw error;
       }
     );
   }
-
-
 
 }

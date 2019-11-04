@@ -1,39 +1,35 @@
 <app-navigation></app-navigation>
-  <div class="pageContent">
-    <div class="userList">
-      <h2 class="title">User list</h2>
-      <table mat-table [dataSource]="dataSource" matSort>
+<app-error></app-error>
 
-        <ng-container matColumnDef="firstName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Firstname </th>
-          <td mat-cell *matCellDef="let user"> {{user.firstName}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="lastName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Lastname </th>
-          <td mat-cell *matCellDef="let user"> {{user.lastName}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-          <td mat-cell *matCellDef="let user"> {{user.email}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="jobDescription">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Job title </th>
-          <td mat-cell *matCellDef="let user"> {{user.jobDescription}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="info" stickyEnd>
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let user">
-            <a (click)="openUserProfile(user)"><mat-icon>info</mat-icon></a>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      <mat-paginator [pageSizeOptions]="[5,10]" showFirstLastButtons></mat-paginator>
+<div class="pageContent">
+  <div class="userList">
+    <h2 class="title">User list</h2>
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Firstname </th>
+        <td mat-cell *matCellDef="let user"> {{user.firstName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lastname </th>
+        <td mat-cell *matCellDef="let user"> {{user.lastName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+      </ng-container>
+      <ng-container matColumnDef="jobDescription">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Job title </th>
+        <td mat-cell *matCellDef="let user"> {{user.jobDescription}} </td>
+      </ng-container>
+      <ng-container matColumnDef="info" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let user">
+          <a (click)="openUserProfile(user)"><mat-icon>info</mat-icon></a>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5,10]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
