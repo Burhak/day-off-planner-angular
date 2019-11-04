@@ -20,7 +20,7 @@ export class UserListComponent implements OnInit {
   }
 
   private array: Array<UserApiModel> = [];
-  public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'admin', 'supervisor', 'edit', 'delete'];
+  public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'jobDescription', 'info'];
   public dataSource: MatTableDataSource<UserApiModel>;
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
@@ -43,22 +43,8 @@ export class UserListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  openDialogDeleteUser(user) {
-    let dialogRef = this.dialog.open(DeleteUserDialogComponent, {data: {userName: user.firstName + ' ' + user.lastName}});
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      if (result === 'true') {
-        this.deleteUser(user);
-      }
-    });
-  }
-
-  deleteUser(user) {
-    this.adminService.deleteUser(user.id).subscribe(
-      response => {
-        console.log(response);
-        this.getDataAllUser();
-      });
+  openUserProfile(user) {
+    this.router.navigate(['userProfile'], { state: { userId: user.id} });
   }
 
 }
