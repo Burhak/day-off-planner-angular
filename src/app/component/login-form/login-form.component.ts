@@ -42,6 +42,7 @@ export class LoginFormComponent implements OnInit {
       response => {
         // save response.token
         this.userService.saveToken(response.token, new Date(response.expiresAt));
+        this.userService.saveUser(response.user);
         this.router.navigate(['']);
       },
       error => {
