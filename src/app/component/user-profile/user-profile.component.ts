@@ -27,6 +27,10 @@ export class UserProfileComponent implements OnInit{
   public isLoaded: boolean;
 
   constructor(public userInfoService: UserInfoService, private userService: UserService, private activatedRoute: ActivatedRoute, private  adminService: AdminService, public dialog: MatDialog, private  router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+
     this.isLoaded = false;
     this.deleteBtnDisabled = true;
 
@@ -51,6 +55,7 @@ export class UserProfileComponent implements OnInit{
   ngOnInit() {
 
   }
+
 
   getUserSupervisor(user) {
     if (user) {

@@ -114,7 +114,7 @@ import { UpdateUserComponent } from './component/update-user/update-user.compone
         component: UserListComponent,
         canActivate: [AuthGuad, AdminGuard]
       }
-    ])
+    ], {onSameUrlNavigation: 'reload'})
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
