@@ -1,4 +1,12 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterViewChecked,
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import {AdminService, UserApiModel, UserService} from '../../api';
 import {UserInfoService} from '../../service/user-info.service';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
@@ -16,25 +24,32 @@ export class UserProfileComponent implements OnInit{
   public userSupervisor: UserApiModel;
   public deleteBtnDisabled: boolean;
   public editingUser: boolean = false;
+  public isLoaded: boolean;
 
   constructor(public userInfoService: UserInfoService, private userService: UserService, private activatedRoute: ActivatedRoute, private  adminService: AdminService, public dialog: MatDialog, private  router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+
+    this.isLoaded = false;
     this.deleteBtnDisabled = true;
 
+    let userId;
     if (this.router.getCurrentNavigation().extras.state != null) {
-      console.log(this.router.getCurrentNavigation().extras.state.userId);
-      this.userService.getUserById(this.router.getCurrentNavigation().extras.state.userId).subscribe((user: UserApiModel) => {
-        this.user = user;
-        this.getUserSupervisor(this.user.supervisor);
-        if (this.user.id !== this.userInfoService.currentUser.id) {
-          this.deleteBtnDisabled = false;
-        }
-      });
+      userId =  this.router.getCurrentNavigation().extras.state.userId;
+      localStorage.setItem('userId', userId);
     } else {
-      if (this.userInfoService.currentUser) {
-        this.user = this.userInfoService.currentUser;
-        this.getUserSupervisor(this.user.supervisor);
-      }
+      userId = localStorage.getItem('userId');
     }
+
+    this.userService.getUserById(userId).subscribe((user: UserApiModel) => {
+      this.user = user;
+      this.getUserSupervisor(this.user.supervisor);
+      if (this.user.id !== this.userInfoService.currentUser.id) {
+        this.deleteBtnDisabled = false;
+      }
+      this.isLoaded = true;
+    });
   }
 
   ngOnInit() {
@@ -77,7 +92,6 @@ export class UserProfileComponent implements OnInit{
     if ($event == true) {
       this.reloadUser();
     }
-    //console.log('response: ' + $event);
   }
 
   reloadUser() {

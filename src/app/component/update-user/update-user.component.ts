@@ -24,7 +24,10 @@ export class UpdateUserComponent implements OnInit {
 
   constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router, private ngZone: NgZone) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
-      this.posibleUserSupervisors = user;
+      const allUsers: Array<UserApiModel> = user;
+      const index = allUsers.findIndex(allUsers => allUsers.id === this.user.id); //find currentUser in allUsers
+      allUsers.splice(index, 1); //delete currentUser from allUsers
+      this.posibleUserSupervisors = allUsers;
     });
   }
 

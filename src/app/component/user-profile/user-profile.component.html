@@ -1,7 +1,7 @@
 <app-navigation></app-navigation>
 <app-error></app-error>
-
-<div *ngIf="!editingUser" class="pageContent">
+<div *ngIf="isLoaded" class="pageContent">
+<div *ngIf="!editingUser" class="userProfile">
   <div class="userProfileCard">
     <div class="title">
       <h1>User profile</h1>
@@ -35,6 +35,6 @@
   </div>
 </div>
 
-<app-update-user *ngIf="editingUser" class="pageContent" (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-update-user>
-
+<app-update-user *ngIf="editingUser"  (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-update-user>
+</div>
 
