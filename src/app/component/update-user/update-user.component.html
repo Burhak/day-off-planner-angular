@@ -61,7 +61,7 @@
 
         <mat-form-field>
           <mat-label>Supervisor</mat-label>
-          <mat-select [formControl]="selectControl" id="supervisor" [(ngModel)]="user.supervisor">
+          <mat-select [formControl]="selectControl" id="supervisor" [ngModel]="user.supervisor">
             <mat-option [value]="null">none</mat-option>
             <mat-option *ngFor="let user of posibleUserSupervisors" [value]="user.id">
               {{user.firstName}} {{user.lastName}}

@@ -33,7 +33,7 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
 import { UserListComponent } from './component/user-list/user-list.component';
 import {MatSortModule} from '@angular/material/sort';
-import { DeleteUserDialogComponent } from './component/user-list/delete-user-dialog/delete-user-dialog.component';
+import { DeleteUserDialogComponent } from './component/user-profile/delete-user-dialog/delete-user-dialog.component';
 import { UpdateUserComponent } from './component/update-user/update-user.component';
 
 @NgModule({

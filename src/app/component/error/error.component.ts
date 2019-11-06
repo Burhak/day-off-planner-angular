@@ -26,7 +26,7 @@ export class ErrorComponent implements OnInit {
     })
   }
 
-  private clearMsg() {
+  public clearMsg() {
     this.errorMsg = '';
     this.errorShown = false;
   }

@@ -10,7 +10,7 @@ import {
 import {AdminService, UserApiModel, UserService} from '../../api';
 import {UserInfoService} from '../../service/user-info.service';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {DeleteUserDialogComponent} from "../user-list/delete-user-dialog/delete-user-dialog.component";
+import {DeleteUserDialogComponent} from "./delete-user-dialog/delete-user-dialog.component";
 import {MatDialog} from "@angular/material";
 
 @Component({
@@ -83,7 +83,7 @@ export class UserProfileComponent implements OnInit{
       });
   }
 
-  openEditUser(user) {
+  openEditUser() {
     this.editingUser = true;
   }
 
