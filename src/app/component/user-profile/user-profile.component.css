@@ -7,12 +7,22 @@
   flex-direction:column;
 }
 
+.userProfile{
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  display:flex;
+  flex-direction:column;
+}
+
 .userProfileCard {
-  margin: 2em 2em 0;
+  margin: 0 auto;
+  display: block;
+  width: fit-content;
+
   padding: 2em 0;
   background-color: rgb(255,255,255);
   box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
-  width: fit-content;
   border-radius: 2em;
 }
 
