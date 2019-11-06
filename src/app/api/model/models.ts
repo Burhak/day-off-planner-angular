@@ -1,3 +1,4 @@
+export * from './errorApiModel';
 export * from './leaveRequestApiModel';
 export * from './leaveRequestCreateApiModel';
 export * from './leaveTypeApiModel';
