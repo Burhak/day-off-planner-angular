@@ -26,9 +26,7 @@ export class NavigationComponent implements OnInit {
         this.userService.removeUser();
         this.router.navigate(['login']);
       }, error => {
-        window.alert(error.message);
-        console.log(error);
-        console.log(error.status);
+        throw error;
       }
     );
   }
