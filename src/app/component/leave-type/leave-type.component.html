@@ -1,0 +1,50 @@
+<app-navigation></app-navigation>
+<app-error></app-error>
+<div class="pageContent">
+  <div class="addLeaveType-form">
+    <h2>Leave type</h2>
+    <form [formGroup]="form" (submit)="updateLeaveType($event)">
+      <mat-form-field class="addLeaveType-element">
+        <input matInput
+               placeholder="Name"
+               id="name" formControlName="name" [value]="leaveType?.name">
+        <mat-error *ngIf="form.hasError('required', ['name'])">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="addLeaveType-element">
+        <input matInput
+               placeholder="Limit"
+               id="limit" formControlName="limit" [value]="leaveType?.limit">
+        <mat-error *ngIf="form.hasError('pattern', ['limit'])">
+          Only digits are <strong>allowed</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="addLeaveType-element">
+        <input matInput
+               placeholder="Carryover"
+               id="carryover" formControlName="carryover" [value]="leaveType?.carryover">
+        <mat-error *ngIf="form.hasError('pattern', ['carryover'])">
+          Only digits are <strong>allowed</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox id="approvalNeeded" name="approvalNeeded" class="example-margin" [checked]="leaveType?.approvalNeeded" (click)="onCheckboxChanged($event)">Approval needed</mat-checkbox>
+
+      <div class="text-danger text-center">
+        {{errorMsg}}
+      </div>
+
+      <div class="buttonGroup">
+        <button [disabled]="!(!form.pristine || isCheckboxChanged)" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Update</button>
+        <button mat-raised-button id="cancelBtn" class="cancelBtn" type="button" routerLink="/admin/leaveTypes">Cancel</button>
+        <button mat-raised-button id="deleteBtn" class="deleteBtn" type="button" (click)="openDialogDeleteLeaveType(leaveType)">Delete</button>
+      </div>
+    </form>
+  </div>
+  <div class="text-center">
+    <h6 class="message" [className]="isLeaveTypeUpdated ? 'messageVisible' : 'messageHidden'"> <mat-icon>check_circle_outline</mat-icon><span class="messageText">Leave type has been updated successfully!</span></h6>
+  </div>
+</div>

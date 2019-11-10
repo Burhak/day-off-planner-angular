@@ -7,9 +7,10 @@
         <h3>{{userService.currentUser?.firstName}} {{userService.currentUser?.lastName}}</h3>
         <h5>{{userService.currentUser?.email}}</h5>
       </div>
-      <div class="adminOptions">
-        <button mat-menu-item routerLink="/admin/addUser" *ngIf="userService.hasAdminPrivileges">Add user</button>
-        <button mat-menu-item routerLink="/admin/userList" *ngIf="userService.hasAdminPrivileges">User list</button>
+      <div class="adminOptions"  *ngIf="userService.hasAdminPrivileges">
+        <button mat-menu-item routerLink="/admin/addUser">Add user</button>
+        <button mat-menu-item routerLink="/admin/userList">User list</button>
+        <button mat-menu-item routerLink="/admin/leaveTypes">Leave types</button>
       </div>
       <button mat-menu-item (click)="openUserProfile()">User profile</button>
       <button mat-menu-item routerLink="/changePassword">Change password</button>

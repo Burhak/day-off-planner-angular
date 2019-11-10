@@ -35,6 +35,10 @@ import { UserListComponent } from './component/user-list/user-list.component';
 import {MatSortModule} from '@angular/material/sort';
 import { DeleteUserDialogComponent } from './component/user-profile/delete-user-dialog/delete-user-dialog.component';
 import { UpdateUserComponent } from './component/update-user/update-user.component';
+import {AddLeaveTypeComponent} from './component/add-leave-type/add-leave-type.component';
+import {LeaveTypesComponent} from './component/leave-types/leave-types.component';
+import {LeaveTypeComponent} from './component/leave-type/leave-type.component';
+import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component";
 
 @NgModule({
   declarations: [
@@ -50,9 +54,13 @@ import { UpdateUserComponent } from './component/update-user/update-user.compone
     ChangePasswordComponent,
     UserListComponent,
     DeleteUserDialogComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    LeaveTypesComponent,
+    AddLeaveTypeComponent,
+    LeaveTypeComponent,
+    DeleteLeaveTypeDialogComponent
   ],
-  entryComponents: [DeleteUserDialogComponent],
+  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,
@@ -113,6 +121,21 @@ import { UpdateUserComponent } from './component/update-user/update-user.compone
         path: 'admin/userList',
         component: UserListComponent,
         canActivate: [AuthGuad, AdminGuard]
+      },
+      {
+        path: 'admin/leaveTypes',
+        component: LeaveTypesComponent,
+        canActivate: [AuthGuad, AdminGuard]
+      },
+      {
+        path: 'admin/addLeaveType',
+        component: AddLeaveTypeComponent,
+        canActivate: [AuthGuad, AdminGuard]
+      },
+      {
+        path: 'admin/leaveType',
+        component: LeaveTypeComponent,
+        canActivate: [AuthGuad, AdminGuard]
       }
     ], {onSameUrlNavigation: 'reload'})
   ],
@@ -135,7 +158,8 @@ import { UpdateUserComponent } from './component/update-user/update-user.compone
     AuthService,
     UserInfoService,
     AuthGuad,
-    CookieService
+    CookieService,
+    LeaveTypeService
   ],
   bootstrap: [AppComponent]
 })

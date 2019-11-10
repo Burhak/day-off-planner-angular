@@ -1,0 +1,50 @@
+<app-navigation></app-navigation>
+<app-error></app-error>
+<div class="pageContent">
+  <div class="addLeaveType-form">
+    <h2>Add leave type</h2>
+    <form [formGroup]="form" #formDirective="ngForm" (submit)="createLeaveType($event,formDirective)">
+      <mat-form-field class="addLeaveType-element">
+        <input matInput
+               placeholder="Name"
+               id="name" formControlName="name">
+        <mat-error *ngIf="form.hasError('required', ['name'])">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="addLeaveType-element">
+        <input matInput
+               placeholder="Limit"
+               id="limit" formControlName="limit">
+        <mat-error *ngIf="form.hasError('pattern', ['limit'])">
+          Only digits are <strong>allowed</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="addLeaveType-element">
+        <input matInput
+               placeholder="Carryover"
+               id="carryover" formControlName="carryover">
+        <mat-error *ngIf="form.hasError('pattern', ['carryover'])">
+          Only digits are <strong>allowed</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox id="approvalNeeded" name="approvalNeeded" class="example-margin">Approval needed</mat-checkbox>
+
+      <div class="text-danger text-center">
+        {{errorMsg}}
+      </div>
+
+      <div class="buttonGroup">
+        <button [disabled]="buttonDisabled" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
+        <button mat-raised-button id="backBtn" class="backBtn" routerLink="/admin/leaveTypes">Back</button>
+      </div>
+
+    </form>
+  </div>
+  <div class="text-center">
+    <h6 class="message" [className]="isLeaveTypeAdded ? 'messageVisible' : 'messageHidden'"> <mat-icon>check_circle_outline</mat-icon><span class="messageText">New leave type has been added successfully!</span></h6>
+  </div>
+</div>
