@@ -19,4 +19,5 @@ export interface UserApiModel {
     readonly admin: boolean;
     readonly jobDescription: string;
     readonly phone?: string;
+    readonly approvers: Array<string>;
 }
