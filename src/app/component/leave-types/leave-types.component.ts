@@ -50,4 +50,9 @@ export class LeaveTypesComponent implements OnInit {
     this.router.navigate(['admin/leaveType'] ,  { state: { leaveTypeId: leaveTypeId }});
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(this.dataSource.filter);
+  }
+
 }

@@ -19,7 +19,7 @@
 }
 
 .title{
-  margin: 0 0 1em;
+  margin: 0 0 0.2em;
 }
 
 tr{
@@ -92,4 +92,8 @@ a:hover{
 
 h1,h2,h3,h4,h5,h6{
   color: rgb(44,62,80);
+}
+
+mat-form-field{
+  width: 100%;
 }

@@ -22,13 +22,21 @@
   width: 100%;
 }
 
-.submitBtn{
+.buttonGroup{
+  padding: 2em 0 1em;
+  float: left;
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
   width: 100%;
+}
+
+button {
+  padding: 0.5em 0;
+  width: 50%;
   background: rgb(52,73,94);
   color: white;
   font-weight: bold;
-  margin: 1em 0;
-  padding: 0.5em 0;
   border-radius: 2em;
 }
 
@@ -36,16 +44,12 @@ button:hover{
   background: rgb(44,62,80);
 }
 
-button {
-  width: 100%;
-  background: rgb(52,73,94);
-  color: white;
-  font-weight: bold;
-  border-radius: 2em;
+.submitBtn{
+  margin: 0 0.5em 0 0;
 }
 
 .backBtn{
-  margin: 0;
+  margin: 0 0 0 0.5em;
 }
 
 .logo{
@@ -69,6 +73,43 @@ h1,h2,h3,h4,h5,h6{
  color: rgb(44,62,80);
 }
 
-.message{
-  margin: 0;
+.messageVisible{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 1em 0 0;
+  padding: 0.5em 0.6em;
+
+  background-color: rgb(44,62,80);
+  color: white;
+  border-radius: 2em;
+
+  visibility: visible;
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 0.6s, transform 0.5s linear;
+}
+
+.messageHidden{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 1em 0 0;
+  padding: 0.5em 0.6em;
+
+  background-color: rgb(44,62,80);
+  color: white;
+  border-radius: 2em;
+
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: visibility 0s 1s, opacity 1s, transform 1s linear;
+}
+
+.messageText{
+  width: 100%;
+  padding: 0 2em;
 }

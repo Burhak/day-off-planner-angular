@@ -3,7 +3,7 @@
 <div class="pageContent">
   <div class="addUser-form">
       <h2>Add user</h2>
-      <form [formGroup]="form" (submit)="createNewUser($event)">
+      <form [formGroup]="form" #formDirective="ngForm" (submit)="createNewUser($event, formDirective)">
         <mat-form-field class="addUser-element">
           <input matInput
                  placeholder="Firstname"
@@ -68,12 +68,15 @@
           {{errorMsg}}
         </div>
 
-        <div class="text-center" *ngIf="isUserAdded">
-          <h5 class="message">New user has been added successfully!</h5>
+        <div class="buttonGroup">
+          <button disabled="{{buttonDisabled}}" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
+          <button mat-raised-button id="backBtn" class="backBtn" routerLink="/admin/userList">Back</button>
         </div>
-
-        <button disabled="{{buttonDisabled}}" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
       </form>
 
+  </div>
+
+  <div class="text-center">
+    <h6 class="message" [className]="isUserAdded ? 'messageVisible' : 'messageHidden'"> <mat-icon>check_circle_outline</mat-icon><span class="messageText">New user has been added successfully!</span></h6>
   </div>
 </div>

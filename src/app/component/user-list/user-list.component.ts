@@ -17,7 +17,7 @@ export class UserListComponent implements OnInit {
   }
 
   private array: Array<UserApiModel> = [];
-  public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'jobDescription', 'info'];
+  public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'jobDescription'];
   public dataSource: MatTableDataSource<UserApiModel>;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -42,6 +42,15 @@ export class UserListComponent implements OnInit {
 
   openUserProfile(user) {
     this.router.navigate(['userProfile'], { state: { userId: user.id } });
+  }
+
+  addUser() {
+    this.router.navigate(['admin/addUser'] );
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(this.dataSource.filter);
   }
 
 }

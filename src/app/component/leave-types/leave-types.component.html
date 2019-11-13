@@ -5,6 +5,9 @@
 <div *ngIf="isDataLoaded" class="pageContent">
   <div class="leaveTypeList">
     <h2 class="title">Leave types</h2>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
@@ -34,7 +37,6 @@
       <tr mat-footer-row *matFooterRowDef="['addLeaveType']"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons></mat-paginator>
-
 
   </div>
 </div>

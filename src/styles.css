@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 .full-width {
   width: 100%;
@@ -95,7 +95,7 @@ mat-icon{
   color: rgb(255,255,255)!important;
 }
 
-.mat-checkbox-background{
+.mat-checkbox-checked .mat-checkbox-background{
   background-color: rgb(44,62,80)!important;
 }
 

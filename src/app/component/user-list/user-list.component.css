@@ -1,6 +1,7 @@
 
 tr{
   background-color: rgb(245,245,245);
+  cursor: pointer;
 }
 
 td{
@@ -31,7 +32,7 @@ td{
 }
 
 .title{
-  margin: 0 0 1em;
+  margin: 0 0 0.2em
 }
 .userList {
   margin: 0 auto;
@@ -78,4 +79,20 @@ a:hover{
 
 h1,h2,h3,h4,h5,h6{
   color: rgb(44,62,80);
+}
+
+.addUser{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addUserText{
+  color: rgb(52,73,94);
+  font-weight: bold;
+  padding: 0 0.2em;
+}
+
+mat-form-field{
+  width: 100%;
 }

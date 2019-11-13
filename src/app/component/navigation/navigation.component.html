@@ -8,8 +8,7 @@
         <h5>{{userService.currentUser?.email}}</h5>
       </div>
       <div class="adminOptions"  *ngIf="userService.hasAdminPrivileges">
-        <button mat-menu-item routerLink="/admin/addUser">Add user</button>
-        <button mat-menu-item routerLink="/admin/userList">User list</button>
+        <button mat-menu-item routerLink="/admin/userList">Users</button>
         <button mat-menu-item routerLink="/admin/leaveTypes">Leave types</button>
       </div>
       <button mat-menu-item (click)="openUserProfile()">User profile</button>
