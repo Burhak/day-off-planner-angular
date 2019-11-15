@@ -7,18 +7,19 @@
   flex-direction:column;
 }
 
-.addUser-form {
+.addLeaveType-form {
   margin: 0 auto;
   display: block;
   width: 33vw;
-
+  height: fit-content;
   padding: 2em 2em 1em;
   background-color: rgb(255,255,255);
   box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
   border-radius: 2em;
+  transition: height 2s;
 }
 
-.addUser-element {
+.addLeaveType-element {
   width: 100%;
 }
 
@@ -52,14 +53,6 @@ button:hover{
   margin: 0 0 0 0.5em;
 }
 
-.logo{
-  width: 100%;
-}
-
-.form-footer{
-  text-align: center;
-}
-
 a {
   color: rgb(44,62,80);
 }
@@ -70,7 +63,7 @@ a:hover{
 }
 
 h1,h2,h3,h4,h5,h6{
- color: rgb(44,62,80);
+  color: rgb(44,62,80);
 }
 
 .messageVisible{
@@ -112,4 +105,8 @@ h1,h2,h3,h4,h5,h6{
 .messageText{
   width: 100%;
   padding: 0 2em;
+}
+
+mat-icon{
+  color: white;
 }

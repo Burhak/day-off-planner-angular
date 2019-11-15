@@ -45,7 +45,7 @@ export class AddUserFormComponent implements OnInit {
   }
 
 
-  createNewUser(event) {
+  createNewUser(event, formDirective) {
     event.preventDefault();
     if (!this.form.valid) {
       console.log(this.form.valid);
@@ -68,6 +68,9 @@ export class AddUserFormComponent implements OnInit {
         console.log(response);
         this.buttonDisabled = false;
         this.isUserAdded = true;
+        this.hideMessage();
+        this.form.reset();
+        formDirective.resetForm();
         this.errorMsg = '';
       },
       error => {
@@ -84,4 +87,14 @@ export class AddUserFormComponent implements OnInit {
     );
     console.log(newUser);
   }
+
+  hideMessage(){
+    (function(that){
+      setTimeout(function() {
+        that.isUserAdded = false;
+      }, 3000);
+    }(this));
+  }
+
+
 }

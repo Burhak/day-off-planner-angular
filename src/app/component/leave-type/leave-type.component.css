@@ -7,57 +7,20 @@
   flex-direction:column;
 }
 
-.addUser-form {
+.addLeaveType-form {
   margin: 0 auto;
   display: block;
   width: 33vw;
-
+  height: fit-content;
   padding: 2em 2em 1em;
   background-color: rgb(255,255,255);
   box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
   border-radius: 2em;
+  transition: height 2s;
 }
 
-.addUser-element {
+.addLeaveType-element {
   width: 100%;
-}
-
-.buttonGroup{
-  padding: 2em 0 1em;
-  float: left;
-  position: relative;
-  display: inline-flex;
-  vertical-align: middle;
-  width: 100%;
-}
-
-button {
-  padding: 0.5em 0;
-  width: 50%;
-  background: rgb(52,73,94);
-  color: white;
-  font-weight: bold;
-  border-radius: 2em;
-}
-
-button:hover{
-  background: rgb(44,62,80);
-}
-
-.submitBtn{
-  margin: 0 0.5em 0 0;
-}
-
-.backBtn{
-  margin: 0 0 0 0.5em;
-}
-
-.logo{
-  width: 100%;
-}
-
-.form-footer{
-  text-align: center;
 }
 
 a {
@@ -70,7 +33,7 @@ a:hover{
 }
 
 h1,h2,h3,h4,h5,h6{
- color: rgb(44,62,80);
+  color: rgb(44,62,80);
 }
 
 .messageVisible{
@@ -112,4 +75,48 @@ h1,h2,h3,h4,h5,h6{
 .messageText{
   width: 100%;
   padding: 0 2em;
+}
+
+mat-icon{
+  color: white;
+}
+
+.buttonGroup{
+  padding: 2em 0 1em;
+  float: left;
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  width: 100%;
+}
+
+button {
+  width: 33%;
+  background: rgb(52,73,94);
+  color: white;
+  font-weight: bold;
+  border-radius: 2em;
+  margin: 0 0.6em;
+  padding: 0.5em 0;
+}
+
+button:hover{
+  background: rgb(44,62,80);
+}
+
+.deleteBtn{
+  margin: 0 0 0 0.6em;
+  background: rgb(231,76,60) !important;
+}
+
+.deleteBtn:hover{
+  background: rgb(221,66,50) !important;
+}
+
+.submitBtn{
+  margin: 0 0.6em 0 0;
+}
+
+.submitBtn[disabled]{
+  background: rgb(210, 210, 210) !important;
 }

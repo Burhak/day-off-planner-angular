@@ -15,6 +15,7 @@ header a {
 .logo{
   height: 4em;
   float: left;
+  cursor: pointer;
 }
 
 .userImg{
