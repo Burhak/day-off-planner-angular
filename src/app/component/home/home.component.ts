@@ -61,7 +61,8 @@ export class HomeComponent implements OnInit {
     let leaveLimits: Array<LimitApiModel> = [];
     let leaveCarryOvers: Array<CarryoverApiModel> = [];
 
-    this.leaveTypes.forEach((leaveType, index) => {
+    //many subscribtions to fill personal limits and carryovers by one at a time
+    this.leaveTypes.forEach((leaveType) => {
       this.userApi.getLimit(leaveType.id).subscribe(
         (leaveLimit: LimitApiModel) => {
           leaveLimits.push(leaveLimit);
@@ -77,18 +78,23 @@ export class HomeComponent implements OnInit {
     });
 
     function update() {
-      /**
-      console.log(leaveCarryOvers);
-      console.log(leaveLimits);
-      console.log('update');
-      **/
-      if (leaveCarryOvers.length == this.leaveTypes.length) {
-        console.log('sme tu');
+
+      //when leaveLimit and leaveCarryOver are fully filled make new array with personal limit and carryover 
+      if (leaveCarryOvers.length == this.leaveTypes.length && leaveLimits.length == this.leaveTypes.length) {
+        let personalLeaveTypes: Array<LeaveTypeApiModel> = this.leaveTypes.map((element) => {
+          const obj: LeaveTypeApiModel = {
+            id: element.id,
+            name: element.name,
+            approvalNeeded: element.approvalNeeded,
+            limit: leaveLimits.find(({ leaveType }) => leaveType === element.id).limit,
+            carryover: leaveCarryOvers.find(({ leaveType }) => leaveType === element.id).carryover
+          };
+          return obj;
+          }
+        )
+        this.leaveTypes = personalLeaveTypes;
       }
     }
-
-    //let personalLeaveTypes = this.leaveTypes.map(function (leaveType) {})
-    //this.leaveTypes.forEach((name, index) => this.leaveTypes[index].limit = `${name}man`);
   }
 
 }
