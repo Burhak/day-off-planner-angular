@@ -136,6 +136,10 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
         path: 'admin/leaveType',
         component: LeaveTypeComponent,
         canActivate: [AuthGuad, AdminGuard]
+      },
+      {
+        path: '**',
+        redirectTo: ''
       }
     ], {onSameUrlNavigation: 'reload'})
   ],
