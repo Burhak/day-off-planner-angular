@@ -17,6 +17,8 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { CarryoverApiModel } from '../model/carryoverApiModel';
+import { LimitApiModel } from '../model/limitApiModel';
 import { PasswordChangeApiModel } from '../model/passwordChangeApiModel';
 import { PasswordResetApiModel } from '../model/passwordResetApiModel';
 import { UserApiModel } from '../model/userApiModel';
@@ -132,6 +134,98 @@ export class UserService {
         ];
 
         return this.httpClient.get<Array<UserApiModel>>(`${this.basePath}/user/getAll`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get user carryover for specified leave type and year
+     * 
+     * @param leaveTypeId ID of the leave type
+     * @param year Year (current year if not specified)
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getCarryover(leaveTypeId: string, year?: number, observe?: 'body', reportProgress?: boolean): Observable<CarryoverApiModel>;
+    public getCarryover(leaveTypeId: string, year?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CarryoverApiModel>>;
+    public getCarryover(leaveTypeId: string, year?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CarryoverApiModel>>;
+    public getCarryover(leaveTypeId: string, year?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (leaveTypeId === null || leaveTypeId === undefined) {
+            throw new Error('Required parameter leaveTypeId was null or undefined when calling getCarryover.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (year !== undefined && year !== null) {
+            queryParameters = queryParameters.set('year', <any>year);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<CarryoverApiModel>(`${this.basePath}/user/carryover/${encodeURIComponent(String(leaveTypeId))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get user individual limit
+     * 
+     * @param leaveTypeId ID of the leave type
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getLimit(leaveTypeId: string, observe?: 'body', reportProgress?: boolean): Observable<LimitApiModel>;
+    public getLimit(leaveTypeId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LimitApiModel>>;
+    public getLimit(leaveTypeId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LimitApiModel>>;
+    public getLimit(leaveTypeId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (leaveTypeId === null || leaveTypeId === undefined) {
+            throw new Error('Required parameter leaveTypeId was null or undefined when calling getLimit.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<LimitApiModel>(`${this.basePath}/user/limit/${encodeURIComponent(String(leaveTypeId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

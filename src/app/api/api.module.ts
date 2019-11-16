@@ -7,6 +7,7 @@ import { AdminService } from './api/admin.service';
 import { AuthService } from './api/auth.service';
 import { LeaveService } from './api/leave.service';
 import { LeaveTypeService } from './api/leaveType.service';
+import { SettingService } from './api/setting.service';
 import { UserService } from './api/user.service';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { UserService } from './api/user.service';
     AuthService,
     LeaveService,
     LeaveTypeService,
+    SettingService,
     UserService ]
 })
 export class ApiModule {
