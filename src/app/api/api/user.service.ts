@@ -21,6 +21,7 @@ import { CarryoverApiModel } from '../model/carryoverApiModel';
 import { LimitApiModel } from '../model/limitApiModel';
 import { PasswordChangeApiModel } from '../model/passwordChangeApiModel';
 import { PasswordResetApiModel } from '../model/passwordResetApiModel';
+import { RequestedHoursApiModel } from '../model/requestedHoursApiModel';
 import { UserApiModel } from '../model/userApiModel';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -274,6 +275,61 @@ export class UserService {
 
         return this.httpClient.get<UserApiModel>(`${this.basePath}/user/me`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get user requested hours for specified leave type and year
+     * 
+     * @param userId User ID
+     * @param leaveTypeId ID of the leave type
+     * @param year Year (current year if not specified)
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRequestedHours(userId: string, leaveTypeId: string, year?: number, observe?: 'body', reportProgress?: boolean): Observable<RequestedHoursApiModel>;
+    public getRequestedHours(userId: string, leaveTypeId: string, year?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RequestedHoursApiModel>>;
+    public getRequestedHours(userId: string, leaveTypeId: string, year?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RequestedHoursApiModel>>;
+    public getRequestedHours(userId: string, leaveTypeId: string, year?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling getRequestedHours.');
+        }
+
+        if (leaveTypeId === null || leaveTypeId === undefined) {
+            throw new Error('Required parameter leaveTypeId was null or undefined when calling getRequestedHours.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (year !== undefined && year !== null) {
+            queryParameters = queryParameters.set('year', <any>year);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<RequestedHoursApiModel>(`${this.basePath}/user/${encodeURIComponent(String(userId))}/requestedHours/${encodeURIComponent(String(leaveTypeId))}`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

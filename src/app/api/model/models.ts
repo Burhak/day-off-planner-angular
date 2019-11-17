@@ -8,6 +8,7 @@ export * from './limitApiModel';
 export * from './limitUpdateApiModel';
 export * from './passwordChangeApiModel';
 export * from './passwordResetApiModel';
+export * from './requestedHoursApiModel';
 export * from './settingApiModel';
 export * from './settingUpdateApiModel';
 export * from './userApiModel';
