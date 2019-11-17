@@ -18,8 +18,8 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { LeaveRequestApiModel } from '../model/leaveRequestApiModel';
-import { LeaveRequestApprovalApiModel } from '../model/leaveRequestApprovalApiModel';
 import { LeaveRequestCreateApiModel } from '../model/leaveRequestCreateApiModel';
+import { LeaveRequestWithApprovalsApiModel } from '../model/leaveRequestWithApprovalsApiModel';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -65,9 +65,9 @@ export class LeaveService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public approveLeaveRequest(id: string, approve: boolean, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestApprovalApiModel>;
-    public approveLeaveRequest(id: string, approve: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestApprovalApiModel>>;
-    public approveLeaveRequest(id: string, approve: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestApprovalApiModel>>;
+    public approveLeaveRequest(id: string, approve: boolean, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestWithApprovalsApiModel>;
+    public approveLeaveRequest(id: string, approve: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestWithApprovalsApiModel>>;
+    public approveLeaveRequest(id: string, approve: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestWithApprovalsApiModel>>;
     public approveLeaveRequest(id: string, approve: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
@@ -99,10 +99,53 @@ export class LeaveService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.post<LeaveRequestApprovalApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/approve`,
+        return this.httpClient.post<LeaveRequestWithApprovalsApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/approve`,
             null,
             {
                 params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Cancel leave request with given ID
+     * 
+     * @param id Leave request ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public cancelLeaveRequest(id: string, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestApiModel>;
+    public cancelLeaveRequest(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestApiModel>>;
+    public cancelLeaveRequest(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestApiModel>>;
+    public cancelLeaveRequest(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling cancelLeaveRequest.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.post<LeaveRequestApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/cancel`,
+            null,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -167,9 +210,9 @@ export class LeaveService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestApiModel>;
-    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestApiModel>>;
-    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestApiModel>>;
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestWithApprovalsApiModel>;
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestWithApprovalsApiModel>>;
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestWithApprovalsApiModel>>;
     public forceApproveLeaveRequest(id: string, approve: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
@@ -201,7 +244,7 @@ export class LeaveService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.post<LeaveRequestApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/forceApprove`,
+        return this.httpClient.post<LeaveRequestWithApprovalsApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/forceApprove`,
             null,
             {
                 params: queryParameters,
@@ -220,9 +263,9 @@ export class LeaveService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getLeaveRequestById(id: string, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestApiModel>;
-    public getLeaveRequestById(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestApiModel>>;
-    public getLeaveRequestById(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestApiModel>>;
+    public getLeaveRequestById(id: string, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestWithApprovalsApiModel>;
+    public getLeaveRequestById(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestWithApprovalsApiModel>>;
+    public getLeaveRequestById(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestWithApprovalsApiModel>>;
     public getLeaveRequestById(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
@@ -245,7 +288,7 @@ export class LeaveService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<LeaveRequestApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<LeaveRequestWithApprovalsApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

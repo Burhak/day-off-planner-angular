@@ -3,6 +3,7 @@ export * from './errorApiModel';
 export * from './leaveRequestApiModel';
 export * from './leaveRequestApprovalApiModel';
 export * from './leaveRequestCreateApiModel';
+export * from './leaveRequestWithApprovalsApiModel';
 export * from './leaveTypeApiModel';
 export * from './leaveTypeCreateApiModel';
 export * from './limitApiModel';
