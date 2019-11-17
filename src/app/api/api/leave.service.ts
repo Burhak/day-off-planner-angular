@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { LeaveRequestApiModel } from '../model/leaveRequestApiModel';
+import { LeaveRequestApprovalApiModel } from '../model/leaveRequestApprovalApiModel';
 import { LeaveRequestCreateApiModel } from '../model/leaveRequestCreateApiModel';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -55,6 +56,60 @@ export class LeaveService {
         return false;
     }
 
+
+    /**
+     * Approve/reject leave request with given ID
+     * 
+     * @param id Leave request ID
+     * @param approve Whether to approve (true) or reject (false) leave request
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public approveLeaveRequest(id: string, approve: boolean, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestApprovalApiModel>;
+    public approveLeaveRequest(id: string, approve: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestApprovalApiModel>>;
+    public approveLeaveRequest(id: string, approve: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestApprovalApiModel>>;
+    public approveLeaveRequest(id: string, approve: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling approveLeaveRequest.');
+        }
+
+        if (approve === null || approve === undefined) {
+            throw new Error('Required parameter approve was null or undefined when calling approveLeaveRequest.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (approve !== undefined && approve !== null) {
+            queryParameters = queryParameters.set('approve', <any>approve);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.post<LeaveRequestApprovalApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/approve`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * Create new leave request

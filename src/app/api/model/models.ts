@@ -1,6 +1,7 @@
 export * from './carryoverApiModel';
 export * from './errorApiModel';
 export * from './leaveRequestApiModel';
+export * from './leaveRequestApprovalApiModel';
 export * from './leaveRequestCreateApiModel';
 export * from './leaveTypeApiModel';
 export * from './leaveTypeCreateApiModel';
