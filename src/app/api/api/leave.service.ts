@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class LeaveService {
 
-    protected basePath = 'https://virtserver.swaggerhub.com/Burhak/DayOffPlanner/1.0.0';
+    protected basePath = '/';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -151,6 +151,60 @@ export class LeaveService {
         return this.httpClient.post<LeaveRequestApiModel>(`${this.basePath}/leave`,
             body,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * FORCE approve/reject leave request with given ID (only supervisor)
+     * 
+     * @param id Leave request ID
+     * @param approve Whether to approve (true) or reject (false) leave request
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestApiModel>;
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestApiModel>>;
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestApiModel>>;
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling forceApproveLeaveRequest.');
+        }
+
+        if (approve === null || approve === undefined) {
+            throw new Error('Required parameter approve was null or undefined when calling forceApproveLeaveRequest.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (approve !== undefined && approve !== null) {
+            queryParameters = queryParameters.set('approve', <any>approve);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.post<LeaveRequestApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/forceApprove`,
+            null,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
