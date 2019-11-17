@@ -146,15 +146,20 @@ export class UserService {
     /**
      * Get user carryover for specified leave type and year
      * 
+     * @param userId User ID
      * @param leaveTypeId ID of the leave type
      * @param year Year (current year if not specified)
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCarryover(leaveTypeId: string, year?: number, observe?: 'body', reportProgress?: boolean): Observable<CarryoverApiModel>;
-    public getCarryover(leaveTypeId: string, year?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CarryoverApiModel>>;
-    public getCarryover(leaveTypeId: string, year?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CarryoverApiModel>>;
-    public getCarryover(leaveTypeId: string, year?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getCarryover(userId: string, leaveTypeId: string, year?: number, observe?: 'body', reportProgress?: boolean): Observable<CarryoverApiModel>;
+    public getCarryover(userId: string, leaveTypeId: string, year?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CarryoverApiModel>>;
+    public getCarryover(userId: string, leaveTypeId: string, year?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CarryoverApiModel>>;
+    public getCarryover(userId: string, leaveTypeId: string, year?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling getCarryover.');
+        }
 
         if (leaveTypeId === null || leaveTypeId === undefined) {
             throw new Error('Required parameter leaveTypeId was null or undefined when calling getCarryover.');
@@ -182,7 +187,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<CarryoverApiModel>(`${this.basePath}/user/carryover/${encodeURIComponent(String(leaveTypeId))}`,
+        return this.httpClient.get<CarryoverApiModel>(`${this.basePath}/user/${encodeURIComponent(String(userId))}/carryover/${encodeURIComponent(String(leaveTypeId))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -196,14 +201,19 @@ export class UserService {
     /**
      * Get user individual limit
      * 
+     * @param userId User ID
      * @param leaveTypeId ID of the leave type
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getLimit(leaveTypeId: string, observe?: 'body', reportProgress?: boolean): Observable<LimitApiModel>;
-    public getLimit(leaveTypeId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LimitApiModel>>;
-    public getLimit(leaveTypeId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LimitApiModel>>;
-    public getLimit(leaveTypeId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getLimit(userId: string, leaveTypeId: string, observe?: 'body', reportProgress?: boolean): Observable<LimitApiModel>;
+    public getLimit(userId: string, leaveTypeId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LimitApiModel>>;
+    public getLimit(userId: string, leaveTypeId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LimitApiModel>>;
+    public getLimit(userId: string, leaveTypeId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling getLimit.');
+        }
 
         if (leaveTypeId === null || leaveTypeId === undefined) {
             throw new Error('Required parameter leaveTypeId was null or undefined when calling getLimit.');
@@ -225,7 +235,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<LimitApiModel>(`${this.basePath}/user/limit/${encodeURIComponent(String(leaveTypeId))}`,
+        return this.httpClient.get<LimitApiModel>(`${this.basePath}/user/${encodeURIComponent(String(userId))}/limit/${encodeURIComponent(String(leaveTypeId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
