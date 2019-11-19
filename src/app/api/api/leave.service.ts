@@ -19,6 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { LeaveRequestApiModel } from '../model/leaveRequestApiModel';
 import { LeaveRequestCreateApiModel } from '../model/leaveRequestCreateApiModel';
+import { LeaveRequestWithApprovalsApiModel } from '../model/leaveRequestWithApprovalsApiModel';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -27,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class LeaveService {
 
-    protected basePath = 'https://virtserver.swaggerhub.com/Burhak/DayOffPlanner/1.0.0';
+    protected basePath = '/';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -55,6 +56,103 @@ export class LeaveService {
         return false;
     }
 
+
+    /**
+     * Approve/reject leave request with given ID
+     * 
+     * @param id Leave request ID
+     * @param approve Whether to approve (true) or reject (false) leave request
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public approveLeaveRequest(id: string, approve: boolean, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestWithApprovalsApiModel>;
+    public approveLeaveRequest(id: string, approve: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestWithApprovalsApiModel>>;
+    public approveLeaveRequest(id: string, approve: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestWithApprovalsApiModel>>;
+    public approveLeaveRequest(id: string, approve: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling approveLeaveRequest.');
+        }
+
+        if (approve === null || approve === undefined) {
+            throw new Error('Required parameter approve was null or undefined when calling approveLeaveRequest.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (approve !== undefined && approve !== null) {
+            queryParameters = queryParameters.set('approve', <any>approve);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.post<LeaveRequestWithApprovalsApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/approve`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Cancel leave request with given ID
+     * 
+     * @param id Leave request ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public cancelLeaveRequest(id: string, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestApiModel>;
+    public cancelLeaveRequest(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestApiModel>>;
+    public cancelLeaveRequest(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestApiModel>>;
+    public cancelLeaveRequest(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling cancelLeaveRequest.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.post<LeaveRequestApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/cancel`,
+            null,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * Create new leave request
@@ -105,6 +203,131 @@ export class LeaveService {
     }
 
     /**
+     * Filter leave requests
+     * 
+     * @param from From date
+     * @param to To date
+     * @param status List of statuses to include in result (all if not set)
+     * @param users List of users to include in result (all if not set)
+     * @param leaveTypes List of leave types to include in result (all if not set)
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<Array<LeaveRequestApiModel>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LeaveRequestApiModel>>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LeaveRequestApiModel>>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (from !== undefined && from !== null) {
+            queryParameters = queryParameters.set('from', <any>from);
+        }
+        if (to !== undefined && to !== null) {
+            queryParameters = queryParameters.set('to', <any>to);
+        }
+        if (status) {
+            status.forEach((element) => {
+                queryParameters = queryParameters.append('status', <any>element);
+            })
+        }
+        if (users) {
+            users.forEach((element) => {
+                queryParameters = queryParameters.append('users', <any>element);
+            })
+        }
+        if (leaveTypes) {
+            leaveTypes.forEach((element) => {
+                queryParameters = queryParameters.append('leaveTypes', <any>element);
+            })
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<LeaveRequestApiModel>>(`${this.basePath}/leave/filter`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * FORCE approve/reject leave request with given ID (only supervisor)
+     * 
+     * @param id Leave request ID
+     * @param approve Whether to approve (true) or reject (false) leave request
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestWithApprovalsApiModel>;
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestWithApprovalsApiModel>>;
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestWithApprovalsApiModel>>;
+    public forceApproveLeaveRequest(id: string, approve: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling forceApproveLeaveRequest.');
+        }
+
+        if (approve === null || approve === undefined) {
+            throw new Error('Required parameter approve was null or undefined when calling forceApproveLeaveRequest.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (approve !== undefined && approve !== null) {
+            queryParameters = queryParameters.set('approve', <any>approve);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.post<LeaveRequestWithApprovalsApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/forceApprove`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Get leave request by ID
      * 
      * @param id Leave request ID
@@ -137,6 +360,48 @@ export class LeaveService {
         ];
 
         return this.httpClient.get<LeaveRequestApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get leave request with approvals by ID
+     * 
+     * @param id Leave request ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getLeaveRequestByIdWithApprovals(id: string, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestWithApprovalsApiModel>;
+    public getLeaveRequestByIdWithApprovals(id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestWithApprovalsApiModel>>;
+    public getLeaveRequestByIdWithApprovals(id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestWithApprovalsApiModel>>;
+    public getLeaveRequestByIdWithApprovals(id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getLeaveRequestByIdWithApprovals.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<LeaveRequestWithApprovalsApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/approvals`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

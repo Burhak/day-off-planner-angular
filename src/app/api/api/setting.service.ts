@@ -17,15 +17,14 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { UserLoginApiModel } from '../model/userLoginApiModel';
-import { UserLoginResponseApiModel } from '../model/userLoginResponseApiModel';
+import { SettingApiModel } from '../model/settingApiModel';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class AuthService {
+export class SettingService {
 
     protected basePath = '/';
     public defaultHeaders = new HttpHeaders();
@@ -57,20 +56,15 @@ export class AuthService {
 
 
     /**
-     * Log user into the system
+     * Get all settings
      * 
-     * @param body Email and password for login
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public loginUser(body: UserLoginApiModel, observe?: 'body', reportProgress?: boolean): Observable<UserLoginResponseApiModel>;
-    public loginUser(body: UserLoginApiModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserLoginResponseApiModel>>;
-    public loginUser(body: UserLoginApiModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserLoginResponseApiModel>>;
-    public loginUser(body: UserLoginApiModel, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling loginUser.');
-        }
+    public getAllSettings(observe?: 'body', reportProgress?: boolean): Observable<Array<SettingApiModel>>;
+    public getAllSettings(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<SettingApiModel>>>;
+    public getAllSettings(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<SettingApiModel>>>;
+    public getAllSettings(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -86,52 +80,9 @@ export class AuthService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.post<UserLoginResponseApiModel>(`${this.basePath}/login`,
-            body,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Log user out
-     * 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public logoutUser(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public logoutUser(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public logoutUser(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public logoutUser(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        // authentication (bearerAuth) required
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
         ];
 
-        return this.httpClient.post<any>(`${this.basePath}/logout`,
-            null,
+        return this.httpClient.get<Array<SettingApiModel>>(`${this.basePath}/setting/getAll`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
