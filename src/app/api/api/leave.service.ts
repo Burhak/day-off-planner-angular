@@ -203,6 +203,77 @@ export class LeaveService {
     }
 
     /**
+     * Filter leave requests
+     * 
+     * @param from From date
+     * @param to To date
+     * @param status List of statuses to include in result (all if not set)
+     * @param users List of users to include in result (all if not set)
+     * @param leaveTypes List of leave types to include in result (all if not set)
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<Array<LeaveRequestApiModel>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LeaveRequestApiModel>>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LeaveRequestApiModel>>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (from !== undefined && from !== null) {
+            queryParameters = queryParameters.set('from', <any>from);
+        }
+        if (to !== undefined && to !== null) {
+            queryParameters = queryParameters.set('to', <any>to);
+        }
+        if (status) {
+            status.forEach((element) => {
+                queryParameters = queryParameters.append('status', <any>element);
+            })
+        }
+        if (users) {
+            users.forEach((element) => {
+                queryParameters = queryParameters.append('users', <any>element);
+            })
+        }
+        if (leaveTypes) {
+            leaveTypes.forEach((element) => {
+                queryParameters = queryParameters.append('leaveTypes', <any>element);
+            })
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<LeaveRequestApiModel>>(`${this.basePath}/leave/filter`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * FORCE approve/reject leave request with given ID (only supervisor)
      * 
      * @param id Leave request ID
