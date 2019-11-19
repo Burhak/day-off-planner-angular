@@ -66,8 +66,8 @@ export class UpdateUserComponent implements OnInit {
       admin: event.target.admin.checked,
       supervisor: this.selectControl.value,
       jobDescription: event.target.jobdescription.value,
-      phone: event.target.phone.value
-
+      phone: event.target.phone.value,
+      approvers: null
     };
 
     this.buttonDisabled = true;
