@@ -58,3 +58,21 @@ a {
 h1, h2, h3, h4, h5, h6 {
   color: rgb(44,62,80);
 }
+
+.linesInputs{
+  float: left;
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.firstInput{
+  width: 50%;
+  padding: 0 1em 0 0;
+}
+
+.secondInput{
+  width: 50%;
+  padding: 0;
+}

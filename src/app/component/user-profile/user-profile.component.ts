@@ -73,6 +73,7 @@ export class UserProfileComponent implements OnInit{
   }
 
   getUserApprovers() {
+    this.userApprovers = [];
     for (const approverId of this.userApproversId) {
       this.userService.getUserById(approverId).subscribe( (user: UserApiModel) => {
         this.userApprovers.push(user);
@@ -117,6 +118,13 @@ export class UserProfileComponent implements OnInit{
         this.getUserSupervisor(this.user.supervisor);
       } else {
         this.userSupervisor = null;
+      }
+      if (this.user.approvers !== null) {
+        this.userApproversId = this.user.approvers;
+        this.getUserApprovers();
+      } else {
+        this.userApprovers = null;
+        this.userApproversId = null;
       }
       if (this.user.id !== this.userInfoService.currentUser.id) {
         this.deleteBtnDisabled = false;
