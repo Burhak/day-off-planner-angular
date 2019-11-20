@@ -210,13 +210,15 @@ export class LeaveService {
      * @param status List of statuses to include in result (all if not set)
      * @param users List of users to include in result (all if not set)
      * @param leaveTypes List of leave types to include in result (all if not set)
+     * @param approvers List of approvers to include in result (all if not set)
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<Array<LeaveRequestApiModel>>;
-    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LeaveRequestApiModel>>>;
-    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LeaveRequestApiModel>>>;
-    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, approvers?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<Array<LeaveRequestApiModel>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, approvers?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LeaveRequestApiModel>>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, approvers?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LeaveRequestApiModel>>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, approvers?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
 
 
 
@@ -243,6 +245,11 @@ export class LeaveService {
         if (leaveTypes) {
             leaveTypes.forEach((element) => {
                 queryParameters = queryParameters.append('leaveTypes', <any>element);
+            })
+        }
+        if (approvers) {
+            approvers.forEach((element) => {
+                queryParameters = queryParameters.append('approvers', <any>element);
             })
         }
 
