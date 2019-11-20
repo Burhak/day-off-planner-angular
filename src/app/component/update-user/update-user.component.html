@@ -83,10 +83,13 @@
 
         <div class="text-danger text-center">{{errorMsg}}</div>
 
-        <button disabled="{{buttonDisabled}}" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
+        <div class="buttonGroup">
+          <button disabled="{{buttonDisabled}}" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
+          <button mat-raised-button (click)="userUpdatedNotify()" type="button" class="cancelBtn" >Cancel</button>
+        </div>
 
       </form>
-      <button mat-raised-button (click)="userUpdatedNotify()" class="cancelBtn">Cancel</button>
+
     </ng-template>
 
     <ng-template #addUserMessage>
