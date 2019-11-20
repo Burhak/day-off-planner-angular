@@ -4,32 +4,26 @@
   <div class="addUser-form">
       <h2>Add user</h2>
       <form [formGroup]="form" #formDirective="ngForm" (submit)="createNewUser($event, formDirective)">
-        <mat-form-field class="addUser-element">
-          <input matInput
-                 placeholder="Firstname"
-                 id="firstname" formControlName="firstname">
-          <mat-error *ngIf="form.hasError('required', ['firstname'])">
-            Firstname is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <div class="linesInputs">
+          <mat-form-field class="firstInput">
+            <input matInput
+                   placeholder="Firstname"
+                   id="firstname" formControlName="firstname">
+            <mat-error *ngIf="form.hasError('required', ['firstname'])">
+              Firstname is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field class="addUser-element">
-          <input matInput
-                 placeholder="Lastname"
-                 id="lastname" formControlName="lastname">
-          <mat-error *ngIf="form.hasError('required', ['lastname'])">
-            Lastname is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+          <mat-form-field class="secondInput">
+            <input matInput
+                   placeholder="Lastname"
+                   id="lastname" formControlName="lastname">
+            <mat-error *ngIf="form.hasError('required', ['lastname'])">
+              Lastname is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-        <mat-form-field class="addUser-element">
-          <input matInput
-                 placeholder="Job title"
-                 id="jobdescription" formControlName="jobdescription">
-          <mat-error *ngIf="form.hasError('required', ['jobdescription'])">
-            Job description is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
 
         <mat-form-field class="addUser-element">
           <input matInput
@@ -49,6 +43,16 @@
                  placeholder="Phone"
                  id="phone">
           <mat-hint></mat-hint>
+        </mat-form-field>
+
+
+        <mat-form-field class="addUser-element">
+          <input matInput
+                 placeholder="Job title"
+                 id="jobdescription" formControlName="jobdescription">
+          <mat-error *ngIf="form.hasError('required', ['jobdescription'])">
+            Job description is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="addUser-element">
