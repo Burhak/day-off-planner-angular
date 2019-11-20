@@ -25,7 +25,7 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -122,7 +122,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }
@@ -153,6 +153,12 @@
           }
         }
       }
-    }},
-  "defaultProject": "day-off-planner-angular-app"
+    }
+  },
+  "defaultProject": "day-off-planner-angular-app",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
