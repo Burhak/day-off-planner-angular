@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LeaveTypeApiModel, LeaveTypeService, UserService, LimitApiModel, CarryoverApiModel, UserApiModel } from '../../api';
+import { LeaveTypeApiModel, LeaveTypeService, UserService, LimitApiModel, CarryoverApiModel, UserApiModel, RequestedHoursApiModel } from '../../api';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { UserInfoService } from '../../service/user-info.service';
 
 @Component({
   selector: 'app-home',
@@ -12,89 +13,83 @@ export class HomeComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  private leaveTypes: Array<LeaveTypeApiModel> = [];
-  private 
-  public displayedColumns: string[] = ['name', 'approvalNeeded', 'limit', 'carryover'];
-  public dataSource: MatTableDataSource<LeaveTypeApiModel>;
+  public displayedColumns: string[] = ['name', 'approvalNeeded', 'limit', 'carryover', 'requestedHours'];
+  public dataSource: MatTableDataSource<UserPersonalLeaveTypes>;
   public isDataLoaded: boolean;
+  private userPromise: Promise<UserApiModel>;
+  private user: UserApiModel;
+  private userPersonalLeaveTypes: Array<UserPersonalLeaveTypes> = []; 
 
-  constructor(private leaveType: LeaveTypeService, private userApi: UserService) {
-    this.isDataLoaded = false;
-    this.getDataAllLeaveTypes();
+  constructor(private leaveType: LeaveTypeService, private userApi: UserService, private userService: UserInfoService) {
   }
 
   ngOnInit() {
+    this.isDataLoaded = false;
+    this.getDataAllLeaveTypes();
+    this.userPromise = this.userService.currentUserPromise;
   }
 
   getDataAllLeaveTypes() {
     this.leaveType.getAllLeaveTypes().subscribe((leaveType: LeaveTypeApiModel[]) => {
-      this.leaveTypes = leaveType;
-      this.fillData();
+      leaveType.forEach((element) => {
+        let obj: UserPersonalLeaveTypes = {
+          leaveType: element,
+          limit: null,
+          carryOver: null,
+          requestedHours: null
+        };
+        this.userPersonalLeaveTypes.push(obj);
+      });
+      this.getUserLimits();
+      this.getRequestedHours();
     });
   }
 
   fillData() {
-    this.dataSource = new MatTableDataSource<LeaveTypeApiModel>(this.leaveTypes);
+    this.dataSource = new MatTableDataSource<UserPersonalLeaveTypes>(this.userPersonalLeaveTypes);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.isDataLoaded = true;
   }
 
-  logArray() {
-    console.log(this.leaveTypes);
-    /**
-    this.userApi.getAllUsers().subscribe(
-      (gay: UserApiModel[]) => {
-        console.log(gay);
-      }
-    )
-    this.userApi.getLimit(this.leaveTypes[1].id).subscribe(
-      (obj: LimitApiModel) => {
-        console.log(obj);
-      }
-    )
-    **/
-    this.getUserLimits();
-  }
+  async getUserLimits() {
 
-  getUserLimits() {
-    let leaveLimits: Array<LimitApiModel> = [];
-    let leaveCarryOvers: Array<CarryoverApiModel> = [];
+    this.user = await this.userPromise;
 
     //many subscribtions to fill personal limits and carryovers by one at a time
-    this.leaveTypes.forEach((leaveType) => {
-      this.userApi.getLimit(leaveType.id).subscribe(
+    this.userPersonalLeaveTypes.forEach((element, index) => {
+      this.userApi.getLimit(this.user.id, element.leaveType.id).subscribe(
         (leaveLimit: LimitApiModel) => {
-          leaveLimits.push(leaveLimit);
-          update();
+          this.userPersonalLeaveTypes[index].limit = leaveLimit;
+          this.fillData();
         }
       );
-      this.userApi.getCarryover(leaveType.id).subscribe(
+      this.userApi.getCarryover(this.user.id, element.leaveType.id).subscribe(
         (leaveCarryOver: CarryoverApiModel) => {
-          leaveCarryOvers.push(leaveCarryOver);
-          update();
+          this.userPersonalLeaveTypes[index].carryOver = leaveCarryOver;
+          this.fillData();
         }
       );
     });
-
-    function update() {
-
-      //when leaveLimit and leaveCarryOver are fully filled make new array with personal limit and carryover 
-      if (leaveCarryOvers.length == this.leaveTypes.length && leaveLimits.length == this.leaveTypes.length) {
-        let personalLeaveTypes: Array<LeaveTypeApiModel> = this.leaveTypes.map((element) => {
-          const obj: LeaveTypeApiModel = {
-            id: element.id,
-            name: element.name,
-            approvalNeeded: element.approvalNeeded,
-            limit: leaveLimits.find(({ leaveType }) => leaveType === element.id).limit,
-            carryover: leaveCarryOvers.find(({ leaveType }) => leaveType === element.id).carryover
-          };
-          return obj;
-          }
-        )
-        this.leaveTypes = personalLeaveTypes;
-      }
-    }
   }
 
+  async getRequestedHours() {
+    this.user = await this.userPromise;
+
+    this.userPersonalLeaveTypes.forEach( (element, index) => {
+      this.userApi.getRequestedHours(this.user.id, element.leaveType.id).subscribe(
+        (rH: RequestedHoursApiModel) => {
+          this.userPersonalLeaveTypes[index].requestedHours = rH;
+          this.fillData();
+        }
+      );
+    });
+  }
+}
+
+interface UserPersonalLeaveTypes {
+  leaveType: LeaveTypeApiModel,
+  limit: LimitApiModel,
+  carryOver: CarryoverApiModel,
+  requestedHours: RequestedHoursApiModel
 }

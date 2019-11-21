@@ -11,25 +11,38 @@
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let leaveType" class="leaveTypeName"> {{leaveType.name}} </td>
+        <td mat-cell *matCellDef="let personalLeaveType" class="leaveTypeName"> {{personalLeaveType.leaveType.name}} </td>
       </ng-container>
       <ng-container matColumnDef="approvalNeeded">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Approval needed </th>
-        <td mat-cell *matCellDef="let leaveType"> {{leaveType.approvalNeeded}} </td>
+        <td mat-cell *matCellDef="let personalLeaveType"> {{personalLeaveType.leaveType.approvalNeeded}} </td>
       </ng-container>
       <ng-container matColumnDef="limit">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Limit </th>
-        <td mat-cell *matCellDef="let leaveType"> {{leaveType.limit}} </td>
+        <td mat-cell *matCellDef="let personalLeaveType">
+          <span *ngIf="personalLeaveType.limit == null">{{personalLeaveType.leaveType.limit}}</span>
+          <span *ngIf="personalLeaveType.limit != null">{{personalLeaveType.limit.limit}}</span>
+        </td>
       </ng-container>
       <ng-container matColumnDef="carryover">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Carryover </th>
-        <td mat-cell *matCellDef="let leaveType"> {{leaveType.carryover}} </td>
+        <td mat-cell *matCellDef="let personalLeaveType">
+          <span *ngIf="personalLeaveType.carryOver == null">{{personalLeaveType.leaveType.carryover}}</span>
+          <span *ngIf="personalLeaveType.carryOver != null">{{personalLeaveType.carryOver.carryover}}</span>
+        </td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let leaveType; columns: displayedColumns;" (click)="openLeaveType(leaveType.id)"></tr>
+      <ng-container matColumnDef="requestedHours">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Spent hours </th>
+        <td mat-cell *matCellDef="let personalLeaveType">
+          <span *ngIf="personalLeaveType.requestedHours == null">0</span>
+          <span *ngIf="personalLeaveType.requestedHours != null">{{personalLeaveType.requestedHours.requestedHours}}</span>
+        </td>
+      </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let personalLeaveType; columns: displayedColumns;" (click)="openLeaveType(personalLeaveType.leaveType.id)"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons></mat-paginator>
 
   </div>
-  <button (click)="logArray()">LogArray</button>
+  <button (click)="helpfulF()">HelpfulFunc</button>
 </div>
