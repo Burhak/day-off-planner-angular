@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  public displayedColumns: string[] = ['name', 'approvalNeeded', 'limit', 'carryover', 'requestedHours'];
+  public displayedColumns: string[] = ['leaveType.name', 'leaveType.approvalNeeded', 'limit', 'carryover', 'requestedHours'];
   public dataSource: MatTableDataSource<UserPersonalLeaveTypes>;
   public isDataLoaded: boolean;
   private userPromise: Promise<UserApiModel>;
@@ -34,9 +34,9 @@ export class HomeComponent implements OnInit {
       leaveType.forEach((element) => {
         let obj: UserPersonalLeaveTypes = {
           leaveType: element,
-          limit: null,
-          carryOver: null,
-          requestedHours: null
+          limit: -1,
+          carryover: -1,
+          requestedHours: -1
         };
         this.userPersonalLeaveTypes.push(obj);
       });
@@ -48,6 +48,10 @@ export class HomeComponent implements OnInit {
   fillData() {
     this.dataSource = new MatTableDataSource<UserPersonalLeaveTypes>(this.userPersonalLeaveTypes);
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item)
+      return item[property];
+    };
     this.dataSource.sort = this.sort;
     this.isDataLoaded = true;
   }
@@ -60,13 +64,15 @@ export class HomeComponent implements OnInit {
     this.userPersonalLeaveTypes.forEach((element, index) => {
       this.userApi.getLimit(this.user.id, element.leaveType.id).subscribe(
         (leaveLimit: LimitApiModel) => {
-          this.userPersonalLeaveTypes[index].limit = leaveLimit;
+          if (leaveLimit != null) this.userPersonalLeaveTypes[index].limit = leaveLimit.limit;
+          else this.userPersonalLeaveTypes[index].limit = this.userPersonalLeaveTypes[index].leaveType.limit;
           this.fillData();
         }
       );
       this.userApi.getCarryover(this.user.id, element.leaveType.id).subscribe(
         (leaveCarryOver: CarryoverApiModel) => {
-          this.userPersonalLeaveTypes[index].carryOver = leaveCarryOver;
+          if (leaveCarryOver != null) this.userPersonalLeaveTypes[index].carryover = leaveCarryOver.carryover;
+          else this.userPersonalLeaveTypes[index].carryover = this.userPersonalLeaveTypes[index].leaveType.carryover;
           this.fillData();
         }
       );
@@ -79,17 +85,26 @@ export class HomeComponent implements OnInit {
     this.userPersonalLeaveTypes.forEach( (element, index) => {
       this.userApi.getRequestedHours(this.user.id, element.leaveType.id).subscribe(
         (rH: RequestedHoursApiModel) => {
-          this.userPersonalLeaveTypes[index].requestedHours = rH;
+          this.userPersonalLeaveTypes[index].requestedHours = rH.requestedHours;
           this.fillData();
         }
       );
     });
   }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filterPredicate = (data: any, filter) => {
+      const dataStr = JSON.stringify(data).toLowerCase();
+      return dataStr.indexOf(filter) != -1;
+    };
+    console.log(this.dataSource.filter);
+  }
 }
 
 interface UserPersonalLeaveTypes {
   leaveType: LeaveTypeApiModel,
-  limit: LimitApiModel,
-  carryOver: CarryoverApiModel,
-  requestedHours: RequestedHoursApiModel
+  limit: number,
+  carryover: number,
+  requestedHours: number
 }
