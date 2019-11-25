@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 
 import { TokenInterceptor } from './interceptor/token.interceptor';
 
-import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService } from './api';
+import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService, LeaveService } from './api';
 
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './component/login-form/login-form.component';
@@ -163,7 +163,8 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
     UserInfoService,
     AuthGuad,
     CookieService,
-    LeaveTypeService
+    LeaveTypeService,
+    LeaveService
   ],
   bootstrap: [AppComponent]
 })
