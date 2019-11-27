@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   LeaveTypeApiModel, LeaveTypeService, UserService, LimitApiModel,
-  CarryoverApiModel, UserApiModel, RequestedHoursApiModel, LeaveService
+  CarryoverApiModel, UserApiModel, RequestedHoursApiModel, LeaveService, LeaveRequestApiModel
 } from '../../api';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { UserInfoService } from '../../service/user-info.service';
@@ -19,20 +19,24 @@ export class HomeComponent implements OnInit {
   @ViewChild('TableTypesPaginator', { static: false }) TableTypesPaginator: MatPaginator;
   @ViewChild('TableTypesSort', { static: false }) TableTypesSort: MatSort;
 
-  public displayedColumns: string[] = ['leaveType.name', 'leaveType.approvalNeeded',
+  public displayedColumnsTypes: string[] = ['leaveType.name', 'leaveType.approvalNeeded',
     'limit', 'carryover', 'requestedHours'];
-  public dataSourceLeaves: MatTableDataSource<UserPersonalLeaveTypes>;
+  public displayedColumnsLeaves: string[] = ['leaveType', 'fromDate', 'toDate', 'status'];
+  public dataSourceLeaves: MatTableDataSource<PersonalLeaveRequests>;
   public dataSourceTypes: MatTableDataSource<UserPersonalLeaveTypes>;
   public isDataLoaded: boolean;
+  public leavesReady: boolean;
   private userPromise: Promise<UserApiModel>;
   private user: UserApiModel;
-  private userPersonalLeaveTypes: Array<UserPersonalLeaveTypes> = []; 
+  public userPersonalLeaveTypes: Array<UserPersonalLeaveTypes> = [];
+  public leaveRequests: Array<PersonalLeaveRequests> = []; 
 
   constructor(private leaveType: LeaveTypeService, private userApi: UserService,
     private userService: UserInfoService, private leavesApi: LeaveService) {}
 
   ngOnInit() {
     this.isDataLoaded = false;
+    this.leavesReady = false;
     this.userPromise = this.userService.currentUserPromise;
     this.initData();
   }
@@ -40,12 +44,23 @@ export class HomeComponent implements OnInit {
   async initData() {
     this.user = await this.userPromise;
 
-    this.getAllMyLeaves();
     this.getDataAllLeaveTypes();
   }
 
   getAllMyLeaves() {
-
+    this.leavesApi.filterLeaveRequests().subscribe((leaves: LeaveRequestApiModel[]) => {
+      leaves.forEach((element) => {
+        let obj: PersonalLeaveRequests = {
+          id: element.id,
+          leaveType: this.userPersonalLeaveTypes.find(({ leaveType }) => leaveType.id === element.leaveType).leaveType.name,
+          fromDate: element.fromDate,
+          toDate: element.toDate,
+          status: element.status
+        };
+        this.leaveRequests.push(obj);
+      });
+      this.leavesReady = true;
+    });
   }
 
   getDataAllLeaveTypes() {
@@ -61,11 +76,12 @@ export class HomeComponent implements OnInit {
       });
       this.getUserLimits();
       this.getRequestedHours();
+      this.getAllMyLeaves();
     });
   }
 
   fillData() {
-    this.dataSourceLeaves = new MatTableDataSource<UserPersonalLeaveTypes>(this.userPersonalLeaveTypes);
+    this.dataSourceLeaves = new MatTableDataSource<PersonalLeaveRequests>(this.leaveRequests);
     this.dataSourceTypes = new MatTableDataSource<UserPersonalLeaveTypes>(this.userPersonalLeaveTypes);
     this.dataSourceLeaves.paginator = this.TableLeavesPaginator;
     this.dataSourceTypes.paginator = this.TableTypesPaginator;
@@ -132,6 +148,10 @@ applyFilterTypes(filterValue: string) {
     };
     //console.log(this.dataSource.filter);
   }
+
+  log() {
+    console.log("what to do...");
+  }
 }
 
 interface UserPersonalLeaveTypes {
@@ -139,4 +159,12 @@ interface UserPersonalLeaveTypes {
   limit: number,
   carryover: number,
   requestedHours: number
+}
+
+interface PersonalLeaveRequests {
+  id: string;
+  leaveType: string;
+  fromDate: Date;
+  toDate: Date;
+  status: LeaveRequestApiModel.StatusEnum;
 }

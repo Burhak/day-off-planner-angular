@@ -1,41 +1,37 @@
 <app-navigation></app-navigation>
 <app-error></app-error>
 
-<div *ngIf="isDataLoaded" class="pageContent">
+<div *ngIf="leavesReady" class="pageContent">
   <div class="leaveTypeList">
-    <h2 class="title">Leave types</h2>
+    <h2 class="title">Leave requests</h2>
     <mat-form-field>
       <input matInput (keyup)="applyFilterLeaves($event.target.value)" placeholder="Filter">
     </mat-form-field>
     <table mat-table [dataSource]="dataSourceLeaves" matSort #TableLeavesSort="matSort">
-      <ng-container matColumnDef="leaveType.name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let personalLeaveType" class="leaveTypeName"> {{personalLeaveType.leaveType.name}} </td>
+      <ng-container matColumnDef="leaveType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type </th>
+        <td mat-cell *matCellDef="let leaves" class="leaveTypeName"> {{leaves.leaveType}} </td>
       </ng-container>
-      <ng-container matColumnDef="leaveType.approvalNeeded">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Approval needed </th>
-        <td mat-cell *matCellDef="let personalLeaveType"> {{personalLeaveType.leaveType.approvalNeeded}} </td>
+      <ng-container matColumnDef="fromDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date </th>
+        <td mat-cell *matCellDef="let leaves"> {{leaves.fromDate | date:'medium'}} </td>
       </ng-container>
-      <ng-container matColumnDef="limit">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Limit </th>
-        <td mat-cell *matCellDef="let personalLeaveType"> {{personalLeaveType.limit}} </td>
+      <ng-container matColumnDef="toDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> To Date </th>
+        <td mat-cell *matCellDef="let leaves"> {{leaves.toDate | date:'medium'}} </td>
       </ng-container>
-      <ng-container matColumnDef="carryover">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Carryover </th>
-        <td mat-cell *matCellDef="let personalLeaveType"> {{personalLeaveType.carryover}} </td>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let leaves"> {{leaves.status}} </td>
       </ng-container>
-      <ng-container matColumnDef="requestedHours">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Spent hours </th>
-        <td mat-cell *matCellDef="let personalLeaveType"> {{personalLeaveType.requestedHours}} </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let personalLeaveType; columns: displayedColumns;" (click)="openLeaveType(personalLeaveType.leaveType.id)"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsLeaves"></tr>
+      <tr mat-row *matRowDef="let leaves; columns: displayedColumnsLeaves;" (click)="log()"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons #TableLeavesPaginator="matPaginator"></mat-paginator>
 
   </div>
 
-  <div *ngIf="isDataLoaded" class="pageContent">
+  <div class="pageContent">
     <div class="leaveTypeList">
       <h2 class="title">Leave types</h2>
       <mat-form-field>
@@ -62,11 +58,10 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Spent hours </th>
           <td mat-cell *matCellDef="let personalLeaveType"> {{personalLeaveType.requestedHours}} </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let personalLeaveType; columns: displayedColumns;" (click)="openLeaveType(personalLeaveType.leaveType.id)"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTypes"></tr>
+        <tr mat-row *matRowDef="let personalLeaveType; columns: displayedColumnsTypes;" (click)="log()"></tr>
       </table>
       <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons #TableTypesPaginator="matPaginator"></mat-paginator>
 
     </div>
-    <button (click)="helpfulF()">HelpfulFunc</button>
   </div>
