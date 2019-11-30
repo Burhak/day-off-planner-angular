@@ -4,25 +4,34 @@
 <div *ngIf="leavesReady" class="pageContent">
   <div class="leaveTypeList">
     <h2 class="title">Leave requests</h2>
-    <mat-form-field>
+    <mat-tab-group animationDuration="0ms" (selectedTabChange)="applyFilterLeavesExact($event.tab.textLabel!='All' ? $event.tab.textLabel : '')">
+      <mat-tab label="All"></mat-tab>
+      <mat-tab label="Pending"></mat-tab>
+      <mat-tab label="Approved"></mat-tab>
+      <mat-tab label="Rejected"></mat-tab>
+    </mat-tab-group>
+    <mat-form-field hidden>
       <input matInput (keyup)="applyFilterLeaves($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    <mat-form-field hidden>
+      <input matInput (keyup)="applyFilterLeavesExact($event.target.value)" placeholder="Filter">
     </mat-form-field>
     <table mat-table [dataSource]="dataSourceLeaves" matSort #TableLeavesSort="matSort">
       <ng-container matColumnDef="leaveType">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type </th>
-        <td mat-cell *matCellDef="let leaves" class="leaveTypeName"> {{leaves.leaveType}} </td>
+        <td mat-cell *matCellDef="let leaves" class="leaveTypeName minWidth250"> {{leaves.leaveType}} </td>
       </ng-container>
       <ng-container matColumnDef="fromDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date </th>
-        <td mat-cell *matCellDef="let leaves"> {{leaves.fromDate | date:'medium'}} </td>
+        <td mat-cell *matCellDef="let leaves" class="minWidth250"> {{leaves.fromDate | date:'medium'}} </td>
       </ng-container>
       <ng-container matColumnDef="toDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> To Date </th>
-        <td mat-cell *matCellDef="let leaves"> {{leaves.toDate | date:'medium'}} </td>
+        <td mat-cell *matCellDef="let leaves" class="minWidth250"> {{leaves.toDate | date:'medium'}} </td>
       </ng-container>
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let leaves"> {{leaves.status}} </td>
+        <td mat-cell *matCellDef="let leaves" class="minWidth140"> {{leaves.status}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumnsLeaves"></tr>
       <tr mat-row *matRowDef="let leaves; columns: displayedColumnsLeaves;" (click)="log()"></tr>

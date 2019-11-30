@@ -140,6 +140,15 @@ applyFilterLeaves(filterValue: string) {
     //console.log(this.dataSource.filter);
   }
 
+  applyFilterLeavesExact(filterValue: string) {
+    this.dataSourceLeaves.filter = filterValue.trim().toLowerCase();
+    this.dataSourceLeaves.filterPredicate = function (data: PersonalLeaveRequests, filterValue: string) {
+      return data.status
+        .trim()
+        .toLocaleLowerCase() === filterValue;
+    };
+  }
+
 applyFilterTypes(filterValue: string) {
   this.dataSourceTypes.filter = filterValue.trim().toLowerCase();
   this.dataSourceTypes.filterPredicate = (data: any, filter) => {
@@ -149,8 +158,8 @@ applyFilterTypes(filterValue: string) {
     //console.log(this.dataSource.filter);
   }
 
-  log() {
-    console.log("what to do...");
+  log(event) {
+    console.log(event);
   }
 }
 
