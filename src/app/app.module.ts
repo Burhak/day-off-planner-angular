@@ -49,7 +49,7 @@ import {LeaveTypeComponent} from './component/leave-type/leave-type.component';
 import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component";
 import { SettingsComponent } from './component/settings/settings.component';
 import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
-import { AddLeaveRequestComponent } from './add-leave-request/add-leave-request.component';
+import { AddLeaveRequestComponent } from './component/add-leave-request/add-leave-request.component';
 
 @NgModule({
   declarations: [
