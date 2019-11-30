@@ -112,7 +112,7 @@ getUserLimits() {
       this.userApi.getCarryover(this.user.id, element.leaveType.id).subscribe(
         (leaveCarryOver: CarryoverApiModel) => {
           if (leaveCarryOver != null) this.userPersonalLeaveTypes[index].carryover = leaveCarryOver.carryover;
-          else this.userPersonalLeaveTypes[index].carryover = this.userPersonalLeaveTypes[index].leaveType.carryover;
+          else this.userPersonalLeaveTypes[index].carryover = 0;
           this.fillData();
         }
       );
