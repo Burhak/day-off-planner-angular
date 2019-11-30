@@ -49,6 +49,7 @@ import {LeaveTypeComponent} from './component/leave-type/leave-type.component';
 import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component";
 import { SettingsComponent } from './component/settings/settings.component';
 import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
+import { AddLeaveRequestComponent } from './add-leave-request/add-leave-request.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
     LeaveTypeComponent,
     DeleteLeaveTypeDialogComponent,
     SettingsComponent,
-    SettingDialogComponent
+    SettingDialogComponent,
+    AddLeaveRequestComponent
   ],
   entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent],
   imports: [
@@ -153,6 +155,11 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
         path: 'admin/settings',
         component: SettingsComponent,
         canActivate: [AuthGuad, AdminGuard]
+      },
+      {
+        path: 'addLeaveRequest',
+        component: AddLeaveRequestComponent,
+        canActivate: [AuthGuad]
       }
     ], {onSameUrlNavigation: 'reload'})
   ],
