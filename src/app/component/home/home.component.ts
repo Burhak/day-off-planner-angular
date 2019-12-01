@@ -3,8 +3,9 @@ import {
   LeaveTypeApiModel, LeaveTypeService, UserService, LimitApiModel,
   CarryoverApiModel, UserApiModel, RequestedHoursApiModel, LeaveService, LeaveRequestApiModel
 } from '../../api';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatTabGroup } from '@angular/material';
 import { UserInfoService } from '../../service/user-info.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,8 @@ export class HomeComponent implements OnInit {
   @ViewChild('TableTypesPaginator', { static: false }) TableTypesPaginator: MatPaginator;
   @ViewChild('TableTypesSort', { static: false }) TableTypesSort: MatSort;
 
+  @ViewChild('tabGroup', { static: false }) tabGroup: MatTabGroup;
+
   public displayedColumnsTypes: string[] = ['leaveType.name', 'leaveType.approvalNeeded',
     'limit', 'carryover', 'requestedHours'];
   public displayedColumnsLeaves: string[] = ['leaveType', 'fromDate', 'toDate', 'status'];
@@ -29,10 +32,16 @@ export class HomeComponent implements OnInit {
   private userPromise: Promise<UserApiModel>;
   private user: UserApiModel;
   public userPersonalLeaveTypes: Array<UserPersonalLeaveTypes> = [];
-  public leaveRequests: Array<PersonalLeaveRequests> = []; 
+  public leaveRequests: Array<PersonalLeaveRequests>;
+  public date;
+  public dateControl;
 
   constructor(private leaveType: LeaveTypeService, private userApi: UserService,
-    private userService: UserInfoService, private leavesApi: LeaveService) {}
+    private userService: UserInfoService, private leavesApi: LeaveService) {
+    this.date = new Date();
+    this.date.setMonth(this.date.getMonth() - 6);
+    this.dateControl = new FormControl(this.date);
+  }
 
   ngOnInit() {
     this.isDataLoaded = false;
@@ -48,7 +57,8 @@ export class HomeComponent implements OnInit {
   }
 
   getAllMyLeaves() {
-    this.leavesApi.filterLeaveRequests().subscribe((leaves: LeaveRequestApiModel[]) => {
+    this.leaveRequests = [];
+    this.leavesApi.filterLeaveRequests(this.pgFormatDate(this.date)).subscribe((leaves: LeaveRequestApiModel[]) => {
       leaves.forEach((element) => {
         let obj: PersonalLeaveRequests = {
           id: element.id,
@@ -60,6 +70,7 @@ export class HomeComponent implements OnInit {
         this.leaveRequests.push(obj);
       });
       this.leavesReady = true;
+      this.fillDataLeaves();
     });
   }
 
@@ -72,30 +83,33 @@ export class HomeComponent implements OnInit {
           carryover: -1,
           requestedHours: -1
         };
-        this.userPersonalLeaveTypes.push(obj);
+        this.userPersonalLeaveTypes.push(obj);  
       });
+      this.isDataLoaded = true;
       this.getUserLimits();
       this.getRequestedHours();
       this.getAllMyLeaves();
     });
   }
 
-  fillData() {
+  fillDataLeaves() {
     this.dataSourceLeaves = new MatTableDataSource<PersonalLeaveRequests>(this.leaveRequests);
-    this.dataSourceTypes = new MatTableDataSource<UserPersonalLeaveTypes>(this.userPersonalLeaveTypes);
-    this.dataSourceLeaves.paginator = this.TableLeavesPaginator;
-    this.dataSourceTypes.paginator = this.TableTypesPaginator;
+    this.dataSourceLeaves.paginator = this.TableLeavesPaginator;  
     this.dataSourceLeaves.sortingDataAccessor = (item, property) => {
       if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item)
       return item[property];
     };
+    setTimeout(() => this.dataSourceLeaves.sort = this.TableLeavesSort);
+  }
+
+  fillDataTypes() {
+    this.dataSourceTypes = new MatTableDataSource<UserPersonalLeaveTypes>(this.userPersonalLeaveTypes);
+    this.dataSourceTypes.paginator = this.TableTypesPaginator;
     this.dataSourceTypes.sortingDataAccessor = (item, property) => {
       if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item)
       return item[property];
     };
-    this.dataSourceLeaves.sort = this.TableLeavesSort;
-    this.dataSourceTypes.sort = this.TableTypesSort;
-    this.isDataLoaded = true;
+    setTimeout(() => this.dataSourceTypes.sort = this.TableTypesSort);
   }
 
 getUserLimits() {
@@ -106,14 +120,14 @@ getUserLimits() {
         (leaveLimit: LimitApiModel) => {
           if (leaveLimit != null) this.userPersonalLeaveTypes[index].limit = leaveLimit.limit;
           else this.userPersonalLeaveTypes[index].limit = this.userPersonalLeaveTypes[index].leaveType.limit;
-          this.fillData();
+          this.fillDataTypes();
         }
       );
       this.userApi.getCarryover(this.user.id, element.leaveType.id).subscribe(
         (leaveCarryOver: CarryoverApiModel) => {
           if (leaveCarryOver != null) this.userPersonalLeaveTypes[index].carryover = leaveCarryOver.carryover;
           else this.userPersonalLeaveTypes[index].carryover = 0;
-          this.fillData();
+          this.fillDataTypes();
         }
       );
     });
@@ -125,7 +139,7 @@ getRequestedHours() {
       this.userApi.getRequestedHours(this.user.id, element.leaveType.id).subscribe(
         (rH: RequestedHoursApiModel) => {
           this.userPersonalLeaveTypes[index].requestedHours = rH.requestedHours;
-          this.fillData();
+          this.fillDataTypes();
         }
       );
     });
@@ -149,6 +163,14 @@ applyFilterLeaves(filterValue: string) {
     };
   }
 
+  applyFilterLeavesDate(filterValue: string) {
+    if (!this.dateControl.valid) return;
+    this.date = new Date(filterValue);
+    console.log(this.pgFormatDate(this.date));
+    this.getAllMyLeaves();
+    this.tabGroup.selectedIndex = 0;
+  }
+
 applyFilterTypes(filterValue: string) {
   this.dataSourceTypes.filter = filterValue.trim().toLowerCase();
   this.dataSourceTypes.filterPredicate = (data: any, filter) => {
@@ -159,8 +181,22 @@ applyFilterTypes(filterValue: string) {
   }
 
   log(event) {
-    console.log(event);
+    console.log(typeof event);
+    let date: Date = new Date(event);
+    console.log(date.toString());
   }
+
+  // Convert Javascript date to api accepted date
+
+  pgFormatDate(date) {
+  function zeroPad(d) {
+    return ("0" + d).slice(-2)
+  }
+
+  var parsed = new Date(date)
+
+  return parsed.getUTCFullYear() + '-' + zeroPad(parsed.getMonth() + 1) + '-' + zeroPad(parsed.getDate());
+}
 }
 
 interface UserPersonalLeaveTypes {

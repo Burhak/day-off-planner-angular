@@ -2,14 +2,42 @@
   background-color: rgb(52,73,94) !important;
 }
 
-.minWidth140 {
-  min-width:140px;
+::ng-deep .mat-calendar-body-selected {
+  background-color: rgb(52,73,94) !important;
 }
 
-.minWidth250 {
-  min-width: 250px;
+::ng-deep .mat-icon-button {
+  color: rgb(52,73,94) !important;
 }
 
+:host {
+  background-color: rgb(245,245,245);
+}
+
+@media (min-width: 1000px) {
+  .minWidth140 {
+    min-width:140px;
+  }
+
+  .minWidth250 {
+    min-width: 250px;
+  }
+
+  .minWidth900 {
+    min-width: 900px;
+  }
+
+  .dateFilter {
+    position: absolute;
+    width: 200px;
+    right: 0px;
+    z-index:10;
+  }
+
+  .relative {
+    position: relative;
+  }
+}
 
 .pageContent {
   justify-content: center;
@@ -18,10 +46,11 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  background-color: rgb(245,245,245);
 }
 
 .leaveTypeList {
-  margin: 0 auto;
+  margin: 36px auto;
   display: block;
   width: fit-content;
   padding: 2em 2em 1em;
@@ -37,10 +66,13 @@
 tr {
   background-color: rgb(245,245,245);
   cursor: pointer;
+  height: fit-content !important;
 }
 
 td {
   border: 1px solid rgb(220,220,220);
+  text-align: center !important;
+  padding: 0.5em 2em !important;
 }
 
 tr:hover {
@@ -51,6 +83,10 @@ th {
   text-align: center;
   background-color: rgb(44,62,80);
   color: white;
+  padding: 1em 2em !important;
+  align-content: center !important;
+  font-weight: bold !important;
+  font-size: 1em !important;
 }
 
 .leaveTypeName {
