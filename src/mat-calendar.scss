@@ -1,0 +1,40 @@
+.mat-calendar-header {
+  padding: 0 0.5em 0!important;
+  background-color: rgb(44, 62, 80);
+  color: white;
+}
+
+.mat-button-wrapper{
+  font-weight: bold;
+}
+
+.mat-calendar{
+  padding: 0 0 0.6em;
+  width: 24em;
+  background-color: whitesmoke;
+  border-radius: 2em;
+}
+
+.mat-calendar-content{
+  width:100%;
+  padding: 0 1.5em 0.5em!important;
+}
+
+.mat-calendar-body-begin-range:not(.mat-calendar-body-end-range) {
+  border-radius: 100% 0 0 100%;
+  background-color: #f0e7ff;
+}
+
+.mat-calendar-cell-semi-selected {
+  background-color: #f0e7ff;
+}
+
+.mat-calendar-body-end-range:not(.mat-calendar-body-begin-range) {
+  border-radius: 0 100% 100% 0;
+  background-color: #f0e7ff;
+}
+
+.mat-calendar-controls {
+  display: flex;
+  margin: 0 calc(33% / 7 - 16px) 5%!important;
+}

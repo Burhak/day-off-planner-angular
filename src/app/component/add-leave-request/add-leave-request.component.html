@@ -1,1 +1,48 @@
-<p>add-leave-request works!</p>
+<app-navigation></app-navigation>
+<app-error></app-error>
+<div class="pageContent">
+  <div class="addLeaveRequest-form">
+    <h2 class="title">Add leave request</h2>
+    <form (submit)="createLeaveRequest($event)">
+
+      <mat-form-field class="addLeaveReques-element">
+        <mat-label>Leave type</mat-label>
+        <mat-select [formControl]="leaveTypesSelectControl" id="leaveTypes">
+          <mat-option *ngFor="let leaveType of leaveTypeList" [value]="leaveType.id">
+            {{leaveType.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="leaveTypesSelectControl.hasError('required')">
+          Leave type is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <div class="calendarContainer">
+        <span class="dateRange" *ngIf="dateRange else dateNotSet">
+          <h5 class="calendarTitle">{{ dateRange.begin | date }} - {{ dateRange.end | date }}</h5>
+        </span>
+        <ng-template #dateNotSet>
+          <h5 class="calendarTitle">Calendar</h5>
+        </ng-template>
+        <sat-calendar [rangeMode]="true"
+                      (dateRangesChange)="dateRangeChange($event)">
+        </sat-calendar>
+      </div>
+
+      <div class="text-danger text-center">
+        {{errorMsg}}
+      </div>
+
+      <div class="buttonGroup">
+        <button mat-raised-button type="submit" id="submitBtn" class="submitBtn" [disabled]="buttonDisabled">Confirm</button>
+        <button mat-raised-button type="button" id="backBtn" routerLink="" class="backBtn">Back</button>
+      </div>
+    </form>
+
+  </div>
+
+  <div class="text-center">
+    <h6 class="message" [className]="isRequestCreated ? 'messageVisible' : 'messageHidden'"> <mat-icon>check_circle_outline</mat-icon><span class="messageText">Leave request has been created successfully!</span></h6>
+  </div>
+
+</div>

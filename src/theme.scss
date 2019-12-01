@@ -75,3 +75,6 @@ $my-custom-warn: mat-palette($mat-red);
 $my-custom-theme: mat-light-theme($my-custom-primary, $my-custom-accent, $my-custom-warn);
 
 @include angular-material-theme($my-custom-theme);
+
+@import '~mat-range-datepicker/theming';
+@include mat-range-datepicker-theme($my-custom-theme);

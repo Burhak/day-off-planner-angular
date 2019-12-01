@@ -1,25 +1,27 @@
-
-tr{
-  background-color: rgb(245,245,245);
-  cursor: pointer;
-}
-
-td{
-  border: 1px solid rgb(220,220,220);
-}
-
 tr:hover {
   background-color: rgba(52,73,94,0.1);
 }
 
-th {
-  text-align: center;
+th{
   background-color: rgb(44,62,80);
   color: white;
+  padding: 1em 2em!important;
+  text-align: left!important;
+  align-content: center!important;
+  font-weight: bold!important;
+  font-size: 1em!important;
 }
 
 td{
+  border: 1px solid rgb(220,220,220);
+  text-align: left!important;
+  padding: 0.5em 2em!important;
+}
 
+tr{
+  height: fit-content!important;
+  background-color: rgb(245,245,245);
+  cursor: pointer;
 }
 
 .pageContent {

@@ -2,8 +2,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule,
-  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule} from '@angular/material';
+import {
+  MatInputModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatToolbarModule,
+  MatSelectModule,
+  MatCheckboxModule,
+  MatMenuModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatIconModule,
+  MatDialogModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatRadioModule
+} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -19,7 +33,7 @@ import {
   AdminService,
   UserService,
   LeaveTypeService,
-  SettingService
+  SettingService, LeaveService
 } from './api';
 
 import { AppComponent } from './app.component';
@@ -50,6 +64,8 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
 import { SettingsComponent } from './component/settings/settings.component';
 import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
 import { AddLeaveRequestComponent } from './component/add-leave-request/add-leave-request.component';
+import {MatRangeDatepickerModule, MatRangeNativeDateModule} from 'mat-range-datepicker';
+import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
 
 @NgModule({
   declarations: [
@@ -91,6 +107,11 @@ import { AddLeaveRequestComponent } from './component/add-leave-request/add-leav
     MatSortModule,
     MatIconModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    SatDatepickerModule,
+    SatNativeDateModule,
+    MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -184,7 +205,8 @@ import { AddLeaveRequestComponent } from './component/add-leave-request/add-leav
     AuthGuad,
     CookieService,
     LeaveTypeService,
-    SettingService
+    SettingService,
+    LeaveService
   ],
   bootstrap: [AppComponent]
 })
