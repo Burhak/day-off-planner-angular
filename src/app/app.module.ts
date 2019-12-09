@@ -176,7 +176,7 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
     AuthGuad,
     CookieService,
     LeaveTypeService,
-    LeaveService
+    LeaveService,
     SettingService
   ],
   bootstrap: [AppComponent]
