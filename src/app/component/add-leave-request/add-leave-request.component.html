@@ -18,20 +18,38 @@
       </mat-form-field>
 
       <div class="calendarContainer">
-        <span class="dateRange" *ngIf="dateRange else dateNotSet">
-          <h5 class="calendarTitle">{{ dateRange.begin | date }} - {{ dateRange.end | date }}</h5>
-        </span>
-        <ng-template #dateNotSet>
-          <h5 class="calendarTitle">Calendar</h5>
-        </ng-template>
+        <h5 class="dateRange">Calendar</h5>
         <sat-calendar [rangeMode]="true"
                       (dateRangesChange)="dateRangeChange($event)">
         </sat-calendar>
       </div>
 
+      <span class="dateRange" [className]="dateRange ? 'dateChosen' : 'dateNotChosen'">
+          <h6 class="calendarTitle">{{ dateRange?.begin | date }}
+            <mat-form-field class="select">
+              <mat-select id="fromHour" name="fromHour" [ngModel]="workdayStart" [formControl]="fromHourSelectControl">
+                <mat-option *ngFor="let hour of possibleHours" [value]="hour" >
+                  <span *ngIf="hour > 9">{{hour}}:00</span>
+                  <span *ngIf="hour <= 9">0{{hour}}:00</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <span> - {{ dateRange?.end | date }} </span>
+            <mat-form-field class="select">
+              <mat-select id="toHour" name="toHour" [ngModel]="workdayStart+workdayLength-1" [formControl]="toHourSelectControl">
+                <mat-option *ngFor="let hour of possibleHours" [value]="hour">
+                  <span *ngIf="hour > 9">{{hour}}:00</span>
+                  <span *ngIf="hour <= 9">0{{hour}}:00</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </h6>
+      </span>
+
       <div class="text-danger text-center">
         {{errorMsg}}
       </div>
+
 
       <div class="buttonGroup">
         <button mat-raised-button type="submit" id="submitBtn" class="submitBtn" [disabled]="buttonDisabled">Confirm</button>
