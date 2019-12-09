@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 
 import { TokenInterceptor } from './interceptor/token.interceptor';
 
-import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService, LeaveService } from './api';
+import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService, LeaveService, SettingService } from './api';
 
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './component/login-form/login-form.component';
@@ -39,6 +39,8 @@ import {AddLeaveTypeComponent} from './component/add-leave-type/add-leave-type.c
 import {LeaveTypesComponent} from './component/leave-types/leave-types.component';
 import {LeaveTypeComponent} from './component/leave-type/leave-type.component';
 import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component";
+import { SettingsComponent } from './component/settings/settings.component';
+import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
 
 @NgModule({
   declarations: [
@@ -58,9 +60,11 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
     LeaveTypesComponent,
     AddLeaveTypeComponent,
     LeaveTypeComponent,
-    DeleteLeaveTypeDialogComponent
+    DeleteLeaveTypeDialogComponent,
+    SettingsComponent,
+    SettingDialogComponent
   ],
-  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent],
+  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,
@@ -141,6 +145,11 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
         canActivate: [AuthGuad, AdminGuard]
       },
       {
+        path: 'admin/settings',
+        component: SettingsComponent,
+        canActivate: [AuthGuad, AdminGuard]
+      },
+      {
         path: '**',
         redirectTo: ''
       }
@@ -168,6 +177,7 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
     CookieService,
     LeaveTypeService,
     LeaveService
+    SettingService
   ],
   bootstrap: [AppComponent]
 })

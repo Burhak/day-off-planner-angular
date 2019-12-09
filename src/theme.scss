@@ -1,0 +1,77 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$my-primary: (
+  50 : rgb(44,62,80),
+  100 : rgb(44,62,80),
+  200 : rgb(44,62,80),
+  300 : rgb(44,62,80),
+  400 : rgb(44,62,80),
+  500 : rgb(44,62,80),
+  600 : rgb(44,62,80),
+  700 : rgb(44,62,80),
+  800 : rgb(44,62,80),
+  900 : rgb(44,62,80),
+  A100 : rgb(44,62,80),
+  A200 : rgb(44,62,80),
+  A400 : rgb(44,62,80),
+  A700 : rgb(44,62,80),
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$my-accent: (
+  50 : rgb(44,62,80),
+  100 : rgb(44,62,80),
+  200 : rgb(44,62,80),
+  300 : rgb(44,62,80),
+  400 : rgb(44,62,80),
+  500 : rgb(44,62,80),
+  600 : rgb(44,62,80),
+  700 : rgb(44,62,80),
+  800 : rgb(44,62,80),
+  900 : rgb(44,62,80),
+  A100 : rgb(44,62,80),
+  A200 : rgb(44,62,80),
+  A400 : rgb(44,62,80),
+  A700 : rgb(44,62,80),
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+/* ======== Angular material custom themes ======== */
+$my-custom-primary: mat-palette($my-primary);
+$my-custom-accent: mat-palette($my-accent);
+$my-custom-warn: mat-palette($mat-red);
+
+$my-custom-theme: mat-light-theme($my-custom-primary, $my-custom-accent, $my-custom-warn);
+
+@include angular-material-theme($my-custom-theme);

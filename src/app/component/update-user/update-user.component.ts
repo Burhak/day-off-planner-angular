@@ -13,8 +13,9 @@ export class UpdateUserComponent implements OnInit {
 
   public form: FormGroup;
   public buttonDisabled: boolean;
-  public posibleUserSupervisors: Array<UserApiModel> = [];
-  public selectControl: FormControl = new FormControl();
+  public posibleUserSupervisorsOrApprovers: Array<UserApiModel> = [];
+  public supervisorSelectControl: FormControl = new FormControl();
+  public approversSelectControl: FormControl = new FormControl();
   public isUserUpdated: boolean;
   public errorMsg: string = '';
 
@@ -27,7 +28,7 @@ export class UpdateUserComponent implements OnInit {
       const allUsers: Array<UserApiModel> = user;
       const index = allUsers.findIndex(allUsers => allUsers.id === this.user.id); //find currentUser in allUsers
       allUsers.splice(index, 1); //delete currentUser from allUsers
-      this.posibleUserSupervisors = allUsers;
+      this.posibleUserSupervisorsOrApprovers = allUsers;
     });
   }
 
@@ -47,7 +48,7 @@ export class UpdateUserComponent implements OnInit {
   }
 
   goBack() {
-    this.userUpdatedNotify()
+    this.userUpdatedNotify();
   }
 
 
@@ -64,10 +65,10 @@ export class UpdateUserComponent implements OnInit {
       lastName: event.target.lastname.value,
       email: event.target.email.value,
       admin: event.target.admin.checked,
-      supervisor: this.selectControl.value,
+      supervisor: this.supervisorSelectControl.value,
       jobDescription: event.target.jobdescription.value,
       phone: event.target.phone.value,
-      approvers: null
+      approvers: this.approversSelectControl.value
     };
 
     this.buttonDisabled = true;
@@ -83,7 +84,7 @@ export class UpdateUserComponent implements OnInit {
         console.log(error.status);
         if (error.status == 409) {
           this.ngZone.run(() => {
-            this.errorMsg = 'Email already taken'
+            this.errorMsg = 'Email already taken';
           })
         } else throw error;
       }

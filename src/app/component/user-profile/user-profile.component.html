@@ -26,6 +26,15 @@
             none
           </ng-template>
         </h3>
+        <h3>
+          <strong>Approvers: </strong>
+          <span *ngIf="userApprovers.length!=0; else noApprovers">
+            <span *ngFor="let userApprover of userApprovers;let i = index"><span *ngIf="i!=0">, </span>{{userApprover?.firstName}} {{userApprover?.lastName}}</span>
+          </span>
+          <ng-template #noApprovers>
+            none
+          </ng-template>
+        </h3>
       </div>
     </div>
   </div>

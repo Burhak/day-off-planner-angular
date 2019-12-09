@@ -1,0 +1,21 @@
+<form [formGroup]="form" (submit)="submit($event)">
+  <h2>{{data.setting.key}}</h2>
+  <mat-dialog-content>
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Value" id="settingValue" formControlName="settingValue" [value]="data.setting.value">
+      <mat-error *ngIf="form.hasError('min', ['settingValue'])">
+        Value must be greater than or equal to <strong>{{data.setting.min}}</strong>
+      </mat-error>
+      <mat-error *ngIf="form.hasError('max', ['settingValue'])">
+        Value must be lower than or equal to <strong>{{data.setting.max}}</strong>
+      </mat-error>
+      <mat-error *ngIf="form.hasError('pattern', ['settingValue'])">
+        Only digits are <strong>allowed</strong>
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button type="submit">Edit</button>
+    <button mat-button mat-dialog-close mat-dialog-close=false type="button">Cancel</button>
+  </mat-dialog-actions>
+</form>
