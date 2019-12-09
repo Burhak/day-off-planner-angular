@@ -42,7 +42,7 @@
           <td mat-cell *matCellDef="let leave" class="minWidth140"> {{leave.status}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumnsLeaves"></tr>
-        <tr mat-row *matRowDef="let leaves; columns: displayedColumnsLeaves;" (click)="log()"></tr>
+        <tr mat-row *matRowDef="let leaves; columns: displayedColumnsLeaves;"></tr>
       </table>
       <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons #TableLeavesPaginator="matPaginator"></mat-paginator>
     </div>
@@ -76,7 +76,7 @@
           <td mat-cell *matCellDef="let leaveType"> {{leaveType.requestedHours | async}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumnsTypes"></tr>
-        <tr mat-row *matRowDef="let leaveType; columns: displayedColumnsTypes;" (click)="log()"></tr>
+        <tr mat-row *matRowDef="let leaveType; columns: displayedColumnsTypes;"></tr>
       </table>
       <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons #TableTypesPaginator="matPaginator"></mat-paginator>
 
