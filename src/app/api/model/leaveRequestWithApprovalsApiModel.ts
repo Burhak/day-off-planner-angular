@@ -10,9 +10,11 @@
  * Do not edit the class manually.
  */import { LeaveRequestApiModel } from './leaveRequestApiModel';
 import { LeaveRequestApprovalApiModel } from './leaveRequestApprovalApiModel';
+import { LeaveRequestMessageApiModel } from './leaveRequestMessageApiModel';
 
 
 export interface LeaveRequestWithApprovalsApiModel { 
     leaveRequest: LeaveRequestApiModel;
     readonly approvals: Array<LeaveRequestApprovalApiModel>;
+    readonly messages?: Array<LeaveRequestMessageApiModel>;
 }

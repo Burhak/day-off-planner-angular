@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule,
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatTabsModule, MatDatepickerModule, MatNativeDateModule,
   MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -12,15 +12,7 @@ import { environment } from '../environments/environment';
 
 import { TokenInterceptor } from './interceptor/token.interceptor';
 
-import {
-  BASE_PATH,
-  Configuration,
-  AuthService as LoginService,
-  AdminService,
-  UserService,
-  LeaveTypeService,
-  SettingService
-} from './api';
+import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService, LeaveService, SettingService } from './api';
 
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './component/login-form/login-form.component';
@@ -89,6 +81,9 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
     MatSortModule,
     MatIconModule,
     MatDialogModule,
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -153,6 +148,10 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
         path: 'admin/settings',
         component: SettingsComponent,
         canActivate: [AuthGuad, AdminGuard]
+      },
+      {
+        path: '**',
+        redirectTo: ''
       }
     ], {onSameUrlNavigation: 'reload'})
   ],
@@ -177,6 +176,7 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
     AuthGuad,
     CookieService,
     LeaveTypeService,
+    LeaveService
     SettingService
   ],
   bootstrap: [AppComponent]

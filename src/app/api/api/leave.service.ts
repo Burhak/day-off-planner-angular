@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { LeaveRequestAddMessageApiModel } from '../model/leaveRequestAddMessageApiModel';
 import { LeaveRequestApiModel } from '../model/leaveRequestApiModel';
 import { LeaveRequestCreateApiModel } from '../model/leaveRequestCreateApiModel';
 import { LeaveRequestWithApprovalsApiModel } from '../model/leaveRequestWithApprovalsApiModel';
@@ -56,6 +57,59 @@ export class LeaveService {
         return false;
     }
 
+
+    /**
+     * Add a message to leave request with given ID
+     * 
+     * @param body Message to be added to leave request
+     * @param id Leave request ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addMessage(body: LeaveRequestAddMessageApiModel, id: string, observe?: 'body', reportProgress?: boolean): Observable<LeaveRequestWithApprovalsApiModel>;
+    public addMessage(body: LeaveRequestAddMessageApiModel, id: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LeaveRequestWithApprovalsApiModel>>;
+    public addMessage(body: LeaveRequestAddMessageApiModel, id: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LeaveRequestWithApprovalsApiModel>>;
+    public addMessage(body: LeaveRequestAddMessageApiModel, id: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling addMessage.');
+        }
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling addMessage.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<LeaveRequestWithApprovalsApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/message`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * Approve/reject leave request with given ID
@@ -210,13 +264,15 @@ export class LeaveService {
      * @param status List of statuses to include in result (all if not set)
      * @param users List of users to include in result (all if not set)
      * @param leaveTypes List of leave types to include in result (all if not set)
+     * @param approvers List of approvers to include in result (all if not set)
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<Array<LeaveRequestApiModel>>;
-    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LeaveRequestApiModel>>>;
-    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LeaveRequestApiModel>>>;
-    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, approvers?: Array<string>, observe?: 'body', reportProgress?: boolean): Observable<Array<LeaveRequestApiModel>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, approvers?: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LeaveRequestApiModel>>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, approvers?: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LeaveRequestApiModel>>>;
+    public filterLeaveRequests(from?: string, to?: string, status?: Array<string>, users?: Array<string>, leaveTypes?: Array<string>, approvers?: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
 
 
 
@@ -243,6 +299,11 @@ export class LeaveService {
         if (leaveTypes) {
             leaveTypes.forEach((element) => {
                 queryParameters = queryParameters.append('leaveTypes', <any>element);
+            })
+        }
+        if (approvers) {
+            approvers.forEach((element) => {
+                queryParameters = queryParameters.append('approvers', <any>element);
             })
         }
 

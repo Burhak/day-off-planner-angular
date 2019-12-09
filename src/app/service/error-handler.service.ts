@@ -48,9 +48,7 @@ export class ErrorHandlerService implements ErrorHandler {
         const auth = this.injector.get(UserInfoService);
         const router = this.injector.get(Router);
         const ngZone = this.injector.get(NgZone);
-        auth.removeToken();
-        auth.removeUser();
-        ngZone.run(() => router.navigate(['login']));
+        auth.logout(() => ngZone.run(() => router.navigate(['login'])));
         return 'Session expired';
       }
     }
