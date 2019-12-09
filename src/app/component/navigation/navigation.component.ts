@@ -22,9 +22,7 @@ export class NavigationComponent implements OnInit {
   logOut() {
     this.authService.logoutUser().subscribe(
       response => {
-        this.userService.removeToken();
-        this.userService.removeUser();
-        this.router.navigate(['login']);
+        this.userService.logout(() => this.router.navigate(['login']));
       }, error => {
         throw error;
       }

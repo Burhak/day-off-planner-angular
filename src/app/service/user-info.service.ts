@@ -35,17 +35,15 @@ export class UserInfoService {
     this.userPromise = new Promise<UserApiModel>((resolve, _) => resolve(user));
   }
 
-  removeUser() {
+  logout(callback: Function = null) {
     this.user = null;
     this.userPromise = null;
+    this.authService.removeToken();
+    if (callback != null) callback();
   }
 
   saveToken(token: string, expireDate: Date) {
     this.authService.saveToken(token, expireDate);
-  }
-
-  removeToken() {
-    this.authService.removeToken();
   }
 
   get hasAdminPrivileges() {
