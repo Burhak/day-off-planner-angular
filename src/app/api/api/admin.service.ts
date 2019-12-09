@@ -19,6 +19,10 @@ import { Observable }                                        from 'rxjs';
 
 import { LeaveTypeApiModel } from '../model/leaveTypeApiModel';
 import { LeaveTypeCreateApiModel } from '../model/leaveTypeCreateApiModel';
+import { LimitApiModel } from '../model/limitApiModel';
+import { LimitUpdateApiModel } from '../model/limitUpdateApiModel';
+import { SettingApiModel } from '../model/settingApiModel';
+import { SettingUpdateApiModel } from '../model/settingUpdateApiModel';
 import { UserApiModel } from '../model/userApiModel';
 import { UserCreateApiModel } from '../model/userCreateApiModel';
 
@@ -29,7 +33,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class AdminService {
 
-    protected basePath = 'https://virtserver.swaggerhub.com/Burhak/DayOffPlanner/1.0.0';
+    protected basePath = '/';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -196,6 +200,52 @@ export class AdminService {
     }
 
     /**
+     * Delete user individual limit
+     * 
+     * @param userId ID of the user
+     * @param leaveTypeId ID of the leave type
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteLimit(userId: string, leaveTypeId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteLimit(userId: string, leaveTypeId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteLimit(userId: string, leaveTypeId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteLimit(userId: string, leaveTypeId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling deleteLimit.');
+        }
+
+        if (leaveTypeId === null || leaveTypeId === undefined) {
+            throw new Error('Required parameter leaveTypeId was null or undefined when calling deleteLimit.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.delete<any>(`${this.basePath}/admin/user/${encodeURIComponent(String(userId))}/limit/${encodeURIComponent(String(leaveTypeId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Delete existing user
      * 
      * @param id ID of the user to be deleted
@@ -279,6 +329,117 @@ export class AdminService {
         }
 
         return this.httpClient.put<LeaveTypeApiModel>(`${this.basePath}/admin/leaveType/${encodeURIComponent(String(id))}`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Update user individual limit
+     * 
+     * @param body Object of limit to be set
+     * @param userId ID of the user
+     * @param leaveTypeId ID of the leave type
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateLimit(body: LimitUpdateApiModel, userId: string, leaveTypeId: string, observe?: 'body', reportProgress?: boolean): Observable<LimitApiModel>;
+    public updateLimit(body: LimitUpdateApiModel, userId: string, leaveTypeId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LimitApiModel>>;
+    public updateLimit(body: LimitUpdateApiModel, userId: string, leaveTypeId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LimitApiModel>>;
+    public updateLimit(body: LimitUpdateApiModel, userId: string, leaveTypeId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateLimit.');
+        }
+
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling updateLimit.');
+        }
+
+        if (leaveTypeId === null || leaveTypeId === undefined) {
+            throw new Error('Required parameter leaveTypeId was null or undefined when calling updateLimit.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.put<LimitApiModel>(`${this.basePath}/admin/user/${encodeURIComponent(String(userId))}/limit/${encodeURIComponent(String(leaveTypeId))}`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Update setting with given key
+     * 
+     * @param body New value of the setting
+     * @param key Key of the setting to be updated
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateSetting(body: SettingUpdateApiModel, key: string, observe?: 'body', reportProgress?: boolean): Observable<SettingApiModel>;
+    public updateSetting(body: SettingUpdateApiModel, key: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SettingApiModel>>;
+    public updateSetting(body: SettingUpdateApiModel, key: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SettingApiModel>>;
+    public updateSetting(body: SettingUpdateApiModel, key: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateSetting.');
+        }
+
+        if (key === null || key === undefined) {
+            throw new Error('Required parameter key was null or undefined when calling updateSetting.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearerAuth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.put<SettingApiModel>(`${this.basePath}/admin/setting/${encodeURIComponent(String(key))}`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,

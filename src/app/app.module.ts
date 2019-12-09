@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule,
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatTabsModule, MatDatepickerModule, MatNativeDateModule,
   MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 
 import { TokenInterceptor } from './interceptor/token.interceptor';
 
-import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService } from './api';
+import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService, LeaveService } from './api';
 
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './component/login-form/login-form.component';
@@ -77,6 +77,9 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
     MatSortModule,
     MatIconModule,
     MatDialogModule,
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -136,6 +139,10 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
         path: 'admin/leaveType',
         component: LeaveTypeComponent,
         canActivate: [AuthGuad, AdminGuard]
+      },
+      {
+        path: '**',
+        redirectTo: ''
       }
     ], {onSameUrlNavigation: 'reload'})
   ],
@@ -159,7 +166,8 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
     UserInfoService,
     AuthGuad,
     CookieService,
-    LeaveTypeService
+    LeaveTypeService,
+    LeaveService
   ],
   bootstrap: [AppComponent]
 })
