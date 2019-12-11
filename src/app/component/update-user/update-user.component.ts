@@ -59,7 +59,7 @@ export class UpdateUserComponent implements OnInit {
       console.log(this.form.valid);
       return;
     }
-    
+
     const newUser: UserCreateApiModel = {
       firstName: event.target.firstname.value,
       lastName: event.target.lastname.value,
@@ -68,7 +68,7 @@ export class UpdateUserComponent implements OnInit {
       supervisor: this.supervisorSelectControl.value,
       jobDescription: event.target.jobdescription.value,
       phone: event.target.phone.value,
-      approvers: this.approversSelectControl.value
+      approvers: this.approversSelectControl.value || []
     };
 
     this.buttonDisabled = true;

@@ -60,7 +60,7 @@ export class AddUserFormComponent implements OnInit {
       supervisor: this.supervisorSelectControl.value,
       jobDescription: event.target.jobdescription.value,
       phone: event.target.phone.value,
-      approvers: this.approversSelectControl.value
+      approvers: this.approversSelectControl.value || []
     };
 
     this.buttonDisabled = true;
