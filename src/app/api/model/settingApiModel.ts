@@ -10,14 +10,10 @@
  * Do not edit the class manually.
  */
 
-export interface UserApiModel { 
-    readonly id: string;
-    readonly firstName: string;
-    readonly lastName: string;
-    readonly email: string;
-    readonly supervisor?: string;
-    readonly admin: boolean;
-    readonly jobDescription: string;
-    readonly phone?: string;
-    readonly approvers: Array<string>;
+export interface SettingApiModel { 
+    readonly key: string;
+    readonly description: string;
+    readonly value: number;
+    readonly min?: number;
+    readonly max?: number;
 }

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule,
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatTabsModule, MatDatepickerModule, MatNativeDateModule,
   MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 
 import { TokenInterceptor } from './interceptor/token.interceptor';
 
-import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService } from './api';
+import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService, LeaveService, SettingService } from './api';
 
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './component/login-form/login-form.component';
@@ -39,6 +39,8 @@ import {AddLeaveTypeComponent} from './component/add-leave-type/add-leave-type.c
 import {LeaveTypesComponent} from './component/leave-types/leave-types.component';
 import {LeaveTypeComponent} from './component/leave-type/leave-type.component';
 import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component";
+import { SettingsComponent } from './component/settings/settings.component';
+import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
 
 @NgModule({
   declarations: [
@@ -58,9 +60,11 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
     LeaveTypesComponent,
     AddLeaveTypeComponent,
     LeaveTypeComponent,
-    DeleteLeaveTypeDialogComponent
+    DeleteLeaveTypeDialogComponent,
+    SettingsComponent,
+    SettingDialogComponent
   ],
-  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent],
+  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,
@@ -77,6 +81,9 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
     MatSortModule,
     MatIconModule,
     MatDialogModule,
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -136,6 +143,15 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
         path: 'admin/leaveType',
         component: LeaveTypeComponent,
         canActivate: [AuthGuad, AdminGuard]
+      },
+      {
+        path: 'admin/settings',
+        component: SettingsComponent,
+        canActivate: [AuthGuad, AdminGuard]
+      },
+      {
+        path: '**',
+        redirectTo: ''
       }
     ], {onSameUrlNavigation: 'reload'})
   ],
@@ -159,7 +175,9 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
     UserInfoService,
     AuthGuad,
     CookieService,
-    LeaveTypeService
+    LeaveTypeService,
+    LeaveService,
+    SettingService
   ],
   bootstrap: [AppComponent]
 })

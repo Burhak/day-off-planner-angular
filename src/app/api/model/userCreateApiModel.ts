@@ -18,4 +18,5 @@ export interface UserCreateApiModel {
     admin: boolean;
     jobDescription: string;
     phone?: string;
+    approvers: Array<string>;
 }

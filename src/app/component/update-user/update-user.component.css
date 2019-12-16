@@ -16,26 +16,33 @@
   margin: 0 0 1.5em;
 }
 
-button:hover {
-  background: rgb(44,62,80);
+.buttonGroup{
+  padding: 2em 0 1em;
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  width: 100%;
 }
 
 button {
-  width: 100%;
+  padding: 0.5em 0;
+  width: 50%;
   background: rgb(52,73,94);
   color: white;
   font-weight: bold;
   border-radius: 2em;
-  margin: 1em 0;
-  padding: 0.5em 0;
 }
 
-.submitBtn {
-  margin: 1.5em 0 0;
+button:hover{
+  background: rgb(44,62,80);
 }
 
-.backBtn {
-  margin: 0;
+.submitBtn{
+  margin: 0 0.5em 0 0;
+}
+
+.backBtn{
+  margin: 0 0 0 0.5em;
 }
 
 .logo {
@@ -57,4 +64,22 @@ a {
 
 h1, h2, h3, h4, h5, h6 {
   color: rgb(44,62,80);
+}
+
+.linesInputs{
+  float: left;
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.firstInput{
+  width: 50%;
+  padding: 0 1em 0 0;
+}
+
+.secondInput{
+  width: 50%;
+  padding: 0;
 }

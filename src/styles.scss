@@ -1,5 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import 'theme.scss';
 
 .full-width {
   width: 100%;
@@ -45,29 +44,12 @@ button:focus {outline:0;}
   background: rgb(49, 67, 85);
 }
 
-app-change-password, app-user-list, app-add-user-form, app-user-profile, app-leave-types, app-add-leave-type, app-leave-type{
+app-change-password, app-user-list, app-add-user-form, app-user-profile, app-leave-types, app-add-leave-type, app-leave-type, app-settings{
   height: 100vh;
   width: 100%;
   display:flex;
   flex-direction:column;
   background-color: rgb(245,245,245);
-}
-
-th{
-  padding: 1em 2em!important;
-  text-align: center!important;
-  align-content: center!important;
-  font-weight: bold!important;
-  font-size: 1em!important;
-}
-
-td{
-  text-align: center!important;
-  padding: 0.5em 2em!important;
-}
-
-tr{
-  height: fit-content!important;
 }
 
 mat-dialog-container{
@@ -99,3 +81,19 @@ mat-icon{
   background-color: rgb(44,62,80)!important;
 }
 
+th{
+  padding: 1em 2em!important;
+  text-align: center!important;
+  align-content: center!important;
+  font-weight: bold!important;
+  font-size: 1em!important;
+}
+
+td{
+  text-align: center!important;
+  padding: 0.5em 2em!important;
+}
+
+tr{
+  height: fit-content!important;
+}

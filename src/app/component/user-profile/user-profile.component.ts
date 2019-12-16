@@ -22,6 +22,8 @@ export class UserProfileComponent implements OnInit{
 
   public user: UserApiModel;
   public userSupervisor: UserApiModel;
+  public userApprovers: Array<UserApiModel> = [];
+  public userApproversId: Array<string>;
   public deleteBtnDisabled: boolean;
   public editingUser: boolean = false;
   public isLoaded: boolean;
@@ -45,10 +47,15 @@ export class UserProfileComponent implements OnInit{
     this.userService.getUserById(userId).subscribe((user: UserApiModel) => {
       this.user = user;
       this.getUserSupervisor(this.user.supervisor);
+
+      this.userService.getUserById(userId).subscribe((user: UserApiModel) => {
+        this.userApproversId = user.approvers;
+        this.getUserApprovers();
+      });
+
       if (this.user.id !== this.userInfoService.currentUser.id) {
         this.deleteBtnDisabled = false;
       }
-      this.isLoaded = true;
     });
   }
 
@@ -57,12 +64,22 @@ export class UserProfileComponent implements OnInit{
   }
 
 
-  getUserSupervisor(user) {
-    if (user) {
-      this.userService.getUserById(user).subscribe((supervisor: UserApiModel) => {
+  getUserSupervisor(userId) {
+    if (userId) {
+      this.userService.getUserById(userId).subscribe((supervisor: UserApiModel) => {
         this.userSupervisor = supervisor;
       });
     }
+  }
+
+  getUserApprovers() {
+    this.userApprovers = [];
+    for (const approverId of this.userApproversId) {
+      this.userService.getUserById(approverId).subscribe( (user: UserApiModel) => {
+        this.userApprovers.push(user);
+      });
+    }
+    this.isLoaded = true;
   }
 
   openDialogDeleteUser(user) {
@@ -101,6 +118,13 @@ export class UserProfileComponent implements OnInit{
         this.getUserSupervisor(this.user.supervisor);
       } else {
         this.userSupervisor = null;
+      }
+      if (this.user.approvers !== null) {
+        this.userApproversId = this.user.approvers;
+        this.getUserApprovers();
+      } else {
+        this.userApprovers = null;
+        this.userApproversId = null;
       }
       if (this.user.id !== this.userInfoService.currentUser.id) {
         this.deleteBtnDisabled = false;

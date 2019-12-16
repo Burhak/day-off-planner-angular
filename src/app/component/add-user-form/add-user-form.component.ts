@@ -14,14 +14,15 @@ export class AddUserFormComponent implements OnInit {
 
   public form: FormGroup;
   public buttonDisabled: boolean;
-  public posibleUserSupervisors: Array<UserApiModel> = [];
-  public selectControl: FormControl = new FormControl();
+  public posibleUserSupervisorsOrApprovers: Array<UserApiModel> = [];
+  public supervisorSelectControl: FormControl = new FormControl();
+  public approversSelectControl: FormControl = new FormControl();
   public isUserAdded: boolean;
   public errorMsg: string = '';
 
   constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router, private ngZone: NgZone) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
-      this.posibleUserSupervisors = user;
+      this.posibleUserSupervisorsOrApprovers = user;
     });
   }
 
@@ -56,10 +57,10 @@ export class AddUserFormComponent implements OnInit {
       lastName: event.target.lastname.value,
       email: event.target.email.value,
       admin: event.target.admin.checked,
-      supervisor: this.selectControl.value,
+      supervisor: this.supervisorSelectControl.value,
       jobDescription: event.target.jobdescription.value,
-      phone: event.target.phone.value
-
+      phone: event.target.phone.value,
+      approvers: this.approversSelectControl.value || []
     };
 
     this.buttonDisabled = true;
