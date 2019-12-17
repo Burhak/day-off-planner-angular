@@ -13,6 +13,7 @@
 export interface LeaveTypeApiModel { 
     readonly id: string;
     readonly name: string;
+    readonly color: string;
     readonly approvalNeeded: boolean;
     readonly limit?: number;
     readonly carryover?: number;

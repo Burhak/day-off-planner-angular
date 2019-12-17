@@ -12,6 +12,7 @@
 
 export interface LeaveTypeCreateApiModel { 
     name: string;
+    color: string;
     approvalNeeded: boolean;
     limit?: number;
     carryover?: number;
