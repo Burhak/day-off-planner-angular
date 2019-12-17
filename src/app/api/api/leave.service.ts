@@ -82,6 +82,12 @@ export class LeaveService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -140,6 +146,12 @@ export class LeaveService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -154,7 +166,6 @@ export class LeaveService {
         ];
 
         return this.httpClient.post<LeaveRequestWithApprovalsApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/approve`,
-            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -184,6 +195,12 @@ export class LeaveService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -198,7 +215,6 @@ export class LeaveService {
         ];
 
         return this.httpClient.post<LeaveRequestApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/cancel`,
-            null,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -227,6 +243,12 @@ export class LeaveService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -310,6 +332,12 @@ export class LeaveService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -363,6 +391,12 @@ export class LeaveService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -377,7 +411,6 @@ export class LeaveService {
         ];
 
         return this.httpClient.post<LeaveRequestWithApprovalsApiModel>(`${this.basePath}/leave/${encodeURIComponent(String(id))}/forceApprove`,
-            null,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -407,6 +440,12 @@ export class LeaveService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -449,6 +488,12 @@ export class LeaveService {
         let headers = this.defaultHeaders;
 
         // authentication (bearerAuth) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
