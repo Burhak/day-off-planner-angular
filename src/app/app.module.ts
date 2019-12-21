@@ -7,6 +7,7 @@ import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { environment } from '../environments/environment';
 
@@ -86,6 +87,7 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
+    ColorPickerModule,
     RouterModule.forRoot([
       {
         path: 'admin',

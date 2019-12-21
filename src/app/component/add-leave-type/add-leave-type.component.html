@@ -31,6 +31,10 @@
         </mat-error>
       </mat-form-field>
 
+      <div class="colorPickerWrapper">
+        <div class="circle" [(colorPicker)]="color" [style.background]="color"></div>
+      </div>
+
       <mat-checkbox id="approvalNeeded" name="approvalNeeded" class="example-margin">Approval needed</mat-checkbox>
 
       <div class="text-danger text-center">

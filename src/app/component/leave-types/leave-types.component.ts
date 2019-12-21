@@ -55,4 +55,14 @@ export class LeaveTypesComponent implements OnInit {
     console.log(this.dataSource.filter);
   }
 
+  setMyStyles(color: string, hover: boolean) {
+    let styles;
+    if (color) {
+      styles = {
+        'box-shadow': 'inset ' + (hover ? '30px' : '10px') + ' 0px ' + color,
+        'transition': 'box-shadow 0.5s'
+      }
+    };
+    return styles;
+  }
 }

@@ -15,6 +15,7 @@ export class AddLeaveTypeComponent implements OnInit {
   public buttonDisabled: boolean;
   public isLeaveTypeAdded: boolean;
   public errorMsg: string = '';
+  public color: string = 'rgb(44, 62, 80)';
 
   constructor(private router: Router, private adminService: AdminService, private ngZone: NgZone) {
 
@@ -46,7 +47,7 @@ export class AddLeaveTypeComponent implements OnInit {
       approvalNeeded: event.target.approvalNeeded.checked,
       limit: event.target.limit.value,
       carryover: event.target.carryover.value,
-      color: null,
+      color: this.color,
     };
 
     this.buttonDisabled = true;
