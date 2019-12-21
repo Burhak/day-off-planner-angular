@@ -57,6 +57,7 @@ export class LeaveTypeComponent implements OnInit {
       approvalNeeded: event.target.approvalNeeded.checked,
       limit: event.target.limit.value,
       carryover: event.target.carryover.value,
+      color: null,
     };
 
     this.adminService.updateLeaveType(updatedLeaveType, this.leaveTypeId).subscribe(

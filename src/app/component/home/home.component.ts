@@ -173,6 +173,19 @@ export class HomeComponent implements OnInit {
 
     return `${date.getUTCFullYear()}-${zeroPad(date.getMonth() + 1)}-${zeroPad(date.getDate())}`;
   }
+
+  setMyStyles(color: string, hover: boolean) {
+    let styles;
+    if (color) {
+      styles = {
+              //'text-decoration-line': 'underline',
+              //'text-decoration-color': color,
+              'box-shadow': 'inset ' + (hover? '30px' : '10px') + ' 0px ' + color,
+              'transition': 'box-shadow 0.5s'
+      }
+    };
+    return styles;
+  }
 }
 
 interface LeaveTypeInfo {
