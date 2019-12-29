@@ -1,7 +1,7 @@
 <app-navigation></app-navigation>
 <app-error></app-error>
 <div *ngIf="isLoaded" class="pageContent">
-<div *ngIf="!editingUser" class="userProfile">
+<div *ngIf="!editingUser && !editingLimits" class="userProfile">
   <div class="userProfileCard">
     <div class="title">
       <h1>User profile</h1>
@@ -40,10 +40,12 @@
   </div>
   <div class="admin-options" *ngIf="userInfoService?.hasAdminPrivileges">
     <button mat-menu-item (click)="openEditUser()">Edit</button>
+    <button mat-menu-item (click)="openLimitsUser()">Limits</button>
     <button mat-menu-item class="deleteBtn" (click)="openDialogDeleteUser(user)" disabled="{{deleteBtnDisabled}}">Delete</button>
   </div>
 </div>
 
 <app-update-user *ngIf="editingUser"  (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-update-user>
+<app-individual-limits *ngIf="editingLimits" [user]="user"></app-individual-limits>
 </div>
 

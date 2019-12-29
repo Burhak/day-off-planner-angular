@@ -18,7 +18,7 @@ import {MatDialog} from "@angular/material";
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent implements OnInit{
+export class UserProfileComponent implements OnInit {
 
   public user: UserApiModel;
   public userSupervisor: UserApiModel;
@@ -27,8 +27,9 @@ export class UserProfileComponent implements OnInit{
   public deleteBtnDisabled: boolean;
   public editingUser: boolean = false;
   public isLoaded: boolean;
+  public editingLimits: boolean = false;
 
-  constructor(public userInfoService: UserInfoService, private userService: UserService, private activatedRoute: ActivatedRoute, private  adminService: AdminService, public dialog: MatDialog, private  router: Router) {
+  constructor(public userInfoService: UserInfoService, private userService: UserService, private activatedRoute: ActivatedRoute, private adminService: AdminService, public dialog: MatDialog, private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -38,7 +39,7 @@ export class UserProfileComponent implements OnInit{
 
     let userId;
     if (this.router.getCurrentNavigation().extras.state != null) {
-      userId =  this.router.getCurrentNavigation().extras.state.userId;
+      userId = this.router.getCurrentNavigation().extras.state.userId;
       localStorage.setItem('userId', userId);
     } else {
       userId = localStorage.getItem('userId');
@@ -75,7 +76,7 @@ export class UserProfileComponent implements OnInit{
   getUserApprovers() {
     this.userApprovers = [];
     for (const approverId of this.userApproversId) {
-      this.userService.getUserById(approverId).subscribe( (user: UserApiModel) => {
+      this.userService.getUserById(approverId).subscribe((user: UserApiModel) => {
         this.userApprovers.push(user);
       });
     }
@@ -83,7 +84,7 @@ export class UserProfileComponent implements OnInit{
   }
 
   openDialogDeleteUser(user) {
-    let dialogRef = this.dialog.open(DeleteUserDialogComponent, {data: {userName: user.firstName + ' ' + user.lastName}});
+    let dialogRef = this.dialog.open(DeleteUserDialogComponent, { data: { userName: user.firstName + ' ' + user.lastName } });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result === 'true') {
@@ -102,6 +103,10 @@ export class UserProfileComponent implements OnInit{
 
   openEditUser() {
     this.editingUser = true;
+  }
+
+  openLimitsUser() {
+    this.editingLimits = true;
   }
 
   receiveMessage($event) {

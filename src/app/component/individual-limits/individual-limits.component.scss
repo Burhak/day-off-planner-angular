@@ -1,0 +1,152 @@
+::ng-deep .mat-ink-bar {
+  background-color: rgb(52,73,94) !important;
+}
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: rgb(52,73,94) !important;
+}
+
+::ng-deep .mat-icon-button {
+  color: rgb(52,73,94) !important;
+}
+
+:host {
+  background-color: rgb(245,245,245);
+}
+
+@media (min-width: 1000px) {
+  .minWidth140 {
+    min-width: 140px;
+  }
+
+  .minWidth250 {
+    min-width: 250px;
+  }
+
+  .minWidth900 {
+    min-width: 900px;
+  }
+
+  .dateFilter {
+    position: absolute;
+    width: 200px;
+    right: 0px;
+    z-index: 10;
+  }
+
+  .relative {
+    position: relative;
+  }
+}
+
+.pageContent {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(245,245,245);
+}
+
+.tableStyle{
+  width:100%;
+  margin:auto;
+}
+
+.leaveTypeList {
+  margin: 36px auto;
+  display: block;
+  width: fit-content;
+  padding: 2em 2em 1em;
+  background-color: rgb(255,255,255);
+  box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
+  border-radius: 2em;
+}
+
+.title {
+  margin: 0 0 0.2em;
+}
+
+tr {
+  background-color: rgb(245,245,245);
+  cursor: pointer;
+  height: fit-content !important;
+}
+
+td {
+  border: 1px solid rgb(220,220,220);
+  text-align: center !important;
+  padding: 0.5em 2em !important;
+}
+
+tr:hover {
+  background-color: rgba(52,73,94,0.1);
+}
+
+th {
+  text-align: center;
+  background-color: rgb(44,62,80);
+  color: white;
+  padding: 1em 2em !important;
+  align-content: center !important;
+  font-weight: bold !important;
+  font-size: 1em !important;
+}
+
+.leaveTypeName {
+  color: rgb(52,73,94);
+  font-weight: bold;
+}
+
+.addLeaveType {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addLeaveTypeText {
+  color: rgb(52,73,94);
+  font-weight: bold;
+  padding: 0 0.2em;
+}
+
+button {
+  background: rgb(52,73,94);
+  color: white;
+  font-weight: bold;
+  border-radius: 2em;
+  padding: 0.1em 1.5em;
+  float: right;
+}
+
+.submitBtn {
+  margin: 1em 0 0.6em;
+}
+
+.backBtn {
+  margin: 0;
+}
+
+button:hover {
+  background: rgb(44,62,80);
+}
+
+
+a {
+  color: rgb(44,62,80);
+  cursor: pointer;
+}
+
+a:hover {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(44,62,80);
+}
+
+mat-form-field {
+  width: 100%;
+}
