@@ -32,7 +32,11 @@
       </mat-form-field>
 
       <div class="colorPickerWrapper">
-        <div class="circle" [(colorPicker)]="color" [style.background]="color"></div>
+        <div class="circle" [(colorPicker)]="color" [style.background]="color"
+             [cpCancelButton]="true"
+             [cpCancelButtonClass]= "'button'"
+             [cpOKButton]="true"
+             [cpOKButtonClass]= "'button'"></div>
       </div>
 
       <mat-checkbox id="approvalNeeded" name="approvalNeeded" class="example-margin">Approval needed</mat-checkbox>
