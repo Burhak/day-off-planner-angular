@@ -32,7 +32,7 @@
       </mat-form-field>
 
       <div class="colorPickerWrapper">
-        <div class="circle" [(colorPicker)]="color" [style.background]="color" (colorPickerChange)="isColorChanged=true"
+        <div class="circle" [(colorPicker)]="color" [style.background]="color" (colorPickerSelect)="isColorChanged=true"
              [cpCancelButton]="true"
              [cpCancelButtonClass]= "'button'"
              [cpOKButton]="true"
