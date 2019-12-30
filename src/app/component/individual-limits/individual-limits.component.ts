@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { UserApiModel, LeaveTypeApiModel, LeaveTypeService, UserService } from 'src/app/api';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { UserApiModel, LeaveTypeApiModel, LeaveTypeService, UserService, AdminService, LimitUpdateApiModel } from 'src/app/api';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { DialogLimitComponent } from './dialog-limit/dialog-limit.component';
 
 @Component({
   selector: 'app-individual-limits',
@@ -14,11 +15,14 @@ export class IndividualLimitsComponent implements OnInit {
   @ViewChild('TableTypesPaginator', { static: false }) TableTypesPaginator: MatPaginator;
   @ViewChild('TableTypesSort', { static: false }) TableTypesSort: MatSort;
 
+  @Output() userUpdatedEvent = new EventEmitter<boolean>();
+
   public displayedColumnsTypes: string[] = ['leaveType.name', 'limit'];
   public dataSourceTypes: MatTableDataSource<LeaveTypeInfo>;
   public leaveTypeInfos: Array<LeaveTypeInfo> = [];
 
-  constructor(private leaveTypeApi: LeaveTypeService, private userApi: UserService) { }
+  constructor(private leaveTypeApi: LeaveTypeService, private userApi: UserService, public dialog: MatDialog,
+    private adminApi: AdminService) { }
 
   ngOnInit() {
     this.getLeaveTypes();
@@ -63,6 +67,45 @@ export class IndividualLimitsComponent implements OnInit {
     //console.log(this.dataSource.filter);
   }
 
+  openEditLimit(leaveType: LeaveTypeInfo) {
+    let dialogRef = this.dialog.open(DialogLimitComponent,
+      {
+        data: {
+          name: leaveType.leaveType.name,
+          id: leaveType.leaveType.id,
+          //take value from promise and extract integer at start
+          limit: leaveType.limit["__zone_symbol__value"].replace(/(^\d+)(.+$)/i, '$1')
+        }
+      });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== "false") {
+        if (result === "") {
+          this.adminApi.deleteLimit(this.user.id, leaveType.leaveType.id).subscribe(
+            response => {
+              let index = this.leaveTypeInfos.findIndex(x => x.leaveType.id === leaveType.leaveType.id);
+              this.leaveTypeInfos[index].limit = this.getLimit(leaveType.leaveType);
+            }
+          );
+        } else {
+          const body: LimitUpdateApiModel = {
+            limit: result
+          };
+
+          this.adminApi.updateLimit(body, this.user.id, leaveType.leaveType.id).subscribe(
+            response => {
+              let index = this.leaveTypeInfos.findIndex(x => x.leaveType.id === leaveType.leaveType.id);
+              this.leaveTypeInfos[index].limit = this.getLimit(leaveType.leaveType);
+            }
+          );
+        }
+      }
+    });
+  }
+
+  userUpdatedNotify() {
+    this.userUpdatedEvent.emit(false);
+  }
 }
 
 interface LeaveTypeInfo {

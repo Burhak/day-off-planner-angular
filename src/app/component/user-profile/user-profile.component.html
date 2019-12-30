@@ -46,6 +46,6 @@
 </div>
 
 <app-update-user *ngIf="editingUser"  (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-update-user>
-<app-individual-limits *ngIf="editingLimits" [user]="user"></app-individual-limits>
+<app-individual-limits *ngIf="editingLimits" (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-individual-limits>
 </div>
 

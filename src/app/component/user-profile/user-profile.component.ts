@@ -111,6 +111,7 @@ export class UserProfileComponent implements OnInit {
 
   receiveMessage($event) {
     this.editingUser = false;
+    this.editingLimits = false;
     if ($event == true) {
       this.reloadUser();
     }

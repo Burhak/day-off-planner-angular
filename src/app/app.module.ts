@@ -42,6 +42,7 @@ import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leav
 import { SettingsComponent } from './component/settings/settings.component';
 import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
 import { IndividualLimitsComponent } from './component/individual-limits/individual-limits.component';
+import { DialogLimitComponent } from './component/individual-limits/dialog-limit/dialog-limit.component';
 
 @NgModule({
   declarations: [
@@ -64,9 +65,10 @@ import { IndividualLimitsComponent } from './component/individual-limits/individ
     DeleteLeaveTypeDialogComponent,
     SettingsComponent,
     SettingDialogComponent,
-    IndividualLimitsComponent
+    IndividualLimitsComponent,
+    DialogLimitComponent
   ],
-  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent],
+  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent, DialogLimitComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,

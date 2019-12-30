@@ -1,42 +1,14 @@
-::ng-deep .mat-ink-bar {
-  background-color: rgb(52,73,94) !important;
-}
-
-::ng-deep .mat-calendar-body-selected {
-  background-color: rgb(52,73,94) !important;
-}
-
-::ng-deep .mat-icon-button {
-  color: rgb(52,73,94) !important;
+.buttonGroup {
+  padding: 2em 0 1em;
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  width: 100%;
+  align-content: center;
 }
 
 :host {
   background-color: rgb(245,245,245);
-}
-
-@media (min-width: 1000px) {
-  .minWidth140 {
-    min-width: 140px;
-  }
-
-  .minWidth250 {
-    min-width: 250px;
-  }
-
-  .minWidth900 {
-    min-width: 900px;
-  }
-
-  .dateFilter {
-    position: absolute;
-    width: 200px;
-    right: 0px;
-    z-index: 10;
-  }
-
-  .relative {
-    position: relative;
-  }
 }
 
 .pageContent {
@@ -120,12 +92,8 @@ button {
   float: right;
 }
 
-.submitBtn {
-  margin: 1em 0 0.6em;
-}
-
 .backBtn {
-  margin: 0;
+  margin: auto;
 }
 
 button:hover {

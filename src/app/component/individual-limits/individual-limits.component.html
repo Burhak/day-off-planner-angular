@@ -14,8 +14,11 @@
         <td mat-cell *matCellDef="let leaveType"> {{leaveType.limit | async}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumnsTypes"></tr>
-      <tr mat-row *matRowDef="let leaveType; columns: displayedColumnsTypes;"></tr>
+      <tr mat-row *matRowDef="let leaveType; columns: displayedColumnsTypes;" (click) = "openEditLimit(leaveType)"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons #TableTypesPaginator="matPaginator"></mat-paginator>
 
+    <div class="buttonGroup">
+      <button mat-raised-button (click)="userUpdatedNotify()" type="button" class="backBtn">Ok</button>
+    </div>
   </div>
