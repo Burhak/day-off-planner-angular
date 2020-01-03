@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
+import {DayPilotModule} from 'daypilot-pro-angular';
+
 import { environment } from '../environments/environment';
 
 import { TokenInterceptor } from './interceptor/token.interceptor';
@@ -41,6 +43,7 @@ import {LeaveTypeComponent} from './component/leave-type/leave-type.component';
 import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component";
 import { SettingsComponent } from './component/settings/settings.component';
 import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
+import { CalendarComponent } from './component/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +65,8 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
     LeaveTypeComponent,
     DeleteLeaveTypeDialogComponent,
     SettingsComponent,
-    SettingDialogComponent
+    SettingDialogComponent,
+    CalendarComponent
   ],
   entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent],
   imports: [
@@ -86,7 +90,12 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
+    DayPilotModule,
     RouterModule.forRoot([
+      {
+        path: 'calendar',
+        component: CalendarComponent
+      },
       {
         path: 'admin',
         component: AdminComponent,

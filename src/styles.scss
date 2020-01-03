@@ -4,6 +4,10 @@
   width: 100%;
 }
 
+html {
+  font-family: 'Avenir Next LT Pro';
+}
+
 app-root {
   display: flex;
   flex-direction: column;
@@ -96,4 +100,18 @@ td{
 
 tr{
   height: fit-content!important;
+}
+
+.leave {
+  border-radius: 15px;
+  margin-top: 5px;
+  height: 25px !important;
+}
+
+.scheduler_default_corner > div {
+  display: none;
+}
+
+[hidden] {
+  display: none !important;
 }

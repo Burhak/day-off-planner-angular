@@ -43,6 +43,7 @@ export class AddLeaveTypeComponent implements OnInit {
     }
     const newLeaveType: LeaveTypeCreateApiModel = {
       name: event.target.name.value,
+      color: '', // TODO
       approvalNeeded: event.target.approvalNeeded.checked,
       limit: event.target.limit.value,
       carryover: event.target.carryover.value,
