@@ -1,7 +1,8 @@
-import { Component, AfterViewInit, ViewChild, Input, Renderer2 } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, Input } from '@angular/core';
 import {DayPilot, DayPilotSchedulerComponent} from 'daypilot-pro-angular';
 import { LeaveRequestApiModel, UserApiModel, UserService, LeaveTypeService, LeaveService, LeaveTypeApiModel } from 'src/app/api';
-import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { SelectUsersComponent } from './select-users/select-users.component';
 
 @Component({
   selector: 'app-calendar',
@@ -28,10 +29,9 @@ export class CalendarComponent implements AfterViewInit {
     eventHoverHandling: 'Disabled',
     useEventBoxes: 'Never',
     dynamicLoading: true,
-    onBeforeCellRender: this.highlightWeekend
+    onBeforeCellRender: this.highlightWeekend,
+    onAfterRender: this.afterRender.bind(this)
   };
-
-  private listeners: Function[] = [];
 
   @Input()
   public displayedUsers: UserApiModel[] = [];
@@ -40,9 +40,9 @@ export class CalendarComponent implements AfterViewInit {
 
   public leaveTypesCache = {};
 
-  constructor(private userApi: UserService, private leaveTypeApi: LeaveTypeService, private leaveApi: LeaveService, private renderer: Renderer2) {
+  constructor(private userApi: UserService, private leaveTypeApi: LeaveTypeService, private leaveApi: LeaveService, private dialog: MatDialog) {
     // fetch users
-    userApi.getAllUsers().subscribe(response => this.allUsers = response);
+    this.userApi.getAllUsers().subscribe(response => this.allUsers = response);
 
     // cache leave types
     this.leaveTypeApi.getAllLeaveTypes().subscribe(response => {
@@ -68,23 +68,22 @@ export class CalendarComponent implements AfterViewInit {
           args.loaded();
         });
     };
-
   }
 
-  addUsers() {
-    this.afterRender(() => {
-      this.listeners.forEach(remove => remove());
-      this.listeners = this.displayedUsers.map(user => {
-        return this.renderer.listen(document.getElementById(`remove-${user.id}`), 'click', e => {
-          this.displayedUsers = this.displayedUsers.filter(u => u.id != user.id)
-          this.config.resources = this.config.resources.filter(r => r.id != user.id);
-        });
-      });
+  public selectUsers() {
+    const data = {
+      displayedUsers: this.displayedUsers,
+      allUsers: this.allUsers
+    };
 
-      this.scheduler.control.scrollTo(this.config.startDate);
+    this.dialog
+      .open(SelectUsersComponent, {data})
+      .afterClosed().subscribe(result => {
+      if (result === 'true') {
+        this.displayedUsers = data.displayedUsers;
+        this.config.resources = this.displayedUsers.map(this.userToResource);
+      }
     });
-
-    this.config.resources = this.displayedUsers.map(this.userToResource);
   }
 
   private userToResource(user: UserApiModel): DayPilot.ResourceData {
@@ -92,8 +91,7 @@ export class CalendarComponent implements AfterViewInit {
 
     return {
       name: userName,
-      id: user.id,
-      html: `<div><button id="remove-${user.id}">Remove</button><div>${userName}</div></div>`
+      id: user.id
     };
   }
 
@@ -134,12 +132,8 @@ export class CalendarComponent implements AfterViewInit {
     }
   }
 
-  private afterRender(fun: () => void) {
-    const previous = this.scheduler.control.onAfterRender;
-    this.scheduler.control.onAfterRender = () => {
-      if (previous) previous();
-      if (fun) fun();
-    };
+  private afterRender() {
+    this.scheduler.control.scrollTo(this.config.startDate);
   }
 
 }

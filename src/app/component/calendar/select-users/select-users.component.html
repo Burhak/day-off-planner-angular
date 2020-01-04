@@ -1,0 +1,13 @@
+<h2>Select users</h2>
+<mat-dialog-content>
+    <mat-selection-list [(ngModel)]="data.displayedUsers">
+    <mat-list-option *ngFor="let user of data.allUsers" [value]="user">
+        {{user.firstName}} {{user.lastName}}
+    </mat-list-option>
+    </mat-selection-list>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close="true">Confirm</button>
+  <button mat-button mat-dialog-close="false">Cancel</button>
+</mat-dialog-actions>

@@ -3,7 +3,6 @@ import {AdminService, LeaveTypeApiModel, LeaveTypeCreateApiModel, LeaveTypeServi
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material";
-import {DeleteUserDialogComponent} from "../user-profile/delete-user-dialog/delete-user-dialog.component";
 import {DeleteLeaveTypeDialogComponent} from "./delete-leave-type-dialog/delete-leave-type-dialog.component";
 
 @Component({

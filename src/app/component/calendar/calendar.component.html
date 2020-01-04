@@ -1,12 +1,4 @@
-<daypilot-scheduler [config]="config" #scheduler></daypilot-scheduler>
-
-<mat-form-field>
-    <mat-label>User</mat-label>
-    <mat-select id="usersToAdd" multiple [(ngModel)]="displayedUsers">
-      <mat-option *ngFor="let user of allUsers" [value]="user">
-        {{user.firstName}} {{user.lastName}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-<button (click)="addUsers()">Add</button>
+<div>
+  <daypilot-scheduler [config]="config" #scheduler></daypilot-scheduler>
+  <button mat-button style="position: absolute; left: 0; top: 0;" (click)="selectUsers()">Select</button>
+</div>

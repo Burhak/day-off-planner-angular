@@ -18,7 +18,9 @@ app-root {
   right: 0;
 }
 
-button:focus {outline:0;}
+button:focus {
+  outline:0;
+}
 
 .mat-menu-panel{
   position: relative;
@@ -42,6 +44,10 @@ button:focus {outline:0;}
   margin: 0.5em 0;
   font-weight: bold;
   text-align: center !important;
+}
+
+.mat-list-base {
+  outline: none;
 }
 
 .mat-menu-item:hover:not([disabled]) {
@@ -108,7 +114,7 @@ tr{
   height: 25px !important;
 }
 
-.scheduler_default_corner > div {
+.scheduler_default_corner > div:not(.scheduler_default_corner_inner) {
   display: none;
 }
 
