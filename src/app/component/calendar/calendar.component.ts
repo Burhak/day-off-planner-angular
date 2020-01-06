@@ -1,7 +1,7 @@
-import { Component, AfterViewInit, ViewChild, Input } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, Input, Renderer2 } from '@angular/core';
 import {DayPilot, DayPilotSchedulerComponent} from 'daypilot-pro-angular';
 import { LeaveRequestApiModel, UserApiModel, UserService, LeaveTypeService, LeaveService, LeaveTypeApiModel } from 'src/app/api';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatButton } from '@angular/material';
 import { SelectUsersComponent } from './select-users/select-users.component';
 
 @Component({
@@ -13,6 +13,9 @@ export class CalendarComponent implements AfterViewInit {
 
   @ViewChild('scheduler', {static: false})
   public scheduler: DayPilotSchedulerComponent;
+
+  @ViewChild('select_users_btn', {static: true})
+  public selectBtn: MatButton;
 
   public config: DayPilot.SchedulerConfig = {
     timeHeaders: [ {'groupBy': 'Month'}, {'groupBy': 'Day', 'format': 'ddd d'} ],
@@ -30,7 +33,8 @@ export class CalendarComponent implements AfterViewInit {
     useEventBoxes: 'Never',
     dynamicLoading: true,
     onBeforeCellRender: this.highlightWeekend,
-    onAfterRender: this.afterRender.bind(this)
+    onAfterRender: this.afterRender.bind(this),
+    onBeforeCornerDomAdd: this.moveSelectButton.bind(this)
   };
 
   @Input()
@@ -40,7 +44,7 @@ export class CalendarComponent implements AfterViewInit {
 
   public leaveTypesCache = {};
 
-  constructor(private userApi: UserService, private leaveTypeApi: LeaveTypeService, private leaveApi: LeaveService, private dialog: MatDialog) {
+  constructor(private userApi: UserService, private leaveTypeApi: LeaveTypeService, private leaveApi: LeaveService, private dialog: MatDialog, private renderer: Renderer2) {
     // fetch users
     this.userApi.getAllUsers().subscribe(response => this.allUsers = response);
 
@@ -77,7 +81,7 @@ export class CalendarComponent implements AfterViewInit {
       allUsers: this.allUsers
     };
 
-    this.dialog.open(SelectUsersComponent, { data }).afterClosed().subscribe(result => {
+    this.dialog.open(SelectUsersComponent, { data, restoreFocus: false }).afterClosed().subscribe(result => {
       if (result === 'true') {
         this.displayedUsers = data.displayedUsers;
         this.config.resources = this.displayedUsers.map(this.userToResource);
@@ -131,6 +135,10 @@ export class CalendarComponent implements AfterViewInit {
 
   private afterRender() {
     this.scheduler.control.scrollTo(this.config.startDate);
+  }
+
+  private moveSelectButton() {
+    this.renderer.appendChild(document.getElementsByClassName('scheduler_default_corner')[0], this.selectBtn._elementRef.nativeElement);
   }
 
 }

@@ -114,8 +114,14 @@ tr{
   height: 25px !important;
 }
 
-.scheduler_default_corner > div:not(.scheduler_default_corner_inner) {
+.scheduler_default_corner > div {
   display: none;
+}
+
+.scheduler_default_corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 [hidden] {
