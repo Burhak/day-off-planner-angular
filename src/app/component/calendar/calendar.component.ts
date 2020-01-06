@@ -55,6 +55,7 @@ export class CalendarComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    // load leave requests on scroll
     this.scheduler.control.onScroll = args => {
       args.async = true;
 
@@ -76,9 +77,7 @@ export class CalendarComponent implements AfterViewInit {
       allUsers: this.allUsers
     };
 
-    this.dialog
-      .open(SelectUsersComponent, {data})
-      .afterClosed().subscribe(result => {
+    this.dialog.open(SelectUsersComponent, { data }).afterClosed().subscribe(result => {
       if (result === 'true') {
         this.displayedUsers = data.displayedUsers;
         this.config.resources = this.displayedUsers.map(this.userToResource);
@@ -87,10 +86,8 @@ export class CalendarComponent implements AfterViewInit {
   }
 
   private userToResource(user: UserApiModel): DayPilot.ResourceData {
-    const userName = `${user.firstName} ${user.lastName}`;
-
     return {
-      name: userName,
+      name: `${user.firstName} ${user.lastName}`,
       id: user.id
     };
   }
