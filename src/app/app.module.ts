@@ -3,10 +3,12 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatTabsModule, MatDatepickerModule, MatNativeDateModule,
-  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule} from '@angular/material';
+  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule, MatListModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+
+import {DayPilotModule} from 'daypilot-pro-angular';
 
 import { environment } from '../environments/environment';
 
@@ -41,6 +43,8 @@ import {LeaveTypeComponent} from './component/leave-type/leave-type.component';
 import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component";
 import { SettingsComponent } from './component/settings/settings.component';
 import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
+import { CalendarComponent } from './component/calendar/calendar.component';
+import { SelectUsersComponent } from './component/calendar/select-users/select-users.component';
 
 @NgModule({
   declarations: [
@@ -62,9 +66,11 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
     LeaveTypeComponent,
     DeleteLeaveTypeDialogComponent,
     SettingsComponent,
-    SettingDialogComponent
+    SettingDialogComponent,
+    CalendarComponent,
+    SelectUsersComponent
   ],
-  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent],
+  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent, SelectUsersComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,
@@ -79,6 +85,7 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatListModule,
     MatIconModule,
     MatDialogModule,
     MatTabsModule,
@@ -86,6 +93,7 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
+    DayPilotModule,
     RouterModule.forRoot([
       {
         path: 'admin',
