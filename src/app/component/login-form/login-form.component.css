@@ -41,3 +41,8 @@ a:hover{
   font-weight: bold;
   text-decoration: none;
 }
+
+.error-msg {
+  color: rgb(231,76,60);
+  text-align: center;
+}

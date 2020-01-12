@@ -96,10 +96,6 @@ import { SelectUsersComponent } from './component/calendar/select-users/select-u
     DayPilotModule,
     RouterModule.forRoot([
       {
-        path: 'calendar',
-        component: CalendarComponent
-      },
-      {
         path: 'admin',
         component: AdminComponent,
         canActivate: [AuthGuad, AdminGuard]
