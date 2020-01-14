@@ -1,7 +1,12 @@
 @import 'theme.scss';
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,600&display=swap');
 
 .full-width {
   width: 100%;
+}
+
+html {
+  font-family: 'Nunito Sans', sans-serif;
 }
 
 app-root {
@@ -14,7 +19,9 @@ app-root {
   right: 0;
 }
 
-button:focus {outline:0;}
+button:focus {
+  outline:0;
+}
 
 .mat-menu-panel{
   position: relative;
@@ -38,6 +45,10 @@ button:focus {outline:0;}
   margin: 0.5em 0;
   font-weight: bold;
   text-align: center !important;
+}
+
+.mat-list-base {
+  outline: none;
 }
 
 .mat-menu-item:hover:not([disabled]) {
@@ -96,4 +107,18 @@ td{
 
 tr{
   height: fit-content!important;
+}
+
+.leave {
+  border-radius: 15px;
+  margin-top: 5px;
+  height: 25px !important;
+}
+
+.scheduler_default_corner > div {
+  display: none;
+}
+
+[hidden] {
+  display: none !important;
 }

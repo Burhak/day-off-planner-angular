@@ -97,7 +97,8 @@ export class HomeComponent implements OnInit {
     this.dataSourceTypes = new MatTableDataSource<LeaveTypeInfo>(this.leaveTypeInfos);
     this.dataSourceTypes.paginator = this.TableTypesPaginator;
     this.dataSourceTypes.sortingDataAccessor = (item, property) => {
-      if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item)
+      if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item);
+      if (["limit", "carryover", "requestedHours"].includes(property)) return item[property]["__zone_symbol__value"];
       return item[property];
     };
     setTimeout(() => this.dataSourceTypes.sort = this.TableTypesSort);

@@ -34,9 +34,15 @@ button:hover{
 
 a {
   color: rgb(44,62,80);
+  text-decoration: none;
 }
 
 a:hover{
   font-weight: bold;
   text-decoration: none;
+}
+
+.error-msg {
+  color: rgb(231,76,60);
+  text-align: center;
 }
