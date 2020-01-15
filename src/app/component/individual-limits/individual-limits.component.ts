@@ -106,6 +106,17 @@ export class IndividualLimitsComponent implements OnInit {
   userUpdatedNotify() {
     this.userUpdatedEvent.emit(false);
   }
+
+  setMyStyles(color: string, hover: boolean) {
+    let styles;
+    if (color) {
+      styles = {
+        'box-shadow': 'inset ' + (hover ? '30px' : '10px') + ' 0px ' + color,
+        transition: 'box-shadow 0.5s'
+      };
+    }
+    return styles;
+  }
 }
 
 interface LeaveTypeInfo {
