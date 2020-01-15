@@ -1,0 +1,71 @@
+.leave {
+  border-radius: 2em;
+  margin-top: 5px;
+  height: 39px !important;
+}
+
+.scheduler_default_main{
+  font-family: sans-serif!important;
+  border-style: none!important;
+}
+
+.scheduler_default_corner > div {
+  display: none;
+}
+
+.scheduler_default_corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.scheduler_default_timeheadergroup {
+  background-color: rgb(44,62,80)!important;
+  color: rgb(255,255,255)!important;
+  font-weight: bold!important;
+  font-size: 1.2em!important;
+
+}
+
+.scheduler_default_timeheadercol {
+  background-color: rgb(52, 73, 94)!important;
+  color: rgb(255,255,255)!important;
+}
+
+.scheduler_default_rowheader, .scheduler_default_corner {
+  background-color: rgb(44,62,80)!important;
+  color: rgb(255,255,255)!important;
+  font-weight: bold!important;
+  font-size: 1.2em!important;
+}
+
+::-webkit-scrollbar {
+  height: 2em;
+  background-color: rgb(220, 220, 220);
+}
+
+::-webkit-scrollbar-thumb:horizontal{
+  background-color: rgb(44,62,80);
+}
+
+.scheduler_default_rowheader_inner{
+  background-color: rgb(52, 73, 94)!important;
+}
+
+.scheduler_default_event_inner{
+  border-width: 3px!important;
+  border-radius: 2em!important;
+}
+
+.scheduler_default_cell{
+  background-color: rgb(220,220,220)!important;
+
+}
+
+.scheduler_default_cell_business{
+  background-color: rgb(245,245,245)!important;
+}
