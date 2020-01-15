@@ -34,7 +34,9 @@ export class CalendarComponent implements AfterViewInit {
     dynamicLoading: true,
     onBeforeCellRender: this.highlightWeekend,
     onAfterRender: this.afterRender.bind(this),
-    onBeforeCornerDomAdd: this.moveSelectButton.bind(this)
+    onBeforeCornerDomAdd: this.moveSelectButton.bind(this),
+    cellWidth: 60,
+    rowMinHeight: 50
   };
 
   @Input()
@@ -105,7 +107,7 @@ export class CalendarComponent implements AfterViewInit {
 
     // stripes for PENDING
     if (leaveRequest.status == LeaveRequestApiModel.StatusEnum.PENDING) {
-      background = `repeating-linear-gradient(135deg, ${type.color}, ${type.color} 5px, black 5px, black 10px)`;
+      background = `repeating-linear-gradient(135deg, ${type.color}, ${type.color} 5px, white 5px, white 10px)`;
     }
 
     // black color for CANCELLED and REJECTED (should never happen)
