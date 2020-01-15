@@ -55,7 +55,10 @@ export class CalendarComponent implements AfterViewInit {
       private renderer: Renderer2
   ) {
     // fetch users
-    this.userApi.getAllUsers().subscribe(response => this.allUsers = response);
+    this.userApi.getAllUsers().subscribe(response => {
+      this.allUsers = response;
+      this.displayedUsers = this.allUsers.filter(u => this.displayedUsers.find(old => old.id === u.id));
+    });
 
     // cache leave types
     this.leaveTypeApi.getAllLeaveTypes().subscribe(response => {
@@ -64,10 +67,11 @@ export class CalendarComponent implements AfterViewInit {
       }
     });
 
-    this.config.resources = this.displayedUsers.map(this.userToResource);
   }
 
   ngAfterViewInit() {
+    this.config.resources = this.displayedUsers.map(this.userToResource);
+
     // load leave requests on scroll
     this.scheduler.control.onScroll = args => {
       args.async = true;
@@ -93,6 +97,8 @@ export class CalendarComponent implements AfterViewInit {
       displayedUsers: this.displayedUsers,
       allUsers: this.allUsers
     };
+
+    console.log(data);
 
     this.dialog.open(SelectUsersComponent, { data, restoreFocus: false }).afterClosed().subscribe(result => {
       if (result === 'true') {
