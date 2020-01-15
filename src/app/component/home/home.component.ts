@@ -3,6 +3,7 @@ import { LeaveTypeApiModel, LeaveTypeService, UserService, UserApiModel, LeaveSe
 import { MatPaginator, MatSort, MatTableDataSource, MatTabGroup } from '@angular/material';
 import { UserInfoService } from '../../service/user-info.service';
 import { FormControl } from '@angular/forms';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -38,7 +39,8 @@ export class HomeComponent implements OnInit {
       private leaveTypeApi: LeaveTypeService,
       private userApi: UserService,
       private userService: UserInfoService,
-      private leavesApi: LeaveService
+      private leavesApi: LeaveService,
+      private router: Router
   ) {
     this.date = new Date();
     this.date.setMonth(this.date.getMonth() - 6);
@@ -200,6 +202,10 @@ export class HomeComponent implements OnInit {
       };
     }
     return styles;
+  }
+
+  addLeaveRequest() {
+    this.router.navigate(['addLeaveRequest'] );
   }
 }
 

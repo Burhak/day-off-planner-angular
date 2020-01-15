@@ -58,7 +58,7 @@ button:focus {
   background: rgb(49, 67, 85);
 }
 
-app-change-password, app-user-list, app-add-user-form, app-user-profile, app-leave-types, app-add-leave-type, app-leave-type, app-settings, app-add-leave-request{
+app-change-password, app-user-list, app-add-user-form, app-user-profile, app-leave-types, app-add-leave-type, app-leave-type, app-settings, app-add-leave-request, app-home{
   height: 100vh;
   width: 100%;
   display:flex;
@@ -85,7 +85,7 @@ mat-dialog-container{
 }
 
 mat-icon{
-  color: rgb(255,255,255);
+  color: rgb(44,62,80);
 }
 
 .mat-sort-header-arrow{
