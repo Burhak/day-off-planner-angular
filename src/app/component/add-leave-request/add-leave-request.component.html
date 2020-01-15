@@ -5,6 +5,7 @@
     <h2 class="title">Add leave request</h2>
     <form (submit)="createLeaveRequest($event)">
 
+      <h4>Choose leave type</h4>
       <mat-form-field class="addLeaveReques-element">
         <mat-label>Leave type</mat-label>
         <mat-select [formControl]="leaveTypesSelectControl" id="leaveTypes">
@@ -18,11 +19,11 @@
       </mat-form-field>
 
       <div class="calendarContainer">
-        <h5 class="dateRange">Calendar</h5>
+        <h4 class="dateRange">Calendar</h4>
         <sat-calendar [rangeMode]="true"
                       (dateRangesChange)="dateRangeChange($event)">
         </sat-calendar>
-      </div>
+
 
       <span class="dateRange" [className]="dateRange ? 'dateChosen' : 'dateNotChosen'">
           <h6 class="calendarTitle">{{ dateRange?.begin | date }}
@@ -45,6 +46,8 @@
             </mat-form-field>
           </h6>
       </span>
+      </div>
+
 
       <div class="text-danger text-center">
         {{errorMsg}}

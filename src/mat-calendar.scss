@@ -9,7 +9,7 @@
 }
 
 .mat-calendar{
-  padding: 0 0 0.6em;
+  padding: 0;
   width: 24em;
   background-color: whitesmoke;
   border-radius: 2em;
@@ -17,7 +17,7 @@
 
 .mat-calendar-content{
   width:100%;
-  padding: 0 1.5em 0.5em!important;
+  padding: 0 1.5em!important;
 }
 
 .mat-calendar-body-begin-range:not(.mat-calendar-body-end-range) {
