@@ -1,8 +1,7 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AdminService, LeaveTypeCreateApiModel, UserApiModel, UserCreateApiModel, UserService} from "../../api";
-import {UserInfoService} from "../../service/user-info.service";
-import {Router} from "@angular/router";
+import {AdminService, LeaveTypeCreateApiModel} from "../../api";
+import { ColorUtils } from 'src/app/util/color.util';
 
 @Component({
   selector: 'app-add-leave-type',
@@ -15,9 +14,9 @@ export class AddLeaveTypeComponent implements OnInit {
   public buttonDisabled: boolean;
   public isLeaveTypeAdded: boolean;
   public errorMsg: string = '';
-  public color: string = 'rgb(44, 62, 80)';
+  public color: string = ColorUtils.randomColor();
 
-  constructor(private router: Router, private adminService: AdminService, private ngZone: NgZone) {
+  constructor(private adminService: AdminService, private ngZone: NgZone) {
 
   }
 
@@ -31,15 +30,13 @@ export class AddLeaveTypeComponent implements OnInit {
     this.buttonDisabled = false;
   }
 
-  goBack() {
-    this.router.navigate(['admin/leaveTypes']);
+  pickColor(color: string) {
+    this.color = color;
   }
-
 
   createLeaveType(event, formDirective) {
     event.preventDefault();
     if (!this.form.valid) {
-      console.log(this.form.valid);
       return;
     }
     const newLeaveType: LeaveTypeCreateApiModel = {

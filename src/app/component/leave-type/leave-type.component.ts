@@ -19,7 +19,7 @@ export class LeaveTypeComponent implements OnInit {
   public isColorChanged: boolean;
   public leaveTypeId: string;
   public errorMsg: string = '';
-  public color: string = 'rgb(44, 62, 80)';
+  public color: string = '';
 
   constructor(private router: Router, private leaveTypeService: LeaveTypeService, private adminService: AdminService, private dialog: MatDialog, private ngZone: NgZone) {
     this.isLeaveTypeUpdated = false;
@@ -46,6 +46,11 @@ export class LeaveTypeComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  pickColor(color: string) {
+    this.color = color;
+    this.isColorChanged = true;
   }
 
   updateLeaveType(event) {
