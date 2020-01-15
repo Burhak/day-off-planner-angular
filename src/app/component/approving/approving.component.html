@@ -1,0 +1,12 @@
+<app-navigation></app-navigation>
+<app-error></app-error>
+
+<div *ngIf="loaded; else spinner">
+<h1>{{user.firstName}} {{user.lastName}} - {{leaveType.name}} </h1>
+<h3>{{startDate | date: "mediumDate"}} - {{endDate | date: "mediumDate"}}</h3>
+</div>
+
+<ng-template #spinner>
+  <mat-spinner mode="indeterminate" class="center" diameter="60"></mat-spinner>
+</ng-template>
+
