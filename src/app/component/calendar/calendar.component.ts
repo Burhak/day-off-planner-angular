@@ -35,7 +35,9 @@ export class CalendarComponent implements AfterViewInit {
     onAfterRender: this.afterRender.bind(this),
     onBeforeCornerDomAdd: this.moveSelectButton.bind(this),
     cellWidth: 60,
-    rowMinHeight: 50
+    rowMinHeight: 50,
+    rowHeaderWidth: 100,
+    rowHeaderWidthMarginRight: 15
   };
 
   @Input()
