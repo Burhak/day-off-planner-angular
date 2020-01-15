@@ -1,4 +1,6 @@
 @import 'theme.scss';
+@import 'mat-calendar.scss';
+@import 'mat-stepper.scss';
 @import 'calendarCustomTheme.scss';
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,600&display=swap');
 
@@ -56,7 +58,7 @@ button:focus {
   background: rgb(49, 67, 85);
 }
 
-app-change-password, app-user-list, app-add-user-form, app-user-profile, app-leave-types, app-add-leave-type, app-leave-type, app-settings{
+app-change-password, app-user-list, app-add-user-form, app-user-profile, app-leave-types, app-add-leave-type, app-leave-type, app-settings, app-add-leave-request{
   height: 100vh;
   width: 100%;
   display:flex;
@@ -83,7 +85,7 @@ mat-dialog-container{
 }
 
 mat-icon{
-  color: rgb(44,62,80);
+  color: rgb(255,255,255);
 }
 
 .mat-sort-header-arrow{
@@ -92,23 +94,6 @@ mat-icon{
 
 .mat-checkbox-checked .mat-checkbox-background{
   background-color: rgb(44,62,80)!important;
-}
-
-th{
-  padding: 1em 2em!important;
-  text-align: center!important;
-  align-content: center!important;
-  font-weight: bold!important;
-  font-size: 1em!important;
-}
-
-td{
-  text-align: center!important;
-  padding: 0.5em 2em!important;
-}
-
-tr{
-  height: fit-content!important;
 }
 
 .mat-raised-button{
