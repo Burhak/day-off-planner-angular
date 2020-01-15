@@ -32,7 +32,6 @@ export class CalendarComponent implements AfterViewInit {
     eventHoverHandling: 'Disabled',
     useEventBoxes: 'Never',
     dynamicLoading: true,
-    onBeforeCellRender: this.highlightWeekend,
     onAfterRender: this.afterRender.bind(this),
     onBeforeCornerDomAdd: this.moveSelectButton.bind(this),
     cellWidth: 60,
@@ -126,12 +125,6 @@ export class CalendarComponent implements AfterViewInit {
       barHidden: true,
       backColor: background,
       borderColor: border
-    }
-  }
-
-  private highlightWeekend(args: any) {
-    if (args.cell.start.getDayOfWeek() === 6 || args.cell.start.getDayOfWeek() === 0) {
-      args.cell.backColor = "#dddddd";
     }
   }
 

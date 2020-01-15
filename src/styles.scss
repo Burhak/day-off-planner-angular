@@ -155,7 +155,7 @@ tr{
 }
 
 ::-webkit-scrollbar {
-  height: 2em;              /* height of horizontal scrollbar ← You're missing this */
+  height: 2em;
   background-color: rgb(220, 220, 220);
 }
 
@@ -172,3 +172,11 @@ tr{
   border-radius: 2em!important;
 }
 
+.scheduler_default_cell{
+  background-color: rgb(220,220,220)!important;
+
+}
+
+.scheduler_default_cell_business{
+  background-color: rgb(245,245,245)!important;
+}
