@@ -34,7 +34,7 @@ export class AddLeaveTypeComponent implements OnInit {
     this.color = color;
   }
 
-  createLeaveType(event, formDirective) {
+  createLeaveType(event: any, formDirective: any) {
     event.preventDefault();
     if (!this.form.valid) {
       return;

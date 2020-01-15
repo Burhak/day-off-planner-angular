@@ -2,8 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatTabsModule, MatDatepickerModule, MatNativeDateModule,
-  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule, MatListModule} from '@angular/material';
+import {
+  MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatTabsModule, MatDatepickerModule, MatNativeDateModule,
+  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule, MatListModule, MatProgressSpinnerModule
+} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -15,7 +17,9 @@ import { environment } from '../environments/environment';
 
 import { TokenInterceptor } from './interceptor/token.interceptor';
 
-import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService, LeaveService, SettingService } from './api';
+import {
+  BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService, LeaveService, SettingService
+} from './api';
 
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './component/login-form/login-form.component';
@@ -35,17 +39,18 @@ import { ErrorHandlerService } from './service/error-handler.service';
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
 import { UserListComponent } from './component/user-list/user-list.component';
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule} from '@angular/material/sort';
 import { DeleteUserDialogComponent } from './component/user-profile/delete-user-dialog/delete-user-dialog.component';
 import { UpdateUserComponent } from './component/update-user/update-user.component';
-import {AddLeaveTypeComponent} from './component/add-leave-type/add-leave-type.component';
-import {LeaveTypesComponent} from './component/leave-types/leave-types.component';
-import {LeaveTypeComponent} from './component/leave-type/leave-type.component';
-import {DeleteLeaveTypeDialogComponent} from "./component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component";
+import { AddLeaveTypeComponent } from './component/add-leave-type/add-leave-type.component';
+import { LeaveTypesComponent } from './component/leave-types/leave-types.component';
+import { LeaveTypeComponent } from './component/leave-type/leave-type.component';
+import { DeleteLeaveTypeDialogComponent } from './component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component';
 import { SettingsComponent } from './component/settings/settings.component';
-import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
+import { SettingDialogComponent } from './component/settings/setting-dialog/setting-dialog.component';
 import { CalendarComponent } from './component/calendar/calendar.component';
 import { SelectUsersComponent } from './component/calendar/select-users/select-users.component';
+import { ApprovingComponent } from './component/approving/approving.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +74,8 @@ import { SelectUsersComponent } from './component/calendar/select-users/select-u
     SettingsComponent,
     SettingDialogComponent,
     CalendarComponent,
-    SelectUsersComponent
+    SelectUsersComponent,
+    ApprovingComponent
   ],
   entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent, SelectUsersComponent],
   imports: [
@@ -96,7 +102,13 @@ import { SelectUsersComponent } from './component/calendar/select-users/select-u
     ReactiveFormsModule,
     ColorPickerModule,
     DayPilotModule,
+    MatProgressSpinnerModule,
     RouterModule.forRoot([
+      {
+        path: 'approve',
+        component: ApprovingComponent,
+        canActivate: [AuthGuad]
+      },
       {
         path: 'admin',
         component: AdminComponent,
