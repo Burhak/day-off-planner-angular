@@ -20,7 +20,7 @@
   display: block;
   width: fit-content;
 
-  padding: 2em 0;
+  /* padding: 2em 0; */
   background-color: rgb(255,255,255);
   box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
   border-radius: 2em;
@@ -28,6 +28,15 @@
 
 .userProfileInfo {
   padding: 2em;
+}
+
+.label {
+  color: rgb(44,62,80);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 11px;
+  margin-left: -5px;
+  margin-top: 10px;
 }
 
 .title{

@@ -31,6 +31,20 @@
         </mat-error>
       </mat-form-field>
 
+      <div class="colorPickerWrapper">
+        <div class="circle"
+          (colorPickerSelect)="pickColor($event)"
+          [colorPicker]="color"
+          [style.background]="color"
+          [cpOutputFormat]="hex"
+          [cpAlphaChannel]="disabled"
+          [cpCancelButton]="true"
+          [cpCancelButtonClass]= "'button'"
+          [cpOKButton]="true"
+          [cpOKButtonClass]= "'button'">
+        </div>
+      </div>
+
       <mat-checkbox id="approvalNeeded" name="approvalNeeded" class="example-margin">Approval needed</mat-checkbox>
 
       <div class="text-danger text-center">
@@ -39,7 +53,7 @@
 
       <div class="buttonGroup">
         <button [disabled]="buttonDisabled" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
-        <button mat-raised-button id="backBtn" class="backBtn" routerLink="/admin/leaveTypes">Back</button>
+        <button mat-raised-button type="button" id="backBtn" class="backBtn" routerLink="/admin/leaveTypes">Back</button>
       </div>
 
     </form>

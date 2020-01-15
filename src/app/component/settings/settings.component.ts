@@ -1,17 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {
-  AdminService,
-  LeaveTypeCreateApiModel,
-  SettingApiModel,
-  SettingService, SettingUpdateApiModel,
-  UserApiModel,
-  UserService
-} from "../../api";
-import {Router} from "@angular/router";
-import {MatDialog, MatTableDataSource} from "@angular/material";
-import {DeleteUserDialogComponent} from "../user-profile/delete-user-dialog/delete-user-dialog.component";
-import {SettingDialogComponent} from "./setting-dialog/setting-dialog.component";
-import {FormGroup} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { AdminService, SettingApiModel, SettingService, SettingUpdateApiModel } from '../../api';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { SettingDialogComponent } from './setting-dialog/setting-dialog.component';
 
 @Component({
   selector: 'app-settings',
@@ -20,7 +10,7 @@ import {FormGroup} from "@angular/forms";
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private settingService: SettingService, private adminService: AdminService, private router: Router, private dialog: MatDialog) {
+  constructor(private settingService: SettingService, private adminService: AdminService, private dialog: MatDialog) {
     this.getAllSettings();
   }
 
@@ -43,14 +33,14 @@ export class SettingsComponent implements OnInit {
     this.dataSource = new MatTableDataSource<SettingApiModel>(this.settings);
   }
 
-  reloadData(){
+  reloadData() {
     this.settings = null;
     this.dataSource = null;
     this.getAllSettings();
   }
 
-  editSettingDialog(setting) {
-    let dialogRef = this.dialog.open(SettingDialogComponent, {data: {setting: setting}});
+  editSettingDialog(setting: SettingApiModel) {
+    const dialogRef = this.dialog.open(SettingDialogComponent, {data: { setting }});
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result === 'false' || result === undefined) {
@@ -60,7 +50,7 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  editSetting(updatedValue, settingKey) {
+  editSetting(updatedValue: number, settingKey: string) {
     const settingValue: SettingUpdateApiModel = {
       value: updatedValue
     };

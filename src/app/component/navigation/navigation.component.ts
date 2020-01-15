@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserInfoService } from 'src/app/service/user-info.service';
-import {AuthService} from "../../api";
-import {Router} from "@angular/router";
-
-
+import { AuthService } from '../../api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',

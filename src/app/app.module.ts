@@ -3,10 +3,13 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatTabsModule, MatDatepickerModule, MatNativeDateModule,
-  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule} from '@angular/material';
+  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule, MatListModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ColorPickerModule } from 'ngx-color-picker';
+
+import {DayPilotModule} from 'daypilot-pro-angular';
 
 import { environment } from '../environments/environment';
 
@@ -43,6 +46,8 @@ import { SettingsComponent } from './component/settings/settings.component';
 import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
 import { IndividualLimitsComponent } from './component/individual-limits/individual-limits.component';
 import { DialogLimitComponent } from './component/individual-limits/dialog-limit/dialog-limit.component';
+import { CalendarComponent } from './component/calendar/calendar.component';
+import { SelectUsersComponent } from './component/calendar/select-users/select-users.component';
 
 @NgModule({
   declarations: [
@@ -65,10 +70,12 @@ import { DialogLimitComponent } from './component/individual-limits/dialog-limit
     DeleteLeaveTypeDialogComponent,
     SettingsComponent,
     SettingDialogComponent,
+    CalendarComponent,
+    SelectUsersComponent,
     IndividualLimitsComponent,
     DialogLimitComponent
   ],
-  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent, DialogLimitComponent],
+  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent, SelectUsersComponent, DialogLimitComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,
@@ -83,6 +90,7 @@ import { DialogLimitComponent } from './component/individual-limits/dialog-limit
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatListModule,
     MatIconModule,
     MatDialogModule,
     MatTabsModule,
@@ -90,6 +98,8 @@ import { DialogLimitComponent } from './component/individual-limits/dialog-limit
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
+    ColorPickerModule,
+    DayPilotModule,
     RouterModule.forRoot([
       {
         path: 'admin',

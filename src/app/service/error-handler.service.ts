@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 })
 export class ErrorHandlerService implements ErrorHandler {
 
+  private static readonly UNEXPECTED_ERROR = 'An unexpected error has occured';
+
   private errorMsg = new Subject<any>();
   public errorUpdate$ = this.errorMsg.asObservable();
-
-  private static readonly UNEXPECTED_ERROR = 'An unexpected error has occured';
 
   private updateMsg(msg: string) {
     this.errorMsg.next(msg);
@@ -38,11 +38,11 @@ export class ErrorHandlerService implements ErrorHandler {
   }
 
   handleErrorResponse(error: HttpErrorResponse): string {
-    let errorMessage: string = (error.error && (error.error.message || error.error.error)) || ErrorHandlerService.UNEXPECTED_ERROR;
+    const errorMessage: string = (error.error && (error.error.message || error.error.error)) || ErrorHandlerService.UNEXPECTED_ERROR;
     console.error('Status code: ', error.status);
     console.error('Error: ', errorMessage);
 
-    //Specific error status
+    // specific error status
     switch (error.status) {
       case 401: {
         const auth = this.injector.get(UserInfoService);
