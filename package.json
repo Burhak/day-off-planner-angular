@@ -26,6 +26,7 @@
     "daypilot-pro-angular": "https://npm.daypilot.org/daypilot-pro-angular/trial/2019.4.4112.tar.gz",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.0",
+    "ngx-color-picker": "^8.2.0",
     "hammerjs": "^2.0.8",
     "ngx-cookie-service": "^2.3.0",
     "path": "^0.12.7",

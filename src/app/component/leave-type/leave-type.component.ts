@@ -16,12 +16,15 @@ export class LeaveTypeComponent implements OnInit {
   public form: FormGroup;
   public isCheckboxChanged: boolean;
   public isLeaveTypeUpdated: boolean;
+  public isColorChanged: boolean;
   public leaveTypeId: string;
   public errorMsg: string = '';
+  public color: string = '';
 
   constructor(private router: Router, private leaveTypeService: LeaveTypeService, private adminService: AdminService, private dialog: MatDialog, private ngZone: NgZone) {
     this.isLeaveTypeUpdated = false;
     this.isCheckboxChanged = false;
+    this.isColorChanged = false;
     if (this.router.getCurrentNavigation().extras.state != null) {
       this.leaveTypeId =  this.router.getCurrentNavigation().extras.state.leaveTypeId;
       localStorage.setItem('leaveTypeId', this.leaveTypeId);
@@ -31,6 +34,7 @@ export class LeaveTypeComponent implements OnInit {
 
     this.leaveTypeService.getLeaveTypeById(this.leaveTypeId).subscribe((leaveType: LeaveTypeApiModel) => {
       this.leaveType = leaveType;
+      this.color = leaveType.color;
     });
 
     this.form = new FormGroup({
@@ -44,6 +48,11 @@ export class LeaveTypeComponent implements OnInit {
   ngOnInit() {
   }
 
+  pickColor(color: string) {
+    this.color = color;
+    this.isColorChanged = true;
+  }
+
   updateLeaveType(event) {
     event.preventDefault();
     if (!this.form.valid) {
@@ -53,10 +62,10 @@ export class LeaveTypeComponent implements OnInit {
 
     const updatedLeaveType: LeaveTypeCreateApiModel = {
       name: event.target.name.value,
-      color: '', // TODO
       approvalNeeded: event.target.approvalNeeded.checked,
       limit: event.target.limit.value,
       carryover: event.target.carryover.value,
+      color: this.color,
     };
 
     this.adminService.updateLeaveType(updatedLeaveType, this.leaveTypeId).subscribe(
