@@ -1,6 +1,5 @@
-import { Component, OnInit, Injector, ErrorHandler, NgZone } from '@angular/core';
+import { Component, OnInit, ErrorHandler, NgZone } from '@angular/core';
 import { ErrorHandlerService } from '../../service/error-handler.service';
-import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-error',
@@ -9,21 +8,21 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class ErrorComponent implements OnInit {
 
-  public errorMsg: string = '';
+  public errorMsg = '';
   public errorShown = false;
 
   constructor(private errorService: ErrorHandler, private ngZone: NgZone) {
   }
 
   ngOnInit() {
-    (<ErrorHandlerService>this.errorService).errorUpdate$.subscribe((msg) => this.updateMsg(msg));
+    (this.errorService as ErrorHandlerService).errorUpdate$.subscribe((msg) => this.updateMsg(msg));
   }
 
   private updateMsg(msg: string) {
     this.ngZone.run(() => {
       this.errorMsg = msg.split('\n')[0];
       this.errorShown = true;
-    })
+    });
   }
 
   public clearMsg() {

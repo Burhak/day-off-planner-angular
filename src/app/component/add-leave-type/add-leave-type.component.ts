@@ -1,6 +1,6 @@
-import {Component, NgZone, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AdminService, LeaveTypeCreateApiModel} from "../../api";
+import { Component, NgZone, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AdminService, LeaveTypeCreateApiModel } from '../../api';
 import { ColorUtils } from 'src/app/util/color.util';
 
 @Component({
@@ -13,7 +13,7 @@ export class AddLeaveTypeComponent implements OnInit {
   public form: FormGroup;
   public buttonDisabled: boolean;
   public isLeaveTypeAdded: boolean;
-  public errorMsg: string = '';
+  public errorMsg = '';
   public color: string = ColorUtils.randomColor();
 
   constructor(private adminService: AdminService, private ngZone: NgZone) {
@@ -62,17 +62,14 @@ export class AddLeaveTypeComponent implements OnInit {
           this.ngZone.run(() => {
             this.errorMsg = 'Name already taken';
           });
-        } else throw error;
+        } else {
+          throw error;
+        }
       }
     );
   }
 
-
-  hideMessage(){
-    (function(that){
-      setTimeout(function() {
-        that.isLeaveTypeAdded = false;
-      }, 3000);
-    }(this));
+  hideMessage() {
+    setTimeout(() => this.isLeaveTypeAdded = false, 3000);
   }
 }

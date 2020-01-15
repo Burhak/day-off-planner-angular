@@ -26,7 +26,7 @@
         <td mat-cell *matCellDef="let setting"> {{setting.min}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let user; columns: displayedColumns;" (click) = "editSettingDialog(user)"></tr>
+      <tr mat-row *matRowDef="let setting; columns: displayedColumns;" (click) = "editSettingDialog(setting)"></tr>
     </table>
   </div>
 </div>

@@ -1,37 +1,32 @@
-import {
-  AfterContentChecked,
-  AfterViewChecked,
-  Component,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges
-} from '@angular/core';
-import {AdminService, UserApiModel, UserService} from '../../api';
-import {UserInfoService} from '../../service/user-info.service';
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {DeleteUserDialogComponent} from "./delete-user-dialog/delete-user-dialog.component";
-import {MatDialog} from "@angular/material";
+import { Component, OnInit } from '@angular/core';
+import { AdminService, UserApiModel, UserService } from '../../api';
+import { UserInfoService } from '../../service/user-info.service';
+import { Router } from '@angular/router';
+import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent implements OnInit{
+export class UserProfileComponent implements OnInit {
 
   public user: UserApiModel;
   public userSupervisor: UserApiModel;
   public userApprovers: Array<UserApiModel> = [];
-  public userApproversId: Array<string>;
   public deleteBtnDisabled: boolean;
-  public editingUser: boolean = false;
+  public editingUser = false;
   public isLoaded: boolean;
 
-  constructor(public userInfoService: UserInfoService, private userService: UserService, private activatedRoute: ActivatedRoute, private  adminService: AdminService, public dialog: MatDialog, private  router: Router) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
+  constructor(
+      public userInfoService: UserInfoService,
+      private userService: UserService,
+      private  adminService: AdminService,
+      public dialog: MatDialog,
+      private  router: Router
+    ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
     this.isLoaded = false;
     this.deleteBtnDisabled = true;
@@ -46,12 +41,8 @@ export class UserProfileComponent implements OnInit{
 
     this.userService.getUserById(userId).subscribe((user: UserApiModel) => {
       this.user = user;
-      this.getUserSupervisor(this.user.supervisor);
-
-      this.userService.getUserById(userId).subscribe((user: UserApiModel) => {
-        this.userApproversId = user.approvers;
-        this.getUserApprovers();
-      });
+      this.getUserSupervisor(user.supervisor);
+      this.getUserApprovers(user.approvers);
 
       if (this.user.id !== this.userInfoService.currentUser.id) {
         this.deleteBtnDisabled = false;
@@ -64,7 +55,7 @@ export class UserProfileComponent implements OnInit{
   }
 
 
-  getUserSupervisor(userId) {
+  getUserSupervisor(userId: string) {
     if (userId) {
       this.userService.getUserById(userId).subscribe((supervisor: UserApiModel) => {
         this.userSupervisor = supervisor;
@@ -72,18 +63,18 @@ export class UserProfileComponent implements OnInit{
     }
   }
 
-  getUserApprovers() {
+  getUserApprovers(userApproverIds: Array<string>) {
     this.userApprovers = [];
-    for (const approverId of this.userApproversId) {
-      this.userService.getUserById(approverId).subscribe( (user: UserApiModel) => {
-        this.userApprovers.push(user);
+    for (const approverId of userApproverIds) {
+      this.userService.getUserById(approverId).subscribe( (approver: UserApiModel) => {
+        this.userApprovers.push(approver);
       });
     }
     this.isLoaded = true;
   }
 
-  openDialogDeleteUser(user) {
-    let dialogRef = this.dialog.open(DeleteUserDialogComponent, {data: {userName: user.firstName + ' ' + user.lastName}});
+  openDialogDeleteUser(user: UserApiModel) {
+    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {data: {userName: user.firstName + ' ' + user.lastName}});
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result === 'true') {
@@ -92,7 +83,7 @@ export class UserProfileComponent implements OnInit{
     });
   }
 
-  deleteUser(user) {
+  deleteUser(user: UserApiModel) {
     this.adminService.deleteUser(user.id).subscribe(
       response => {
         console.log(response);
@@ -104,9 +95,9 @@ export class UserProfileComponent implements OnInit{
     this.editingUser = true;
   }
 
-  receiveMessage($event) {
+  receiveMessage(event: any) {
     this.editingUser = false;
-    if ($event == true) {
+    if (event === true) {
       this.reloadUser();
     }
   }
@@ -120,11 +111,9 @@ export class UserProfileComponent implements OnInit{
         this.userSupervisor = null;
       }
       if (this.user.approvers !== null) {
-        this.userApproversId = this.user.approvers;
-        this.getUserApprovers();
+        this.getUserApprovers(this.user.approvers);
       } else {
-        this.userApprovers = null;
-        this.userApproversId = null;
+        this.userApprovers = [];
       }
       if (this.user.id !== this.userInfoService.currentUser.id) {
         this.deleteBtnDisabled = false;

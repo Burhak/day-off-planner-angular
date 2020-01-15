@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-setting-dialog',
@@ -15,11 +15,18 @@ export class SettingDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      settingValue: new FormControl('',[Validators.min(this.data.setting.min), Validators.max(this.data.setting.max), Validators.pattern('[0-9]+')])
+      settingValue: new FormControl(
+        '',
+        [
+          Validators.min(this.data.setting.min),
+          Validators.max(this.data.setting.max),
+          Validators.pattern('[0-9]+')
+        ]
+      )
     }, {updateOn: 'submit'});
   }
 
-  submit(event) {
+  submit(event: any) {
     event.preventDefault();
     if (!this.form.valid) {
       console.log(this.form.valid);

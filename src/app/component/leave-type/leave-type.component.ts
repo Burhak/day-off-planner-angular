@@ -1,9 +1,9 @@
-import {Component, NgZone, OnInit} from '@angular/core';
-import {AdminService, LeaveTypeApiModel, LeaveTypeCreateApiModel, LeaveTypeService, UserApiModel} from "../../api";
-import {Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatDialog} from "@angular/material";
-import {DeleteLeaveTypeDialogComponent} from "./delete-leave-type-dialog/delete-leave-type-dialog.component";
+import { Component, NgZone, OnInit } from '@angular/core';
+import { AdminService, LeaveTypeApiModel, LeaveTypeCreateApiModel, LeaveTypeService } from '../../api';
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { DeleteLeaveTypeDialogComponent } from './delete-leave-type-dialog/delete-leave-type-dialog.component';
 
 @Component({
   selector: 'app-leave-type',
@@ -18,10 +18,16 @@ export class LeaveTypeComponent implements OnInit {
   public isLeaveTypeUpdated: boolean;
   public isColorChanged: boolean;
   public leaveTypeId: string;
-  public errorMsg: string = '';
-  public color: string = '';
+  public errorMsg = '';
+  public color = '';
 
-  constructor(private router: Router, private leaveTypeService: LeaveTypeService, private adminService: AdminService, private dialog: MatDialog, private ngZone: NgZone) {
+  constructor(
+      private router: Router,
+      private leaveTypeService: LeaveTypeService,
+      private adminService: AdminService,
+      private dialog: MatDialog,
+      private ngZone: NgZone
+  ) {
     this.isLeaveTypeUpdated = false;
     this.isCheckboxChanged = false;
     this.isColorChanged = false;
@@ -53,7 +59,7 @@ export class LeaveTypeComponent implements OnInit {
     this.isColorChanged = true;
   }
 
-  updateLeaveType(event) {
+  updateLeaveType(event: any) {
     event.preventDefault();
     if (!this.form.valid) {
       console.log(this.form.valid);
@@ -78,25 +84,23 @@ export class LeaveTypeComponent implements OnInit {
           this.ngZone.run(() => {
             this.errorMsg = 'Name already taken';
           });
-        } else throw error;
+        } else {
+          throw error;
+        }
       }
     );
   }
 
   hideMessage() {
-    (function(that) {
-      setTimeout(function() {
-        that.isLeaveTypeUpdated = false;
-      }, 3000);
-    }(this));
+    setTimeout(() => this.isLeaveTypeUpdated = false, 3000);
   }
 
-  onCheckboxChanged(event) {
+  onCheckboxChanged() {
     this.isCheckboxChanged = true;
   }
 
-  openDialogDeleteLeaveType(leaveType) {
-    let dialogRef = this.dialog.open(DeleteLeaveTypeDialogComponent, {data: {leaveTypeName: leaveType.name}});
+  openDialogDeleteLeaveType(leaveType: LeaveTypeApiModel) {
+    const dialogRef = this.dialog.open(DeleteLeaveTypeDialogComponent, {data: {leaveTypeName: leaveType.name}});
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result === 'true') {
@@ -105,7 +109,7 @@ export class LeaveTypeComponent implements OnInit {
     });
   }
 
-  deleteLeaveType(leaveType) {
+  deleteLeaveType(leaveType: LeaveTypeApiModel) {
     this.adminService.deleteLeaveType(leaveType.id).subscribe(
       response => {
         console.log(response);
