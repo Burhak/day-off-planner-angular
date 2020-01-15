@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, NgZone } from '@angular/core';
 import { AdminService, UserApiModel, UserCreateApiModel, UserService } from '../../api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { UserInfoService } from 'src/app/service/user-info.service';
 
 @Component({
   selector: 'app-update-user',
@@ -17,26 +15,22 @@ export class UpdateUserComponent implements OnInit {
   public supervisorSelectControl: FormControl = new FormControl();
   public approversSelectControl: FormControl = new FormControl();
   public isUserUpdated: boolean;
-  public errorMsg: string = '';
+  public errorMsg = '';
 
   @Input() public user: UserApiModel;
 
   @Output() userUpdatedEvent = new EventEmitter<boolean>();
 
-  constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router, private ngZone: NgZone) {
+  constructor(private adminService: AdminService, private userService: UserService, private ngZone: NgZone) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
       const allUsers: Array<UserApiModel> = user;
-      const index = allUsers.findIndex(allUsers => allUsers.id === this.user.id); //find currentUser in allUsers
-      allUsers.splice(index, 1); //delete currentUser from allUsers
+      const index = allUsers.findIndex(u => u.id === this.user.id); // find currentUser in allUsers
+      allUsers.splice(index, 1); // delete currentUser from allUsers
       this.posibleUserSupervisorsOrApprovers = allUsers;
     });
   }
 
-
   ngOnInit() {
-    if (!this.userInfoService.hasAdminPrivileges) {
-      this.router.navigate(['']);
-    }
     this.form = new FormGroup({
       firstname: new FormControl('x', [Validators.required]),
       lastname: new FormControl('x', [Validators.required]),
@@ -52,14 +46,14 @@ export class UpdateUserComponent implements OnInit {
   }
 
 
-  createNewUser(event) {
+  createNewUser(event: any) {
     event.preventDefault();
     this.form.updateValueAndValidity();
     if (!this.form.valid) {
       console.log(this.form.valid);
       return;
     }
-    
+
     const newUser: UserCreateApiModel = {
       firstName: event.target.firstname.value,
       lastName: event.target.lastname.value,
@@ -68,7 +62,7 @@ export class UpdateUserComponent implements OnInit {
       supervisor: this.supervisorSelectControl.value,
       jobDescription: event.target.jobdescription.value,
       phone: event.target.phone.value,
-      approvers: this.approversSelectControl.value
+      approvers: this.approversSelectControl.value || []
     };
 
     this.buttonDisabled = true;
@@ -82,11 +76,11 @@ export class UpdateUserComponent implements OnInit {
         this.buttonDisabled = false;
         console.log(error);
         console.log(error.status);
-        if (error.status == 409) {
-          this.ngZone.run(() => {
-            this.errorMsg = 'Email already taken';
-          })
-        } else throw error;
+        if (error.status === 409) {
+          this.ngZone.run(() => this.errorMsg = 'Email already taken');
+        } else {
+          throw error;
+        }
       }
     );
     console.log(newUser);

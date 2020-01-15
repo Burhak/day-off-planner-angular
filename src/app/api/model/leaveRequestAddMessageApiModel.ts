@@ -10,10 +10,6 @@
  * Do not edit the class manually.
  */
 
-export interface LeaveTypeCreateApiModel { 
-    name: string;
-    color: string;
-    approvalNeeded: boolean;
-    limit?: number;
-    carryover?: number;
+export interface LeaveRequestAddMessageApiModel { 
+    message: string;
 }

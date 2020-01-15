@@ -1,2 +1,85 @@
 <app-navigation></app-navigation>
 <app-error></app-error>
+
+<div class="pageContent">
+  <div>
+    <div class="leaveTypeList">
+      <h2 class="title">Leave requests</h2>
+      <div class="relative">
+        <mat-form-field class="negGlobalCss dateFilter">
+          <input matInput [matDatepicker]="picker" placeholder="Leave requests after date:" (dateChange)="applyFilterLeavesDate($event.target.value)" [formControl]="dateControl">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-tab-group animationDuration="0ms" (selectedTabChange)="applyFilterLeavesExact($event.tab.textLabel!='All' ? $event.tab.textLabel : '')" #tabGroup>
+          <mat-tab label="All"></mat-tab>
+          <mat-tab label="Pending"></mat-tab>
+          <mat-tab label="Approved"></mat-tab>
+          <mat-tab label="Rejected"></mat-tab>
+        </mat-tab-group>
+      </div>
+      <mat-form-field hidden>
+        <input matInput (keyup)="applyFilterLeaves($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+      <mat-form-field hidden>
+        <input matInput (keyup)="applyFilterLeavesExact($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSourceLeaves" matSort #TableLeavesSort="matSort" class="minWidth900">
+        <ng-container matColumnDef="leaveType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type </th>
+          <td mat-cell *matCellDef="let leave" class="leaveTypeName minWidth250" [ngStyle]="setMyStyles(leaveTypesCache[leave.leaveType].color, leave.hover)"> {{leaveTypesCache[leave.leaveType].name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="fromDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date </th>
+          <td mat-cell *matCellDef="let leave" class="minWidth250"> {{leave.fromDate | date:'medium'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="toDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> To Date </th>
+          <td mat-cell *matCellDef="let leave" class="minWidth250"> {{leave.toDate | date:'medium'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let leave" class="minWidth140"> {{leave.status}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsLeaves"></tr>
+        <tr mat-row *matRowDef="let leaves; columns: displayedColumnsLeaves;" (mouseenter)="leaves.hover=true" (mouseleave)="leaves.hover=false"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons #TableLeavesPaginator="matPaginator"></mat-paginator>
+    </div>
+  </div>
+
+  <div>
+    <div class="leaveTypeList">
+      <h2 class="title">Leave types</h2>
+      <mat-form-field>
+        <input matInput (keyup)="applyFilterTypes($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSourceTypes" matSort #TableTypesSort="matSort">
+        <ng-container matColumnDef="leaveType.name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let leaveType" class="leaveTypeName" [ngStyle]="setMyStyles(leaveType.leaveType.color, leaveType.hover)"> {{leaveType.leaveType.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="leaveType.approvalNeeded">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Approval needed </th>
+          <td mat-cell *matCellDef="let leaveType"> {{leaveType.leaveType.approvalNeeded}} </td>
+        </ng-container>
+        <ng-container matColumnDef="limit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Limit </th>
+          <td mat-cell *matCellDef="let leaveType"> {{leaveType.limit | async}} </td>
+        </ng-container>
+        <ng-container matColumnDef="carryover">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Carryover </th>
+          <td mat-cell *matCellDef="let leaveType"> {{leaveType.carryover | async}} </td>
+        </ng-container>
+        <ng-container matColumnDef="requestedHours">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Spent hours </th>
+          <td mat-cell *matCellDef="let leaveType"> {{leaveType.requestedHours | async}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTypes"></tr>
+        <tr mat-row *matRowDef="let leaveType; columns: displayedColumnsTypes;" (mouseenter)="leaveType.hover=true" (mouseleave)="leaveType.hover=false"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons #TableTypesPaginator="matPaginator"></mat-paginator>
+
+    </div>
+  </div>
+</div>

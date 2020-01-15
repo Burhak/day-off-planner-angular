@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {LeaveTypeApiModel, LeaveTypeService} from '../../api';
-import {Router} from '@angular/router';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { LeaveTypeApiModel, LeaveTypeService } from '../../api';
+import { Router } from '@angular/router';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-leave-types',
@@ -45,9 +45,9 @@ export class LeaveTypesComponent implements OnInit {
     this.router.navigate(['admin/addLeaveType'] );
   }
 
-  openLeaveType(leaveTypeId) {
+  openLeaveType(leaveTypeId: string) {
     console.log(leaveTypeId);
-    this.router.navigate(['admin/leaveType'] ,  { state: { leaveTypeId: leaveTypeId }});
+    this.router.navigate(['admin/leaveType'], { state: { leaveTypeId }});
   }
 
   applyFilter(filterValue: string) {
@@ -55,4 +55,14 @@ export class LeaveTypesComponent implements OnInit {
     console.log(this.dataSource.filter);
   }
 
+  setMyStyles(color: string, hover: boolean) {
+    let styles;
+    if (color) {
+      styles = {
+        'box-shadow': 'inset ' + (hover ? '30px' : '10px') + ' 0px ' + color,
+        transition: 'box-shadow 0.5s'
+      };
+    }
+    return styles;
+  }
 }

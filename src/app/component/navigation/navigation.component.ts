@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserInfoService } from 'src/app/service/user-info.service';
-import {AuthService} from "../../api";
-import {Router} from "@angular/router";
-
-
+import { AuthService } from '../../api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -22,9 +20,7 @@ export class NavigationComponent implements OnInit {
   logOut() {
     this.authService.logoutUser().subscribe(
       response => {
-        this.userService.removeToken();
-        this.userService.removeUser();
-        this.router.navigate(['login']);
+        this.userService.logout(() => this.router.navigate(['login']));
       }, error => {
         throw error;
       }

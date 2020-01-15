@@ -2,39 +2,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatInputModule,
-  MatButtonModule,
-  MatFormFieldModule,
-  MatToolbarModule,
-  MatSelectModule,
-  MatCheckboxModule,
-  MatMenuModule,
-  MatTableModule,
-  MatPaginatorModule,
-  MatIconModule,
-  MatDialogModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatRadioModule
-} from '@angular/material';
+import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatTabsModule, MatDatepickerModule, MatNativeDateModule,
+  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule, MatListModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ColorPickerModule } from 'ngx-color-picker';
+
+import {DayPilotModule} from 'daypilot-pro-angular';
 
 import { environment } from '../environments/environment';
 
 import { TokenInterceptor } from './interceptor/token.interceptor';
 
-import {
-  BASE_PATH,
-  Configuration,
-  AuthService as LoginService,
-  AdminService,
-  UserService,
-  LeaveTypeService,
-  SettingService, LeaveService
-} from './api';
+import { BASE_PATH, Configuration, AuthService as LoginService, AdminService, UserService, LeaveTypeService, LeaveService, SettingService } from './api';
 
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './component/login-form/login-form.component';
@@ -67,6 +48,8 @@ import { AddLeaveRequestComponent } from './component/add-leave-request/add-leav
 import {MatRangeDatepickerModule, MatRangeNativeDateModule} from 'mat-range-datepicker';
 import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
 import {MatStepperModule} from '@angular/material/stepper';
+import { CalendarComponent } from './component/calendar/calendar.component';
+import { SelectUsersComponent } from './component/calendar/select-users/select-users.component';
 
 @NgModule({
   declarations: [
@@ -89,9 +72,11 @@ import {MatStepperModule} from '@angular/material/stepper';
     DeleteLeaveTypeDialogComponent,
     SettingsComponent,
     SettingDialogComponent,
-    AddLeaveRequestComponent
+    AddLeaveRequestComponent,
+    CalendarComponent,
+    SelectUsersComponent
   ],
-  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent],
+  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent, SelectUsersComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,
@@ -106,6 +91,7 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatListModule,
     MatIconModule,
     MatDialogModule,
     MatDatepickerModule,
@@ -116,6 +102,9 @@ import {MatStepperModule} from '@angular/material/stepper';
     FormsModule,
     ReactiveFormsModule,
     MatStepperModule,
+    MatTabsModule,
+    ColorPickerModule,
+    DayPilotModule,
     RouterModule.forRoot([
       {
         path: 'admin',
@@ -183,6 +172,10 @@ import {MatStepperModule} from '@angular/material/stepper';
         path: 'addLeaveRequest',
         component: AddLeaveRequestComponent,
         canActivate: [AuthGuad]
+      },
+      {
+        path: '**',
+        redirectTo: ''
       }
     ], {onSameUrlNavigation: 'reload'})
   ],
@@ -207,8 +200,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     AuthGuad,
     CookieService,
     LeaveTypeService,
-    SettingService,
-    LeaveService
+    LeaveService,
+    SettingService
   ],
   bootstrap: [AppComponent]
 })

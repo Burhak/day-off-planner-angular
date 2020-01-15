@@ -1,8 +1,6 @@
-<div class="white-text red-background text-center marginCenter">
+<div class="white-text red-background margin-center">
   {{this.errorMsg}}
-  <button class="close" aria-label="Close" *ngIf="errorShown" (click)="clearMsg()">
-    <span aria-hidden="true">&times;</span>
-  </button>
+  <span class="close" *ngIf="errorShown" (click)="clearMsg()">&times;</span>
 </div>
 
 

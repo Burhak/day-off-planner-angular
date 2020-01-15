@@ -12,7 +12,7 @@ import { UserInfoService } from 'src/app/service/user-info.service';
 export class LoginFormComponent implements OnInit {
 
   public form: FormGroup;
-  public errorMsg: string = '';
+  public errorMsg = '';
 
   constructor(private apiService: LoginService, private userService: UserInfoService, private router: Router, private ngZone: NgZone) { }
 
@@ -26,7 +26,7 @@ export class LoginFormComponent implements OnInit {
     }, {updateOn: 'submit'});
   }
 
-  loginUser(event) {
+  loginUser(event: any) {
     event.preventDefault();
     this.errorMsg = '';
     if (!this.form.valid) {
@@ -48,11 +48,11 @@ export class LoginFormComponent implements OnInit {
       error => {
         console.log(error);
         console.log(error.status);
-        if (error.status == 401) {
-            this.ngZone.run(() => {
-            this.errorMsg = 'Invalid email or password'
-          })
-        } else throw error;
+        if (error.status === 401) {
+            this.ngZone.run(() => this.errorMsg = 'Invalid email or password');
+        } else {
+          throw error;
+        }
       }
     );
   }

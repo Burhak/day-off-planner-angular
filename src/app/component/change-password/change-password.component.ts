@@ -1,11 +1,11 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {UserService} from '../../api';
-import {passwordConfirmValidator} from './passwordValidator';
-import {ErrorStateMatcher} from '@angular/material';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from '../../api';
+import { passwordConfirmValidator } from './passwordValidator';
+import { ErrorStateMatcher } from '@angular/material';
 
-class CrossFieldErrorMatcher implements ErrorStateMatcher{
+class CrossFieldErrorMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     return form.submitted && (form.hasError('misMatch') || form.hasError('required', ['confirmPassword']));
   }
@@ -21,7 +21,7 @@ export class ChangePasswordComponent implements OnInit {
   public form: FormGroup;
   public isPasswordChanged: boolean;
   public buttonDisabled: boolean;
-  public errorMsg: string = '';
+  public errorMsg = '';
   public errorMatcher = new CrossFieldErrorMatcher();
 
   constructor(private router: Router, private userService: UserService, private ngZone: NgZone) { }
@@ -61,11 +61,13 @@ export class ChangePasswordComponent implements OnInit {
         this.buttonDisabled = false;
         console.log(error);
         console.log(error.status);
-        if (error.status == 403) {
+        if (error.status === 403) {
           this.ngZone.run(() => {
-            this.errorMsg = 'Invalid current password'
-          })
-        } else throw error;
+            this.errorMsg = 'Invalid current password';
+          });
+        } else {
+          throw error;
+        }
       }
     );
   }

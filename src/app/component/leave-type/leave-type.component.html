@@ -31,6 +31,20 @@
         </mat-error>
       </mat-form-field>
 
+      <div class="colorPickerWrapper">
+        <div class="circle"
+          (colorPickerSelect)="pickColor($event)"
+          [colorPicker]="color"
+          [style.background]="color"
+          [cpOutputFormat]="hex"
+          [cpAlphaChannel]="disabled"
+          [cpCancelButton]="true"
+          [cpCancelButtonClass]= "'button'"
+          [cpOKButton]="true"
+          [cpOKButtonClass]= "'button'">
+        </div>
+      </div>
+
       <mat-checkbox id="approvalNeeded" name="approvalNeeded" class="example-margin" [checked]="leaveType?.approvalNeeded" (click)="onCheckboxChanged($event)">Approval needed</mat-checkbox>
 
       <div class="text-danger text-center">
@@ -38,7 +52,7 @@
       </div>
 
       <div class="buttonGroup">
-        <button [disabled]="!(!form.pristine || isCheckboxChanged)" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Update</button>
+        <button [disabled]="!(!form.pristine || isCheckboxChanged || isColorChanged)" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Update</button>
         <button mat-raised-button id="cancelBtn" class="cancelBtn" type="button" routerLink="/admin/leaveTypes">Cancel</button>
         <button mat-raised-button id="deleteBtn" class="deleteBtn" type="button" (click)="openDialogDeleteLeaveType(leaveType)">Delete</button>
       </div>

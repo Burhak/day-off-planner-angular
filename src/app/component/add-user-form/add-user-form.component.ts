@@ -1,9 +1,8 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import {AdminService, UserApiModel, UserCreateApiModel, UserService} from '../../api';
+import { AdminService, UserApiModel, UserCreateApiModel, UserService } from '../../api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserInfoService } from 'src/app/service/user-info.service';
-import {MatSelectChange} from "@angular/material";
 
 @Component({
   selector: 'app-add-user-form',
@@ -18,9 +17,15 @@ export class AddUserFormComponent implements OnInit {
   public supervisorSelectControl: FormControl = new FormControl();
   public approversSelectControl: FormControl = new FormControl();
   public isUserAdded: boolean;
-  public errorMsg: string = '';
+  public errorMsg = '';
 
-  constructor(private adminService: AdminService, private userService: UserService, private userInfoService: UserInfoService, private router: Router, private ngZone: NgZone) {
+  constructor(
+      private adminService: AdminService,
+      private userService: UserService,
+      private userInfoService: UserInfoService,
+      private router: Router,
+      private ngZone: NgZone
+  ) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
       this.posibleUserSupervisorsOrApprovers = user;
     });
@@ -46,7 +51,7 @@ export class AddUserFormComponent implements OnInit {
   }
 
 
-  createNewUser(event, formDirective) {
+  createNewUser(event: any, formDirective: any) {
     event.preventDefault();
     if (!this.form.valid) {
       console.log(this.form.valid);
@@ -60,7 +65,7 @@ export class AddUserFormComponent implements OnInit {
       supervisor: this.supervisorSelectControl.value,
       jobDescription: event.target.jobdescription.value,
       phone: event.target.phone.value,
-      approvers: this.approversSelectControl.value
+      approvers: this.approversSelectControl.value || []
     };
 
     this.buttonDisabled = true;
@@ -83,19 +88,16 @@ export class AddUserFormComponent implements OnInit {
           this.ngZone.run(() => {
             this.errorMsg = 'Email already taken';
           });
-        } else throw error;
+        } else {
+          throw error;
+        }
       }
     );
     console.log(newUser);
   }
 
-  hideMessage(){
-    (function(that){
-      setTimeout(function() {
-        that.isUserAdded = false;
-      }, 3000);
-    }(this));
+  hideMessage() {
+    setTimeout(() => this.isUserAdded = false, 3000);
   }
-
 
 }

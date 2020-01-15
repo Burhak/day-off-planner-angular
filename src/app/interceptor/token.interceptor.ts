@@ -9,13 +9,11 @@ export class TokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        if (this.auth.isLoggedIn) {
-            request = request.clone({
-                setHeaders: {
-                    Authorization: `Bearer ${this.auth.getAccessToken()}`
-                }
-            });
-        }
+        request = request.clone({
+            setHeaders: {
+                Authorization: this.auth.isLoggedIn ? `Bearer ${this.auth.getAccessToken()}` : ''
+            }
+        });
 
         return next.handle(request);
     }
