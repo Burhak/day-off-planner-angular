@@ -32,9 +32,12 @@ export class CalendarComponent implements AfterViewInit {
     eventHoverHandling: 'Disabled',
     useEventBoxes: 'Never',
     dynamicLoading: true,
-    onBeforeCellRender: this.highlightWeekend,
     onAfterRender: this.afterRender.bind(this),
-    onBeforeCornerDomAdd: this.moveSelectButton.bind(this)
+    onBeforeCornerDomAdd: this.moveSelectButton.bind(this),
+    cellWidth: 60,
+    rowMinHeight: 50,
+    rowHeaderWidth: 100,
+    rowHeaderWidthMarginRight: 15
   };
 
   @Input()
@@ -114,8 +117,8 @@ export class CalendarComponent implements AfterViewInit {
     let background = type.color;
 
     // stripes for PENDING
-    if (leaveRequest.status === LeaveRequestApiModel.StatusEnum.PENDING) {
-      background = `repeating-linear-gradient(135deg, ${type.color}, ${type.color} 5px, black 5px, black 10px)`;
+    if (leaveRequest.status == LeaveRequestApiModel.StatusEnum.PENDING) {
+      background = `repeating-linear-gradient(135deg, ${type.color}, ${type.color} 5px, white 5px, white 10px)`;
     }
 
     // black color for CANCELLED and REJECTED (should never happen)
@@ -136,12 +139,6 @@ export class CalendarComponent implements AfterViewInit {
       backColor: background,
       borderColor: border
     };
-  }
-
-  private highlightWeekend(args: any) {
-    if (args.cell.start.getDayOfWeek() === 6 || args.cell.start.getDayOfWeek() === 0) {
-      args.cell.backColor = '#dddddd';
-    }
   }
 
   private afterRender() {
