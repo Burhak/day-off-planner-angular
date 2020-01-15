@@ -37,7 +37,7 @@
         <mat-step>
           <ng-template matStepLabel>Check your leave request</ng-template>
           <div class="leaveTypeConfirmation">
-            <h4><strong>Leave request:</strong></h4>
+            <h4><strong>Leave request</strong></h4>
             <h5 class="noMargin"><strong> {{leaveTypesSelectControl.value.name}}</strong></h5>
             <span class="dateRange">
                     <h6><strong>{{ dateRange?.begin | date }}
@@ -66,7 +66,7 @@
       </mat-vertical-stepper>
 
 
-      <div class="text-danger text-center">
+      <div class="error-text">
         {{errorMsg}}
       </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {
   LeaveRequestCreateApiModel,
   LeaveService,
@@ -32,7 +32,7 @@ export class AddLeaveRequestComponent implements OnInit {
   public toHourSelectControl: FormControl = new FormControl();
 
 
-  constructor(private leaveTypeService: LeaveTypeService, private leaveService: LeaveService, private settingService: SettingService) {
+  constructor(private leaveTypeService: LeaveTypeService, private leaveService: LeaveService, private settingService: SettingService, private ngZone: NgZone) {
     this.leaveTypeService.getAllLeaveTypes().subscribe((leaveTypes: LeaveTypeApiModel[]) => {
       this.leaveTypeList = leaveTypes;
     });
@@ -98,7 +98,11 @@ export class AddLeaveRequestComponent implements OnInit {
         this.isRequestCreated = false;
         console.log(error);
         console.log(error.status);
-        throw error;
+        if (error.status === 412) {
+          this.ngZone.run(() => {
+            this.errorMsg = 'Limit of this leave type has been exceeded!';
+          });
+        } else throw error;
       });
   }
 
