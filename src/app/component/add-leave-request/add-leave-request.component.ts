@@ -18,6 +18,7 @@ export class AddLeaveRequestComponent implements OnInit {
 
   public dateRange;
   public leaveTypesSelectControl: FormControl = new FormControl('', [Validators.required]);
+  public dateRangeControl: FormControl = new FormControl('', [Validators.required]);
   public leaveTypeList: Array<LeaveTypeApiModel> = [];
   public isRequestCreated: boolean = false;
   public errorMsg: string = '';
@@ -78,7 +79,7 @@ export class AddLeaveRequestComponent implements OnInit {
     console.log(dateFrom) ;
     console.log(dateTo) ;
     const leaveRequest: LeaveRequestCreateApiModel = {
-      leaveType: this.leaveTypesSelectControl.value,
+      leaveType: this.leaveTypesSelectControl.value.id,
       fromDate: dateFrom,
       toDate: dateTo
     };
@@ -103,6 +104,7 @@ export class AddLeaveRequestComponent implements OnInit {
 
   dateRangeChange($event) {
     this.dateRange = $event;
+    this.dateRangeControl.setValue(" "); //set valid formControl for rangeDatePicker
   }
 
   hideMessage() {

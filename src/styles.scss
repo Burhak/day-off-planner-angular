@@ -1,5 +1,6 @@
 @import 'theme.scss';
 @import 'mat-calendar.scss';
+@import 'mat-stepper.scss';
 
 .full-width {
   width: 100%;
@@ -71,7 +72,7 @@ mat-dialog-container{
 }
 
 mat-icon{
-  color: rgb(44,62,80);
+  color: rgb(255,255,255);
 }
 
 .mat-sort-header-arrow{

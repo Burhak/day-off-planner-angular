@@ -66,6 +66,7 @@ import {SettingDialogComponent} from "./component/settings/setting-dialog/settin
 import { AddLeaveRequestComponent } from './component/add-leave-request/add-leave-request.component';
 import {MatRangeDatepickerModule, MatRangeNativeDateModule} from 'mat-range-datepicker';
 import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
     MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
+    MatStepperModule,
     RouterModule.forRoot([
       {
         path: 'admin',
