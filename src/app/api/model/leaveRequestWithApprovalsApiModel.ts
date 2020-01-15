@@ -16,5 +16,5 @@ import { LeaveRequestMessageApiModel } from './leaveRequestMessageApiModel';
 export interface LeaveRequestWithApprovalsApiModel { 
     leaveRequest: LeaveRequestApiModel;
     readonly approvals: Array<LeaveRequestApprovalApiModel>;
-    readonly messages?: Array<LeaveRequestMessageApiModel>;
+    readonly messages: Array<LeaveRequestMessageApiModel>;
 }

@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <mat-checkbox id="approvalNeeded" name="approvalNeeded" class="example-margin" [checked]="leaveType?.approvalNeeded" (click)="onCheckboxChanged($event)">Approval needed</mat-checkbox>
+      <mat-checkbox id="approvalNeeded" name="approvalNeeded" class="example-margin" [checked]="leaveType?.approvalNeeded" (click)="onCheckboxChanged()">Approval needed</mat-checkbox>
 
       <div class="text-danger text-center">
         {{errorMsg}}

@@ -1,0 +1,195 @@
+.pageContent {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.addLeaveRequest-form {
+  margin: 0 auto;
+  display: block;
+  width: fit-content;
+
+  padding: 2em 2em 1em;
+  background-color: rgb(255,255,255);
+  box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
+  border-radius: 2em;
+}
+
+.addLeaveReques-element {
+  width: 100%;
+}
+
+.title{
+  margin: 0 0 1em;
+}
+
+.calendarContainer{
+  background-color: whitesmoke;
+  border-radius: 2em;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #f0e7ff;
+  margin-top: 1em;
+}
+
+.calendarTitle{
+  margin: 0.4em 0;
+  text-align: center;
+}
+
+.buttonGroup{
+  padding: 0 0 1em;
+  float: left;
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  width: 100%;
+}
+
+button {
+  padding: 0.5em 0;
+  width: 50%;
+  background: rgb(52,73,94);
+  color: white;
+  font-weight: bold;
+  border-radius: 2em;
+}
+
+button:hover{
+  background: rgb(44,62,80);
+}
+
+.submitBtn{
+  margin: 0 0.5em 0 0;
+}
+
+.backBtn{
+  margin: 0 0 0 0.5em;
+}
+
+.logo{
+  width: 100%;
+}
+
+.form-footer{
+  text-align: center;
+}
+
+a {
+  color: rgb(44,62,80);
+}
+
+a:hover{
+  font-weight: bold;
+  text-decoration: none;
+}
+
+h1,h2,h3,h4,h5,h6{
+  color: rgb(44,62,80);
+}
+
+.messageVisible{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 1em 0 0;
+  padding: 0.5em 0.6em;
+
+  background-color: rgb(44,62,80);
+  color: white;
+  border-radius: 2em;
+
+  visibility: visible;
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 0.6s, transform 0.5s linear;
+}
+
+.messageHidden{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 1em 0 0;
+  padding: 0.5em 0.6em;
+
+  background-color: rgb(44,62,80);
+  color: white;
+  border-radius: 2em;
+
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: visibility 0s 1s, opacity 1s, transform 1s linear;
+}
+
+.messageText{
+  width: 100%;
+  padding: 0 2em;
+}
+
+.linesInputs{
+  float: left;
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.firstInput{
+  width: 50%;
+  padding: 0 1em 0 0;
+}
+
+.secondInput{
+  width: 50%;
+  padding: 0;
+}
+
+.calendarTitle{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(44, 62, 80);
+}
+
+
+.dateRange{
+  text-align: left;
+  margin: 0;
+  justify-content: left;
+  align-items: center;
+}
+
+.select{
+  width: 4em;
+}
+
+
+mat-icon{
+  color: rgb(255, 255, 255)!important;
+}
+
+.hidedInput{
+  display: none;
+}
+
+.leaveTypeConfirmation{
+  padding: 1.5em 0 0;
+}
+
+.noMargin{
+  margin: 0;
+}
+
+.error-text{
+  color: rgb(231, 76, 60);
+  font-weight: bold;
+  text-align: center;
+  margin: 0 0 1em;
+}

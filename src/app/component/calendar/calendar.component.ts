@@ -32,9 +32,12 @@ export class CalendarComponent implements AfterViewInit {
     eventHoverHandling: 'Disabled',
     useEventBoxes: 'Never',
     dynamicLoading: true,
-    onBeforeCellRender: this.highlightWeekend,
     onAfterRender: this.afterRender.bind(this),
-    onBeforeCornerDomAdd: this.moveSelectButton.bind(this)
+    onBeforeCornerDomAdd: this.moveSelectButton.bind(this),
+    cellWidth: 60,
+    rowMinHeight: 50,
+    rowHeaderWidth: 100,
+    rowHeaderWidthMarginRight: 15
   };
 
   @Input()
@@ -52,7 +55,10 @@ export class CalendarComponent implements AfterViewInit {
       private renderer: Renderer2
   ) {
     // fetch users
-    this.userApi.getAllUsers().subscribe(response => this.allUsers = response);
+    this.userApi.getAllUsers().subscribe(response => {
+      this.allUsers = response;
+      this.displayedUsers = this.allUsers.filter(u => this.displayedUsers.find(old => old.id === u.id));
+    });
 
     // cache leave types
     this.leaveTypeApi.getAllLeaveTypes().subscribe(response => {
@@ -61,10 +67,11 @@ export class CalendarComponent implements AfterViewInit {
       }
     });
 
-    this.config.resources = this.displayedUsers.map(this.userToResource);
   }
 
   ngAfterViewInit() {
+    this.config.resources = this.displayedUsers.map(this.userToResource);
+
     // load leave requests on scroll
     this.scheduler.control.onScroll = args => {
       args.async = true;
@@ -91,6 +98,8 @@ export class CalendarComponent implements AfterViewInit {
       allUsers: this.allUsers
     };
 
+    console.log(data);
+
     this.dialog.open(SelectUsersComponent, { data, restoreFocus: false }).afterClosed().subscribe(result => {
       if (result === 'true') {
         this.displayedUsers = data.displayedUsers;
@@ -114,8 +123,8 @@ export class CalendarComponent implements AfterViewInit {
     let background = type.color;
 
     // stripes for PENDING
-    if (leaveRequest.status === LeaveRequestApiModel.StatusEnum.PENDING) {
-      background = `repeating-linear-gradient(135deg, ${type.color}, ${type.color} 5px, black 5px, black 10px)`;
+    if (leaveRequest.status == LeaveRequestApiModel.StatusEnum.PENDING) {
+      background = `repeating-linear-gradient(135deg, ${type.color}, ${type.color} 5px, white 5px, white 10px)`;
     }
 
     // black color for CANCELLED and REJECTED (should never happen)
@@ -136,12 +145,6 @@ export class CalendarComponent implements AfterViewInit {
       backColor: background,
       borderColor: border
     };
-  }
-
-  private highlightWeekend(args: any) {
-    if (args.cell.start.getDayOfWeek() === 6 || args.cell.start.getDayOfWeek() === 0) {
-      args.cell.backColor = '#dddddd';
-    }
   }
 
   private afterRender() {
