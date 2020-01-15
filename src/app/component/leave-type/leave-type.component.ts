@@ -1,9 +1,9 @@
-import {Component, NgZone, OnInit} from '@angular/core';
-import {AdminService, LeaveTypeApiModel, LeaveTypeCreateApiModel, LeaveTypeService, UserApiModel} from "../../api";
-import {Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatDialog} from "@angular/material";
-import {DeleteLeaveTypeDialogComponent} from "./delete-leave-type-dialog/delete-leave-type-dialog.component";
+import { Component, NgZone, OnInit } from '@angular/core';
+import { AdminService, LeaveTypeApiModel, LeaveTypeCreateApiModel, LeaveTypeService } from '../../api';
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { DeleteLeaveTypeDialogComponent } from './delete-leave-type-dialog/delete-leave-type-dialog.component';
 
 @Component({
   selector: 'app-leave-type',
@@ -16,12 +16,21 @@ export class LeaveTypeComponent implements OnInit {
   public form: FormGroup;
   public isCheckboxChanged: boolean;
   public isLeaveTypeUpdated: boolean;
+  public isColorChanged: boolean;
   public leaveTypeId: string;
-  public errorMsg: string = '';
+  public errorMsg = '';
+  public color = '';
 
-  constructor(private router: Router, private leaveTypeService: LeaveTypeService, private adminService: AdminService, private dialog: MatDialog, private ngZone: NgZone) {
+  constructor(
+      private router: Router,
+      private leaveTypeService: LeaveTypeService,
+      private adminService: AdminService,
+      private dialog: MatDialog,
+      private ngZone: NgZone
+  ) {
     this.isLeaveTypeUpdated = false;
     this.isCheckboxChanged = false;
+    this.isColorChanged = false;
     if (this.router.getCurrentNavigation().extras.state != null) {
       this.leaveTypeId =  this.router.getCurrentNavigation().extras.state.leaveTypeId;
       localStorage.setItem('leaveTypeId', this.leaveTypeId);
@@ -31,6 +40,7 @@ export class LeaveTypeComponent implements OnInit {
 
     this.leaveTypeService.getLeaveTypeById(this.leaveTypeId).subscribe((leaveType: LeaveTypeApiModel) => {
       this.leaveType = leaveType;
+      this.color = leaveType.color;
     });
 
     this.form = new FormGroup({
@@ -44,7 +54,12 @@ export class LeaveTypeComponent implements OnInit {
   ngOnInit() {
   }
 
-  updateLeaveType(event) {
+  pickColor(color: string) {
+    this.color = color;
+    this.isColorChanged = true;
+  }
+
+  updateLeaveType(event: any) {
     event.preventDefault();
     if (!this.form.valid) {
       console.log(this.form.valid);
@@ -53,10 +68,10 @@ export class LeaveTypeComponent implements OnInit {
 
     const updatedLeaveType: LeaveTypeCreateApiModel = {
       name: event.target.name.value,
-      color: '', // TODO
       approvalNeeded: event.target.approvalNeeded.checked,
       limit: event.target.limit.value,
       carryover: event.target.carryover.value,
+      color: this.color,
     };
 
     this.adminService.updateLeaveType(updatedLeaveType, this.leaveTypeId).subscribe(
@@ -69,25 +84,23 @@ export class LeaveTypeComponent implements OnInit {
           this.ngZone.run(() => {
             this.errorMsg = 'Name already taken';
           });
-        } else throw error;
+        } else {
+          throw error;
+        }
       }
     );
   }
 
   hideMessage() {
-    (function(that) {
-      setTimeout(function() {
-        that.isLeaveTypeUpdated = false;
-      }, 3000);
-    }(this));
+    setTimeout(() => this.isLeaveTypeUpdated = false, 3000);
   }
 
-  onCheckboxChanged(event) {
+  onCheckboxChanged() {
     this.isCheckboxChanged = true;
   }
 
-  openDialogDeleteLeaveType(leaveType) {
-    let dialogRef = this.dialog.open(DeleteLeaveTypeDialogComponent, {data: {leaveTypeName: leaveType.name}});
+  openDialogDeleteLeaveType(leaveType: LeaveTypeApiModel) {
+    const dialogRef = this.dialog.open(DeleteLeaveTypeDialogComponent, {data: {leaveTypeName: leaveType.name}});
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result === 'true') {
@@ -96,7 +109,7 @@ export class LeaveTypeComponent implements OnInit {
     });
   }
 
-  deleteLeaveType(leaveType) {
+  deleteLeaveType(leaveType: LeaveTypeApiModel) {
     this.adminService.deleteLeaveType(leaveType.id).subscribe(
       response => {
         console.log(response);

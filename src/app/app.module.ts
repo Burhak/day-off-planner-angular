@@ -7,6 +7,7 @@ import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import {DayPilotModule} from 'daypilot-pro-angular';
 
@@ -93,6 +94,7 @@ import { SelectUsersComponent } from './component/calendar/select-users/select-u
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
+    ColorPickerModule,
     DayPilotModule,
     RouterModule.forRoot([
       {

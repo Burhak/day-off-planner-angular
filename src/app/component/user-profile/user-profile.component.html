@@ -3,9 +3,9 @@
 <div *ngIf="isLoaded" class="pageContent">
 <div *ngIf="!editingUser" class="userProfile">
   <div class="userProfileCard">
-    <div class="title">
+    <!-- <div class="title">
       <h1>User profile</h1>
-    </div>
+    </div> -->
     <div class="userProfileInfo">
       <div class="mainUserInfo">
         <img src="../../../assets/images/userIcon_dark.png">
@@ -13,26 +13,32 @@
         <h3>{{user?.jobDescription}}</h3>
       </div>
       <div class="otherUserInfo">
-        <h3><strong>Email: </strong> {{user?.email}}</h3>
-        <h3><strong>Phone number: </strong>{{user?.phone}}</h3>
+        <div>
+          <div class="label">Email</div>
+          <h3>{{user?.email}}</h3>
+        </div>
+        <div>
+          <div class="label">Phone</div>
+          <h3>{{user?.phone}}</h3>
+        </div>
       </div>
       <div class="userRoles">
+        <div class="label">Supervisor</div>
         <h3>
-          <strong>Supervisor: </strong>
-          <span *ngIf="userSupervisor; else noSupervisor">
+          <div *ngIf="userSupervisor; else noSupervisor">
             {{userSupervisor?.firstName}} {{userSupervisor?.lastName}}
-          </span>
+          </div>
           <ng-template #noSupervisor>
-            none
+            -
           </ng-template>
         </h3>
+        <div class="label">Approvers</div>
         <h3>
-          <strong>Approvers: </strong>
-          <span *ngIf="userApprovers.length!=0; else noApprovers">
-            <span *ngFor="let userApprover of userApprovers;let i = index"><span *ngIf="i!=0">, </span>{{userApprover?.firstName}} {{userApprover?.lastName}}</span>
-          </span>
+          <div *ngIf="userApprovers.length!=0; else noApprovers">
+            <div *ngFor="let userApprover of userApprovers">{{userApprover?.firstName}} {{userApprover?.lastName}}</div>
+          </div>
           <ng-template #noApprovers>
-            none
+            -
           </ng-template>
         </h3>
       </div>
@@ -44,6 +50,6 @@
   </div>
 </div>
 
-<app-update-user *ngIf="editingUser"  (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-update-user>
+<app-update-user *ngIf="editingUser" (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-update-user>
 </div>
 

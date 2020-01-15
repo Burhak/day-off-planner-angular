@@ -40,7 +40,7 @@ export class UserListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  openUserProfile(user) {
+  openUserProfile(user: UserApiModel) {
     this.router.navigate(['userProfile'], { state: { userId: user.id } });
   }
 

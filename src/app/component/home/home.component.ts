@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  LeaveTypeApiModel, LeaveTypeService, UserService, LimitApiModel,
-  CarryoverApiModel, UserApiModel, RequestedHoursApiModel, LeaveService, LeaveRequestApiModel
-} from '../../api';
+import { LeaveTypeApiModel, LeaveTypeService, UserService, UserApiModel, LeaveService, LeaveRequestApiModel } from '../../api';
 import { MatPaginator, MatSort, MatTableDataSource, MatTabGroup } from '@angular/material';
 import { UserInfoService } from '../../service/user-info.service';
 import { FormControl } from '@angular/forms';
@@ -22,8 +19,7 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('tabGroup', { static: false }) tabGroup: MatTabGroup;
 
-  public displayedColumnsTypes: string[] = ['leaveType.name', 'leaveType.approvalNeeded',
-    'limit', 'carryover', 'requestedHours'];
+  public displayedColumnsTypes: string[] = ['leaveType.name', 'leaveType.approvalNeeded', 'limit', 'carryover', 'requestedHours'];
   public displayedColumnsLeaves: string[] = ['leaveType', 'fromDate', 'toDate', 'status'];
   public dataSourceLeaves: MatTableDataSource<LeaveRequestApiModel>;
   public dataSourceTypes: MatTableDataSource<LeaveTypeInfo>;
@@ -38,8 +34,12 @@ export class HomeComponent implements OnInit {
   private userPromise: Promise<UserApiModel>;
   private user: UserApiModel;
 
-  constructor(private leaveTypeApi: LeaveTypeService, private userApi: UserService,
-    private userService: UserInfoService, private leavesApi: LeaveService) {
+  constructor(
+      private leaveTypeApi: LeaveTypeService,
+      private userApi: UserService,
+      private userService: UserInfoService,
+      private leavesApi: LeaveService
+  ) {
     this.date = new Date();
     this.date.setMonth(this.date.getMonth() - 6);
     this.dateControl = new FormControl(this.date);
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
           limit: this.getLimit(type),
           carryover: this.getCarryover(type),
           requestedHours: this.getRequestedHours(type)
-        }
+        };
       });
       this.fillDataTypes();
     });
@@ -87,7 +87,9 @@ export class HomeComponent implements OnInit {
     this.dataSourceLeaves = new MatTableDataSource<LeaveRequestApiModel>(this.leaveRequests);
     this.dataSourceLeaves.paginator = this.TableLeavesPaginator;
     this.dataSourceLeaves.sortingDataAccessor = (item, property) => {
-      if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item)
+      if (property.includes('.')) {
+        return property.split('.').reduce((o, i) => o[i], item);
+      }
       return item[property];
     };
     setTimeout(() => this.dataSourceLeaves.sort = this.TableLeavesSort);
@@ -97,31 +99,46 @@ export class HomeComponent implements OnInit {
     this.dataSourceTypes = new MatTableDataSource<LeaveTypeInfo>(this.leaveTypeInfos);
     this.dataSourceTypes.paginator = this.TableTypesPaginator;
     this.dataSourceTypes.sortingDataAccessor = (item, property) => {
-      if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item)
+      if (property.includes('.')) {
+        return property.split('.').reduce((o, i) => o[i], item);
+      }
+      if (['limit', 'carryover', 'requestedHours'].includes(property)) {
+        return item[property].__zone_symbol__value;
+      }
       return item[property];
     };
     setTimeout(() => this.dataSourceTypes.sort = this.TableTypesSort);
   }
 
   private getLimit(leaveType: LeaveTypeApiModel): Promise<number> {
-    if (leaveType.limit == null) return null;
+    if (leaveType.limit == null) {
+      return null;
+    }
     return this.userApi.getLimit(this.user.id, leaveType.id).toPromise().then(response => {
-      if (response != null) return response.limit;
+      if (response != null) {
+        return response.limit;
+      }
       return leaveType.limit;
     });
   }
 
   private getCarryover(leaveType: LeaveTypeApiModel): Promise<number> {
-    if (leaveType.carryover == null) return null;
+    if (leaveType.carryover == null) {
+      return null;
+    }
     return this.userApi.getCarryover(this.user.id, leaveType.id).toPromise().then(response => {
-      if (response != null) return response.carryover;
+      if (response != null) {
+        return response.carryover;
+      }
       return 0;
     });
   }
 
   private getRequestedHours(leaveType: LeaveTypeApiModel): Promise<number> {
     return this.userApi.getRequestedHours(this.user.id, leaveType.id).toPromise().then(response => {
-      if (response != null) return response.requestedHours;
+      if (response != null) {
+        return response.requestedHours;
+      }
       return 0;
     });
   }
@@ -130,22 +147,20 @@ export class HomeComponent implements OnInit {
     this.dataSourceLeaves.filter = filterValue.trim().toLowerCase();
     this.dataSourceLeaves.filterPredicate = (data: any, filter) => {
       const dataStr = JSON.stringify(data).toLowerCase();
-      return dataStr.indexOf(filter) != -1;
+      return dataStr.indexOf(filter) !== -1;
     };
-    //console.log(this.dataSource.filter);
+    // console.log(this.dataSource.filter);
   }
 
   applyFilterLeavesExact(filterValue: string) {
     this.dataSourceLeaves.filter = filterValue.trim().toLowerCase();
-    this.dataSourceLeaves.filterPredicate = function (data: LeaveRequestApiModel, filterValue: string) {
-      return data.status
-        .trim()
-        .toLocaleLowerCase() === filterValue;
-    };
+    this.dataSourceLeaves.filterPredicate = (data: LeaveRequestApiModel, value: string) => data.status.trim().toLocaleLowerCase() === value;
   }
 
   applyFilterLeavesDate(filterValue: string) {
-    if (!this.dateControl.valid) return;
+    if (!this.dateControl.valid) {
+      return;
+    }
     this.date = new Date(filterValue);
     console.log(this.pgFormatDate(this.date));
     this.getMyLeaves();
@@ -156,28 +171,41 @@ export class HomeComponent implements OnInit {
     this.dataSourceTypes.filter = filterValue.trim().toLowerCase();
     this.dataSourceTypes.filterPredicate = (data: any, filter) => {
       const dataStr = JSON.stringify(data).toLowerCase();
-      return dataStr.indexOf(filter) != -1;
+      return dataStr.indexOf(filter) !== -1;
     };
-    //console.log(this.dataSource.filter);
+    // console.log(this.dataSource.filter);
   }
 
-  log(event) {
+  log(event: any) {
     console.log(typeof event);
-    let date: Date = new Date(event);
+    const date: Date = new Date(event);
     console.log(date.toString());
   }
 
   // Convert Javascript date to api accepted date
   pgFormatDate(date: Date): string {
-    const zeroPad = d => ("0" + d).slice(-2);
+    const zeroPad = d => ('0' + d).slice(-2);
 
     return `${date.getUTCFullYear()}-${zeroPad(date.getMonth() + 1)}-${zeroPad(date.getDate())}`;
+  }
+
+  setMyStyles(color: string, hover: boolean) {
+    let styles: any;
+    if (color) {
+      styles = {
+              // 'text-decoration-line': 'underline',
+              // 'text-decoration-color': color,
+              'box-shadow': 'inset ' + (hover ? '30px' : '10px') + ' 0px ' + color,
+              transition: 'box-shadow 0.5s'
+      };
+    }
+    return styles;
   }
 }
 
 interface LeaveTypeInfo {
-  leaveType: LeaveTypeApiModel,
-  limit?: Promise<number>,
-  carryover?: Promise<number>,
-  requestedHours: Promise<number>
+  leaveType: LeaveTypeApiModel;
+  limit?: Promise<number>;
+  carryover?: Promise<number>;
+  requestedHours: Promise<number>;
 }

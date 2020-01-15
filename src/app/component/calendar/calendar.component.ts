@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ViewChild, Input, Renderer2 } from '@angular/core';
-import {DayPilot, DayPilotSchedulerComponent} from 'daypilot-pro-angular';
+import { DayPilot, DayPilotSchedulerComponent } from 'daypilot-pro-angular';
 import { LeaveRequestApiModel, UserApiModel, UserService, LeaveTypeService, LeaveService, LeaveTypeApiModel } from 'src/app/api';
 import { MatDialog, MatButton } from '@angular/material';
 import { SelectUsersComponent } from './select-users/select-users.component';
@@ -18,7 +18,7 @@ export class CalendarComponent implements AfterViewInit {
   public selectBtn: MatButton;
 
   public config: DayPilot.SchedulerConfig = {
-    timeHeaders: [ {'groupBy': 'Month'}, {'groupBy': 'Day', 'format': 'ddd d'} ],
+    timeHeaders: [ {groupBy: 'Month'}, {groupBy: 'Day', format: 'ddd d'} ],
     scale: 'Day',
     days: DayPilot.Date.today().daysInYear(),
     infiniteScrollingEnabled: true,
@@ -47,7 +47,13 @@ export class CalendarComponent implements AfterViewInit {
 
   public leaveTypesCache = {};
 
-  constructor(private userApi: UserService, private leaveTypeApi: LeaveTypeService, private leaveApi: LeaveService, private dialog: MatDialog, private renderer: Renderer2) {
+  constructor(
+      private userApi: UserService,
+      private leaveTypeApi: LeaveTypeService,
+      private leaveApi: LeaveService,
+      private dialog: MatDialog,
+      private renderer: Renderer2
+  ) {
     // fetch users
     this.userApi.getAllUsers().subscribe(response => this.allUsers = response);
 
@@ -70,7 +76,11 @@ export class CalendarComponent implements AfterViewInit {
       const end = args.viewport.end.toString('yyyy-MM-dd');
 
       this.leaveApi
-        .filterLeaveRequests(start, end, [LeaveRequestApiModel.StatusEnum.APPROVED, LeaveRequestApiModel.StatusEnum.PENDING], args.viewport.resources)
+        .filterLeaveRequests(
+          start,
+          end,
+          [LeaveRequestApiModel.StatusEnum.APPROVED, LeaveRequestApiModel.StatusEnum.PENDING],
+          args.viewport.resources)
         .subscribe(response => {
           args.events = response.map(this.createEvent.bind(this));
           args.loaded();
@@ -112,7 +122,8 @@ export class CalendarComponent implements AfterViewInit {
     }
 
     // black color for CANCELLED and REJECTED (should never happen)
-    if (leaveRequest.status == LeaveRequestApiModel.StatusEnum.CANCELLED || leaveRequest.status == LeaveRequestApiModel.StatusEnum.REJECTED) {
+    if (leaveRequest.status === LeaveRequestApiModel.StatusEnum.CANCELLED ||
+        leaveRequest.status === LeaveRequestApiModel.StatusEnum.REJECTED) {
       border = 'black';
       background = 'black';
     }
@@ -127,7 +138,7 @@ export class CalendarComponent implements AfterViewInit {
       barHidden: true,
       backColor: background,
       borderColor: border
-    }
+    };
   }
 
   private afterRender() {
