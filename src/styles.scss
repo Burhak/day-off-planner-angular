@@ -1,4 +1,5 @@
 @import 'theme.scss';
+@import 'calendarCustomTheme.scss';
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,600&display=swap');
 
 .full-width {
@@ -64,11 +65,12 @@ app-change-password, app-user-list, app-add-user-form, app-user-profile, app-lea
 }
 
 mat-dialog-container{
-  border-radius: 2em!important;
-  padding: 2em!important;
-  color: rgb(44,62,80)!important;
-  width: fit-content!important;
-  height: fit-content!important;
+  border-radius: 2em !important;
+  padding: 1em 2em 2em 2em !important;
+  color: #2c3e50 !important;
+  min-width: 33vw;
+  width: fit-content !important;
+  height: fit-content !important;
 }
 
 .mat-dialog-title{
@@ -109,16 +111,6 @@ tr{
   height: fit-content!important;
 }
 
-.leave {
-  border-radius: 15px;
-  margin-top: 5px;
-  height: 25px !important;
-}
-
-.scheduler_default_corner > div {
-  display: none;
-}
-
-[hidden] {
-  display: none !important;
+.mat-raised-button{
+  border-radius: 2em!important;
 }
