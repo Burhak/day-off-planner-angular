@@ -16,6 +16,7 @@ header a {
   height: 4em;
   float: left;
   cursor: pointer;
+  outline: none;
 }
 
 .userImg{
