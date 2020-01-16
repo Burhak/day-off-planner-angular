@@ -35,12 +35,9 @@ export class ApprovingComponent implements OnInit {
       private userService: UserInfoService,
       private leaveTypeApi: LeaveTypeService
   ) {
-    if (this.router.getCurrentNavigation().extras.state != null) {
-      this.leaveRequestId = this.router.getCurrentNavigation().extras.state.leaveRequestId;
-      localStorage.setItem('leaveRequestId', this.leaveRequestId);
-    } else {
-      this.leaveRequestId = localStorage.getItem('leaveRequestId');
-    }
+
+      this.leaveRequestId = '3fc2bd85-8051-4fe1-b947-0cc69e0e77fc';
+      localStorage.setItem('leaveRequestId', '3fc2bd85-8051-4fe1-b947-0cc69e0e77fc');
 
     this.loadData().then(() => this.loaded = true);
   }
@@ -65,6 +62,7 @@ export class ApprovingComponent implements OnInit {
   private cacheApprovers() {
     for (const approver of this.approvers) {
       this.approversCache[approver.id] = approver;
+      console.log(approver);
     }
   }
 
