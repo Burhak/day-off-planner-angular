@@ -1,0 +1,138 @@
+.pageContent {
+  width: 100%;
+  height: 100%;
+}
+
+.approvingPage{
+  padding: 1.5em;
+}
+
+.grid-container {
+  display: grid;
+  padding: 3em;
+  border-radius: 2em;
+  background-color: white;
+  box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
+}
+
+.grid-item {
+  text-align: center;
+  padding: 20px;
+}
+
+.item1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-start: 2;
+}
+
+.item2 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-start: 3;
+}
+
+.item3 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-start: 3;
+}
+
+.item4 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-start: 4;
+}
+
+.info{
+  text-align: left;
+}
+
+.noMargin{
+  margin: 0;
+}
+
+h1,h2,h3,h4,h5,h6{
+color: rgb(44,62,80);
+}
+
+.center {
+  margin: auto;
+}
+
+.left{
+  text-align: left;
+}
+
+.container {
+  padding: 1em;
+}
+
+.messages {
+  border: 1px solid #ebebeb;
+  border-radius: 2em;
+  background-color: rgb(250, 250, 250);
+}
+
+.message {
+  padding: 1em;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.sendMessage{
+  padding: 0 0 0 2em;
+}
+
+.message-sender {
+  margin-right: 10px;
+}
+
+.my-message {
+  text-align: right;
+}
+
+.message-input {
+  width: 90%;
+}
+
+button {
+  color: white;
+  font-weight: bold;
+}
+
+
+.largeButton{
+  border-radius: 2em;
+  padding: 0.5em 0;
+  margin: 0.5em;
+  width: 10em;
+  background: rgb(52,73,94);
+}
+.smallButton{
+  color: white;
+  border-radius: 2em;
+  padding: 0;
+  margin: 0.2em;
+  width: 2em;
+  background: rgb(52,73,94);
+}
+
+.neutral{
+  background-color: rgb(170,170,170);
+}
+
+.negative{
+  background-color: rgb(231, 76, 60)
+}
+
+.mat-button[disabled][disabled] {
+  color: rgb(255,255,255);
+}
+
+.votes{
+  padding: 0 1em 1em;
+}

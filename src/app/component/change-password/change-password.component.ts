@@ -40,7 +40,7 @@ export class ChangePasswordComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  changePassword(event) {
+  changePassword(event: any) {
     event.preventDefault();
     this.errorMsg = '';
     if (!this.form.valid) {

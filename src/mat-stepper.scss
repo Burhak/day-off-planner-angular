@@ -1,0 +1,12 @@
+.mat-vertical-stepper-header {
+  padding: 12px 24px!important;
+}
+
+.mat-step-header .mat-step-label.mat-step-label-active {
+  color:  rgb(44,62,80)!important;
+}
+
+.mat-step-header .mat-step-label, .mat-step-header .mat-step-optional {
+  color:  rgb(117,117,117)!important;
+  font-weight: bold;
+}

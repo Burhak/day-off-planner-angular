@@ -43,20 +43,29 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(245,245,245);
+  flex:1;
+  display:flex;
+  flex-direction:column;
 }
 
-.leaveTypeList {
-  margin: 36px auto;
+.leaveTypeList{
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  display:flex;
+  flex-direction:column;
+}
+
+.leaveTypeCard {
+  margin: 0 auto;
   display: block;
   width: fit-content;
-  padding: 2em 2em 1em;
+
+  padding: 2em;
   background-color: rgb(255,255,255);
   box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
   border-radius: 2em;
+  text-align: left;
 }
 
 .title {
@@ -145,3 +154,60 @@ h1, h2, h3, h4, h5, h6 {
 mat-form-field {
   width: 100%;
 }
+
+
+.addLeaveRequest{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addLeaveRequestText{
+  color: rgb(52,73,94);
+  font-weight: bold;
+  padding: 0 0.2em;
+}
+
+.showCard{
+  visibility: visible;
+  position: absolute;
+  margin: 0 auto;
+  display: block;
+  width: fit-content;
+  text-align: center;
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transition-delay: 0.4s;
+}
+
+.hideCard{
+  position: absolute;
+  margin: 0 auto;
+  display: block;
+  width: fit-content;
+  text-align: center;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: visibility 0.5s 0s, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.switchingIcon {
+  font-size: 3em;
+  cursor: pointer;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+}
+
+.activeIcon{
+  color: rgb(44,62,80);
+  transition: color 0.4s linear;
+}
+
+.notActiveIcon{
+  color: rgb(200,200,200);
+  transition: color 0.4s linear;
+}
+
