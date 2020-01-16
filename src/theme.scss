@@ -1,5 +1,11 @@
 @import '~@angular/material/theming';
-@include mat-core();
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,600&display=swap');
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Nunito Sans'
+);
+
+@include mat-core($custom-typography);
 
 $my-primary: (
   50 : rgb(44,62,80),
