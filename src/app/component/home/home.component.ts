@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   public date: Date;
   public dateControl: FormControl;
   public leaveTypesCache = {};
+  public isLeaveRequestShown = true;
 
   private userPromise: Promise<UserApiModel>;
   private user: UserApiModel;
@@ -206,6 +207,18 @@ export class HomeComponent implements OnInit {
 
   addLeaveRequest() {
     this.router.navigate(['addLeaveRequest'] );
+  }
+
+  showLeaveTypes(){
+    if(this.isLeaveRequestShown) {
+      this.isLeaveRequestShown = false;
+    }
+  }
+
+  showLeaveRequests(){
+    if(!this.isLeaveRequestShown) {
+      this.isLeaveRequestShown = true;
+    }
   }
 }
 
