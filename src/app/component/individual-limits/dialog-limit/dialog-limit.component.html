@@ -1,7 +1,6 @@
-<h2 mat-dialog-title>Edit individual limit for leave type:</h2>
-<h4 mat-dialog-title class="center">{{data.name}}</h4>
+<h2 mat-dialog-title class="bottomPadding">Edit individual limit for leave type: <strong>{{data.name}}</strong></h2>
+<!--<h4 mat-dialog-title class="center">{{data.name}}</h4>-->
 <mat-dialog-content>
-  <div>Enter new limit value or leave blank for default</div>
   <form [formGroup]="form">
     <mat-form-field class="block">
       <input matInput
@@ -12,6 +11,7 @@
         Value must be an <strong>integer</strong>
       </mat-error>
     </mat-form-field>
+    <div>Enter new limit value or leave blank for default</div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
