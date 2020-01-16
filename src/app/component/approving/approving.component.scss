@@ -12,6 +12,7 @@
   padding: 3em;
   border-radius: 2em;
   background-color: white;
+  box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
 }
 
 .grid-item {
@@ -40,6 +41,13 @@
   grid-row-start: 3;
 }
 
+.item4 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-start: 4;
+}
+
 .info{
   text-align: left;
 }
@@ -57,11 +65,11 @@
 }
 
 .messages {
-  width: 50%;
   border: 1px solid black;
 }
 
 .message {
+  padding: 1em;
   border-bottom: 1px solid black;
 }
 

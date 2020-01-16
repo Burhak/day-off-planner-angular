@@ -8,8 +8,10 @@
     <div class="info">
       <h1>{{user.firstName}} {{user.lastName}} ({{leaveType.name}}) </h1>
       <h3>{{startDate | date: "mediumDate"}} - {{endDate | date: "mediumDate"}}</h3>
-
-      <div *ngIf="supervisor" class="votes">
+    </div>
+  </div>
+  <div class="grid-item item2">
+      <div  class="votes">
         <div class="label">Supervisor</div>
         <ng-container [ngTemplateOutlet]="approverTemplate" [ngTemplateOutletContext]="{approver: supervisor}"></ng-container>
 
@@ -18,11 +20,6 @@
           <ng-container [ngTemplateOutlet]="approverTemplate" [ngTemplateOutletContext]="{approver: approver}"></ng-container>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="grid-item item2">
-    <app-calendar [displayedUsers]="[user]"></app-calendar>
   </div>
 
   <div class="grid-item item3">
@@ -54,6 +51,10 @@
     </div>
   </div>
 
+  <div class="grid-item item4">
+    <app-calendar [displayedUsers]="[user]"></app-calendar>
+  </div>
+
 </div>
 </div>
 </div>
@@ -72,9 +73,9 @@
 
 <ng-template #approverTemplate let-approver="approver">
   <div>
-    <span>{{approver.firstName}} {{approver.lastName}}</span>
-    <mat-icon *ngIf="approvalsCache[approver.id].approved === true">done</mat-icon>
-    <mat-icon *ngIf="approvalsCache[approver.id].approved === false">close</mat-icon>
+    <span>{{approver?.firstName}} {{approver?.lastName}}</span>
+    <mat-icon *ngIf="approvalsCache[approver?.id]?.approved === true">done</mat-icon>
+    <mat-icon *ngIf="approvalsCache[approver?.id]?.approved === false">close</mat-icon>
   </div>
 </ng-template>
 
