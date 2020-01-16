@@ -65,6 +65,7 @@ export class ApprovingComponent implements OnInit {
   private cacheApprovers() {
     for (const approver of this.approvers) {
       this.approversCache[approver.id] = approver;
+      console.log(approver);
     }
   }
 

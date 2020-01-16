@@ -1,51 +1,61 @@
 <app-navigation></app-navigation>
 <app-error></app-error>
 
-<div class="container" *ngIf="loaded; else spinner">
-  <h1>{{user.firstName}} {{user.lastName}} - {{leaveType.name}} </h1>
-  <h3>{{startDate | date: "mediumDate"}} - {{endDate | date: "mediumDate"}}</h3>
+<div class="pageContent">
+<div class="approvingPage">
+<div class="grid-container" *ngIf="loaded; else spinner">
+  <div class="grid-item item1">
+    <div class="info">
+      <h1>{{user.firstName}} {{user.lastName}} ({{leaveType.name}}) </h1>
+      <h3>{{startDate | date: "mediumDate"}} - {{endDate | date: "mediumDate"}}</h3>
 
-  <div *ngIf="supervisor" class="votes">
-    <div class="label">Supervisor</div>
-    <ng-container [ngTemplateOutlet]="approverTemplate" [ngTemplateOutletContext]="{approver: supervisor}"></ng-container>
+      <div *ngIf="supervisor" class="votes">
+        <div class="label">Supervisor</div>
+        <ng-container [ngTemplateOutlet]="approverTemplate" [ngTemplateOutletContext]="{approver: supervisor}"></ng-container>
 
-    <div class="label">Other approvers</div>
-    <div *ngFor="let approver of approvers">
-      <ng-container [ngTemplateOutlet]="approverTemplate" [ngTemplateOutletContext]="{approver: approver}"></ng-container>
+        <div class="label">Other approvers</div>
+        <div *ngFor="let approver of approvers">
+          <ng-container [ngTemplateOutlet]="approverTemplate" [ngTemplateOutletContext]="{approver: approver}"></ng-container>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="calendar">
+  <div class="grid-item item2">
     <app-calendar [displayedUsers]="[user]"></app-calendar>
   </div>
 
-  <div class="messages">
-    <div class="message" [ngClass]="message.approver === loggedUser.id ? 'my-message' : 'other-message'" *ngFor="let message of leaveRequest.messages">
-      <span class="message-sender">{{approversCache[message.approver].firstName}} {{approversCache[message.approver].lastName}}</span>
-      <span class="message-time">{{message.timestamp | date: "medium"}}</span>
-      <div class="message-text">{{message.message}}</div>
+  <div class="grid-item item3">
+    <div class="messages">
+      <div class="message" [ngClass]="message.approver === loggedUser.id ? 'my-message' : 'other-message'" *ngFor="let message of leaveRequest.messages">
+        <span class="message-sender">{{approversCache[message.approver].firstName}} {{approversCache[message.approver].lastName}}</span>
+        <span class="message-time">{{message.timestamp | date: "medium"}}</span>
+        <div class="message-text">{{message.message}}</div>
+      </div>
+      <div>
+        <mat-form-field class="message-input" [floatLabel]="'never'">
+          <input matInput placeholder="Type your message here..." [(ngModel)]="typedMessage">
+        </mat-form-field>
+        <button (click)="sendMessage()" type="button" [disabled]="sending || typedMessage === ''">SEND</button>
+      </div>
     </div>
-    <div>
-      <mat-form-field class="message-input" [floatLabel]="'never'">
-        <input matInput placeholder="Type your message here..." [(ngModel)]="typedMessage">
-      </mat-form-field>
-      <button (click)="sendMessage()" type="button" [disabled]="sending || typedMessage === ''">SEND</button>
+
+    <div *ngIf="leaveRequest.leaveRequest.status === PENDING; else alreadyResolvedTemplate">
+
+      <div *ngIf="approvalsCache[loggedUser.id]?.approved === null; else alreadyVotedTemplate" class="voting-buttons">
+        <button (click)="approve(true)" type="button">Approve</button>
+        <button (click)="approve(false)" type="button">Reject</button>
+      </div>
+
+      <div *ngIf="loggedUser.id === user.supervisor" class="force-buttons">
+        <button (click)="forceApprove(true)" type="button">Force approve</button>
+        <button (click)="forceApprove(false)" type="button">Force reject</button>
+      </div>
     </div>
   </div>
 
-  <div *ngIf="leaveRequest.leaveRequest.status === PENDING; else alreadyResolvedTemplate">
-
-    <div *ngIf="approvalsCache[loggedUser.id].approved === null; else alreadyVotedTemplate" class="voting-buttons">
-      <button (click)="approve(true)" type="button">Approve</button>
-      <button (click)="approve(false)" type="button">Reject</button>
-    </div>
-
-    <div *ngIf="loggedUser.id === user.supervisor" class="force-buttons">
-      <button (click)="forceApprove(true)" type="button">Force approve</button>
-      <button (click)="forceApprove(false)" type="button">Force reject</button>
-    </div>
 </div>
-
+</div>
 </div>
 
 <ng-template #alreadyVotedTemplate>
