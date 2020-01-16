@@ -36,8 +36,12 @@ export class ApprovingComponent implements OnInit {
       private leaveTypeApi: LeaveTypeService
   ) {
 
-      this.leaveRequestId = '3fc2bd85-8051-4fe1-b947-0cc69e0e77fc';
-      localStorage.setItem('leaveRequestId', '3fc2bd85-8051-4fe1-b947-0cc69e0e77fc');
+      if (this.router.getCurrentNavigation().extras.state != null) {
+      this.leaveRequestId = this.router.getCurrentNavigation().extras.state.leaveRequestId;
+      localStorage.setItem('leaveRequestId', this.leaveRequestId);
+    } else {
+      this.leaveRequestId = localStorage.getItem('leaveRequestId');
+    }
 
     this.loadData().then(() => this.loaded = true);
   }
