@@ -1,0 +1,7 @@
+<app-navigation></app-navigation>
+<app-error></app-error>
+
+<app-approvals *ngIf="isApprover"></app-approvals>
+<div class="calendar" *ngIf="userService.currentUser">
+  <app-calendar [displayedUsers]="[userService.currentUser]"></app-calendar>
+</div>

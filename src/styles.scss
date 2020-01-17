@@ -17,6 +17,8 @@
 
 html{
   font-family: 'Nunito Sans', sans-serif!important;
+  background-color: rgb(245,245,245);
+
 }
 
 app-root {
@@ -61,6 +63,10 @@ button:focus {
   outline: none;
 }
 
+.mat-menu-panel .mat-menu-item {
+  background: none;
+}
+
 .mat-menu-item:hover:not([disabled]) {
   background: rgb(49, 67, 85);
 }
@@ -70,7 +76,6 @@ app-change-password, app-user-list, app-add-user-form, app-user-profile, app-lea
   width: 100%;
   display:flex;
   flex-direction:column;
-  background-color: rgb(245,245,245);
 }
 
 mat-dialog-container{

@@ -14,7 +14,7 @@ header a {
 
 .logo{
   height: 4em;
-  float: left;
+  margin-left: 1em;
   cursor: pointer;
   outline: none;
 }
@@ -28,10 +28,6 @@ header a {
 .userInfo{
   margin: 1em 3em 2em;
   text-align: center;
-}
-
-.adminOptions{
-  margin: 2em 0;
 }
 
 ul {
@@ -49,10 +45,18 @@ ul {
 }
 
 li {
+  height: 4em;
   margin: 0 1em;
   color: white;
-  font-size: 1.5em;
   font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  outline: none;
+}
+
+.name {
+  font-size: 1.5em;
 }
 
 li a {
