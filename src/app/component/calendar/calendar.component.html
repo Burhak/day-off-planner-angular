@@ -1,3 +1,8 @@
+<div class="scheduler">
+  <daypilot-scheduler [config]="config" #scheduler></daypilot-scheduler>
+  <button mat-button (click)="selectUsers()" id="select-users-btn" #select_users_btn>Select users</button>
+</div>
+
 <div class="legend">
   <div class="legend-row">
     <div class="legend-item" *ngFor="let leaveType of leaveTypesCache | keyvalue">
@@ -16,9 +21,4 @@
       <span class="legend-item-label">Pending</span>
     </div>
   </div>
-</div>
-
-<div class="scheduler">
-  <daypilot-scheduler [config]="config" #scheduler></daypilot-scheduler>
-  <button mat-button (click)="selectUsers()" id="select-users-btn" #select_users_btn>Select users</button>
 </div>
