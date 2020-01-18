@@ -1,4 +1,24 @@
-<div>
+<div class="legend">
+  <div class="legend-row">
+    <div class="legend-item" *ngFor="let leaveType of leaveTypesCache | keyvalue">
+      <span class="color" [ngStyle]="{'background-color':leaveType.value.color}"></span>
+      <span class="legend-item-label">{{leaveType.value.name}}</span>
+    </div>
+  </div>
+
+  <div class="legend-row">
+    <div class="legend-item">
+      <span class="style" id="approved"></span>
+      <span class="legend-item-label">Approved</span>
+    </div>
+    <div class="legend-item">
+      <span class="style" id="pending"></span>
+      <span class="legend-item-label">Pending</span>
+    </div>
+  </div>
+</div>
+
+<div class="scheduler">
   <daypilot-scheduler [config]="config" #scheduler></daypilot-scheduler>
   <button mat-button (click)="selectUsers()" id="select-users-btn" #select_users_btn>Select users</button>
 </div>

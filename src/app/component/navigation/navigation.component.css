@@ -28,6 +28,7 @@ header a {
 .userInfo{
   margin: 1em 3em 2em;
   text-align: center;
+  cursor: pointer;
 }
 
 ul {
