@@ -79,6 +79,7 @@ app-leave-type,
 app-settings,
 app-add-leave-request,
 app-home,
+app-dashboard,
 app-approving {
   min-height: 100vh;
   width: 100%;
@@ -94,6 +95,10 @@ mat-dialog-container{
   min-width: 33vw;
   width: fit-content !important;
   height: fit-content !important;
+}
+
+.mat-badge-content {
+  font-family: 'Roboto', sans-serif;
 }
 
 .mat-dialog-title{
@@ -128,4 +133,8 @@ mat-icon{
   font-size: 11px;
   margin-left: -5px;
   margin-top: 10px;
+}
+
+.noMargin{
+  margin: 0;
 }

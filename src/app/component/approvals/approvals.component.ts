@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LeaveService, UserService, LeaveRequestApiModel, LeaveTypeService } from 'src/app/api';
 import { UserInfoService } from 'src/app/service/user-info.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-approvals',
@@ -18,7 +19,8 @@ export class ApprovalsComponent implements OnInit {
       private leaveApi: LeaveService,
       private userApi: UserService,
       private leaveTypeApi: LeaveTypeService,
-      private userService: UserInfoService
+      private userService: UserInfoService,
+      private router: Router
   ) {
     this.leaveTypeApi.getAllLeaveTypes().subscribe(response => {
       for (let leaveType of response) {
@@ -40,6 +42,10 @@ export class ApprovalsComponent implements OnInit {
           }
         });
     });
+  }
+
+  openApproval(leave: LeaveRequestApiModel) {
+    this.router.navigate(['approve'], { state: { leaveRequestId: leave.id } });
   }
 
   ngOnInit() {
