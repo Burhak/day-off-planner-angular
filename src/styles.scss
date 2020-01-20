@@ -45,24 +45,19 @@ button:focus {
 
 .mat-menu-content{
   padding: 0 !important;
-  width: fit-content !important;
+  min-width: fit-content !important;
 }
 
 .mat-menu-item{
-  background-color: rgb(52,73,94);
+  background-color: rgba(37, 55, 73, 1);
   color: rgb(255,255,255);
   border-radius: 2em;
   margin: 0.5em 0;
   font-weight: bold;
-  text-align: center !important;
 }
 
 .mat-list-base {
   outline: none;
-}
-
-.mat-menu-panel .mat-menu-item {
-  background: none;
 }
 
 .mat-menu-item:hover:not([disabled]) {
