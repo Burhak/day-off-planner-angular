@@ -28,6 +28,12 @@
 
 .userProfileInfo {
   padding: 2em;
+  display: grid;
+  grid-template-columns: auto 2em auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "main . other"
+    "main . approvers";
 }
 
 .title{
@@ -42,6 +48,7 @@
 
 .mainUserInfo{
   text-align: center;
+  grid-area: main;
 }
 
 .mainUserInfo img{
@@ -54,11 +61,13 @@ img{
 }
 
 .otherUserInfo{
-  padding: 2em 2em 1em;
+  padding: 1em 2em;
+  grid-area: other;
 }
 
 .userRoles{
   padding: 1em 2em;
+  grid-area: approvers;
 }
 
 .admin-options{
