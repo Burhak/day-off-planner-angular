@@ -46,12 +46,12 @@ import { LeaveTypeComponent } from './component/leave-type/leave-type.component'
 import { DeleteLeaveTypeDialogComponent } from './component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component';
 import { SettingsComponent } from './component/settings/settings.component';
 import {SettingDialogComponent} from "./component/settings/setting-dialog/setting-dialog.component";
+import { IndividualLimitsComponent } from './component/individual-limits/individual-limits.component';
+import { DialogLimitComponent } from './component/individual-limits/dialog-limit/dialog-limit.component';
 import { AddLeaveRequestComponent } from './component/add-leave-request/add-leave-request.component';
 import {MatRangeDatepickerModule, MatRangeNativeDateModule} from 'mat-range-datepicker';
 import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
 import {MatStepperModule} from '@angular/material/stepper';
-import { IndividualLimitsComponent } from './component/individual-limits/individual-limits.component';
-import { DialogLimitComponent } from './component/individual-limits/dialog-limit/dialog-limit.component';
 import { CalendarComponent } from './component/calendar/calendar.component';
 import { SelectUsersComponent } from './component/calendar/select-users/select-users.component';
 import { ApprovingComponent } from './component/approving/approving.component';
@@ -80,9 +80,9 @@ import { ApprovingComponent } from './component/approving/approving.component';
     AddLeaveRequestComponent,
     CalendarComponent,
     SelectUsersComponent,
-    ApprovingComponent,
     IndividualLimitsComponent,
-    DialogLimitComponent
+    DialogLimitComponent,
+    ApprovingComponent
   ],
   entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent, SelectUsersComponent, DialogLimitComponent],
   imports: [

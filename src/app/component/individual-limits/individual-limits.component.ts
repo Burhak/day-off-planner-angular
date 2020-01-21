@@ -68,18 +68,18 @@ export class IndividualLimitsComponent implements OnInit {
   }
 
   openEditLimit(leaveType: LeaveTypeInfo) {
-    let dialogRef = this.dialog.open(DialogLimitComponent,
+    const dialogRef = this.dialog.open(DialogLimitComponent,
       {
         data: {
           name: leaveType.leaveType.name,
           id: leaveType.leaveType.id,
-          //take value from promise and extract integer at start
+          // take value from promise and extract integer at start
           limit: leaveType.limit["__zone_symbol__value"].replace(/(^\d+)(.+$)/i, '$1')
         }
       });
     
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== "false") {
+      if (result !== undefined && result !== "false") {
         if (result === "") {
           this.adminApi.deleteLimit(this.user.id, leaveType.leaveType.id).subscribe(
             response => {

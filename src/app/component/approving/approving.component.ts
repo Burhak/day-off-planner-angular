@@ -35,7 +35,8 @@ export class ApprovingComponent implements OnInit {
       private userService: UserInfoService,
       private leaveTypeApi: LeaveTypeService
   ) {
-    if (this.router.getCurrentNavigation().extras.state != null) {
+
+      if (this.router.getCurrentNavigation().extras.state != null) {
       this.leaveRequestId = this.router.getCurrentNavigation().extras.state.leaveRequestId;
       localStorage.setItem('leaveRequestId', this.leaveRequestId);
     } else {
@@ -65,6 +66,7 @@ export class ApprovingComponent implements OnInit {
   private cacheApprovers() {
     for (const approver of this.approvers) {
       this.approversCache[approver.id] = approver;
+      console.log(approver);
     }
   }
 
