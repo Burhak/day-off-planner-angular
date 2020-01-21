@@ -38,12 +38,13 @@ export class IndividualLimitsComponent implements OnInit {
     });
   }
 
-  private getLimit(leaveType: LeaveTypeApiModel): Promise<string> {
+  private async getLimit(leaveType: LeaveTypeApiModel): Promise<string> {
     if (leaveType.limit == null) { return null; }
-    return this.userApi.getLimit(this.user.id, leaveType.id).toPromise().then(response => {
-      if (response != null) { return response.limit + ' (custom)'; }
-      return leaveType.limit + ' (default)';
-    });
+    const response = await this.userApi.getLimit(this.user.id, leaveType.id).toPromise();
+    if (response != null) {
+      return response.limit + ' (custom)';
+    }
+    return leaveType.limit + ' (default)';
   }
 
   private fillDataTypes() {

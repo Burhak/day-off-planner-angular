@@ -1,11 +1,8 @@
 <app-navigation></app-navigation>
 <app-error></app-error>
 <div *ngIf="isLoaded" class="pageContent">
-  <div *ngIf="!editingUser && !editingLimits" class="userProfile">
+  <div *ngIf="!editingUser" class="userProfile">
     <div class="userProfileCard">
-      <!-- <div class="title">
-        <h1>User profile</h1>
-      </div> -->
       <div class="userProfileInfo">
         <div class="mainUserInfo">
           <img src="../../../assets/images/userIcon_dark.png">
