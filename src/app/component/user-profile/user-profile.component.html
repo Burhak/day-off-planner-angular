@@ -46,12 +46,10 @@
     </div>
     <div class="admin-options" *ngIf="userInfoService?.hasAdminPrivileges">
       <button mat-menu-item (click)="openEditUser()">Edit</button>
-      <button mat-menu-item (click)="openLimitsUser()">Limits</button>
       <button mat-menu-item class="deleteBtn" (click)="openDialogDeleteUser(user)" disabled="{{deleteBtnDisabled}}">Delete</button>
     </div>
   </div>
 
   <app-update-user *ngIf="editingUser" (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-update-user>
-  <app-individual-limits *ngIf="editingLimits" (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-individual-limits>
 </div>
 

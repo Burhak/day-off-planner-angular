@@ -1,101 +1,103 @@
-  <div class="addUser-form">
-    <ng-template *ngIf="isUserUpdated; then addUserMessage; else addUserForm">
-    </ng-template>
+<div class="addUser-form">
+  <ng-template *ngIf="isUserUpdated; then addUserMessage; else addUserForm">
+  </ng-template>
 
-    <ng-template #addUserForm>
-      <div class="title">
-        <h2>Update user</h2>
-        <h5>{{user.firstName}} {{user.lastName}}</h5>
+  <ng-template #addUserForm>
+    <div class="title">
+      <h2>Update user</h2>
+      <h5>{{user.firstName}} {{user.lastName}}</h5>
+    </div>
+    <form [formGroup]="form" (submit)="createNewUser($event)">
+      <div class="linesInputs">
+        <mat-form-field class="firstInput">
+          <input matInput
+                  placeholder="Firstname"
+                  id="firstname" formControlName="firstname" value="{{user.firstName}}">
+          <mat-error *ngIf="form.hasError('required', ['firstname'])">
+            Firstname is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="secondInput">
+          <input matInput
+                  placeholder="Lastname"
+                  id="lastname" formControlName="lastname" value="{{user.lastName}}">
+          <mat-error *ngIf="form.hasError('required', ['lastname'])">
+            Lastname is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
       </div>
-      <form [formGroup]="form" (submit)="createNewUser($event)">
-        <div class="linesInputs">
-          <mat-form-field class="firstInput">
-            <input matInput
-                   placeholder="Firstname"
-                   id="firstname" formControlName="firstname" value="{{user.firstName}}">
-            <mat-error *ngIf="form.hasError('required', ['firstname'])">
-              Firstname is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
 
-          <mat-form-field class="secondInput">
-            <input matInput
-                   placeholder="Lastname"
-                   id="lastname" formControlName="lastname" value="{{user.lastName}}">
-            <mat-error *ngIf="form.hasError('required', ['lastname'])">
-              Lastname is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
+      <mat-form-field class="addUser-element">
+        <input matInput
+                placeholder="Job title"
+                id="jobdescription" formControlName="jobdescription"
+                value="{{user.jobDescription}}">
+        <mat-error *ngIf="form.hasError('required', ['jobdescription'])">
+          Job description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
 
-        <mat-form-field class="addUser-element">
-          <input matInput
-                 placeholder="Job title"
-                 id="jobdescription" formControlName="jobdescription"
-                 value="{{user.jobDescription}}">
-          <mat-error *ngIf="form.hasError('required', ['jobdescription'])">
-            Job description is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+      <mat-form-field class="addUser-element">
+        <input matInput
+                placeholder="Email"
+                id="email" formControlName="email"
+                value="{{user.email}}">
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="form.hasError('required', ['email'])">
+          Email is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="form.hasError('email', ['email'])">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
 
-        <mat-form-field class="addUser-element">
-          <input matInput
-                 placeholder="Email"
-                 id="email" formControlName="email"
-                 value="{{user.email}}">
-          <mat-hint></mat-hint>
-          <mat-error *ngIf="form.hasError('required', ['email'])">
-            Email is <strong>required</strong>
-          </mat-error>
-          <mat-error *ngIf="form.hasError('email', ['email'])">
-            Please enter a valid email address
-          </mat-error>
-        </mat-form-field>
+      <mat-form-field class="addUser-element">
+        <input matInput
+                placeholder="Phone"
+                id="phone" value="{{user.phone}}">
+        <mat-hint></mat-hint>
+      </mat-form-field>
 
-        <mat-form-field class="addUser-element">
-          <input matInput
-                 placeholder="Phone"
-                 id="phone" value="{{user.phone}}">
-          <mat-hint></mat-hint>
-        </mat-form-field>
+      <mat-form-field class="addUser-element">
+        <mat-label>Supervisor</mat-label>
+        <mat-select [formControl]="supervisorSelectControl" id="supervisor" [ngModel]="user.supervisor">
+          <mat-option [value]="null">none</mat-option>
+          <mat-option *ngFor="let user of posibleUserSupervisorsOrApprovers" [value]="user.id">
+            {{user.firstName}} {{user.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-        <mat-form-field class="addUser-element">
-          <mat-label>Supervisor</mat-label>
-          <mat-select [formControl]="supervisorSelectControl" id="supervisor" [ngModel]="user.supervisor">
-            <mat-option [value]="null">none</mat-option>
-            <mat-option *ngFor="let user of posibleUserSupervisorsOrApprovers" [value]="user.id">
-              {{user.firstName}} {{user.lastName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <mat-form-field class="addUser-element">
+        <mat-label>Approvers</mat-label>
+        <mat-select [formControl]="approversSelectControl" id="approvers" multiple [ngModel]="user.approvers">
+          <mat-option *ngFor="let user of posibleUserSupervisorsOrApprovers" [value]="user.id">
+            {{user.firstName}} {{user.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-        <mat-form-field class="addUser-element">
-          <mat-label>Approvers</mat-label>
-          <mat-select [formControl]="approversSelectControl" id="approvers" multiple [ngModel]="user.approvers">
-            <mat-option *ngFor="let user of posibleUserSupervisorsOrApprovers" [value]="user.id">
-              {{user.firstName}} {{user.lastName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <br>
+      <mat-checkbox id="admin" name="admin" class="example-margin" [checked]="user.admin">Admin privileges</mat-checkbox>
 
-        <br>
-        <mat-checkbox id="admin" name="admin" class="example-margin" [checked]="user.admin">Admin privileges</mat-checkbox>
+      <div class="text-danger text-center">{{errorMsg}}</div>
 
-        <div class="text-danger text-center">{{errorMsg}}</div>
+      <div class="buttonGroup">
+        <button disabled="{{buttonDisabled}}" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
+        <button mat-raised-button (click)="userUpdatedNotify()" type="button" class="cancelBtn" >Cancel</button>
+      </div>
 
-        <div class="buttonGroup">
-          <button disabled="{{buttonDisabled}}" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
-          <button mat-raised-button (click)="userUpdatedNotify()" type="button" class="cancelBtn" >Cancel</button>
-        </div>
+    </form>
 
-      </form>
+  </ng-template>
 
-    </ng-template>
+  <ng-template #addUserMessage>
+    <h2>User updated!</h2>
+    <h5>User has been updated successfully.</h5>
+    <button mat-raised-button id="backBtn" type="button" (click)="goBack()" class="backBtn">Back</button>
+  </ng-template>
 
-    <ng-template #addUserMessage>
-      <h2>User updated!</h2>
-      <h5>User has been updated successfully.</h5>
-      <button mat-raised-button id="backBtn" type="button" (click)="goBack()" class="backBtn">Back</button>
-    </ng-template>
-  </div>
+  <app-individual-limits [user]="user"></app-individual-limits>
+</div>
 

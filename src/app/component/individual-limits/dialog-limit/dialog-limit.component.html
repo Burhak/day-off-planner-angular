@@ -4,7 +4,7 @@
   <form [formGroup]="form">
     <mat-form-field class="block">
       <input matInput
-             placeholder="limit"
+             placeholder="Limit"
              id="limitInput" formControlName="limit"
              (keyup)="inputUpdate()">
       <mat-error *ngIf="form.hasError('pattern', ['limit'])">

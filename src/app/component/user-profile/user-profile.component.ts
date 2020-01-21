@@ -18,7 +18,6 @@ export class UserProfileComponent implements OnInit {
   public deleteBtnDisabled: boolean;
   public editingUser = false;
   public isLoaded: boolean;
-  public editingLimits: boolean = false;
 
   constructor(
       public userInfoService: UserInfoService,
@@ -96,13 +95,8 @@ export class UserProfileComponent implements OnInit {
     this.editingUser = true;
   }
 
-  openLimitsUser() {
-    this.editingLimits = true;
-  }
-
   receiveMessage(event: any) {
     this.editingUser = false;
-    this.editingLimits = false;
     if (event === true) {
       this.reloadUser();
     }

@@ -9,7 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class DialogLimitComponent implements OnInit {
 
-  public saveEnabled: boolean = false;
+  public saveEnabled = false;
   public form: FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }

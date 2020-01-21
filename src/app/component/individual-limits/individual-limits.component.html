@@ -1,6 +1,6 @@
 <div>
   <div class="leaveTypeList">
-    <h2 class="title">Leave types for {{user.firstName}} {{user.lastName}}</h2>
+    <h2 class="title">Individual limits</h2>
     <mat-form-field>
       <input matInput (keyup)="applyFilterTypes($event.target.value)" placeholder="Filter">
     </mat-form-field>
@@ -17,8 +17,4 @@
       <tr mat-row *matRowDef="let leaveType; columns: displayedColumnsTypes;" (click) = "openEditLimit(leaveType)" (mouseenter)="leaveType.hover=true" (mouseleave)="leaveType.hover=false"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons #TableTypesPaginator="matPaginator"></mat-paginator>
-
-    <div class="buttonGroup">
-      <button mat-raised-button (click)="userUpdatedNotify()" type="button" class="backBtn">Ok</button>
-    </div>
   </div>

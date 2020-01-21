@@ -15,14 +15,12 @@ export class IndividualLimitsComponent implements OnInit {
   @ViewChild('TableTypesPaginator', { static: false }) TableTypesPaginator: MatPaginator;
   @ViewChild('TableTypesSort', { static: false }) TableTypesSort: MatSort;
 
-  @Output() userUpdatedEvent = new EventEmitter<boolean>();
-
   public displayedColumnsTypes: string[] = ['leaveType.name', 'limit'];
   public dataSourceTypes: MatTableDataSource<LeaveTypeInfo>;
   public leaveTypeInfos: Array<LeaveTypeInfo> = [];
 
   constructor(private leaveTypeApi: LeaveTypeService, private userApi: UserService, public dialog: MatDialog,
-    private adminApi: AdminService) { }
+              private adminApi: AdminService) { }
 
   ngOnInit() {
     this.getLeaveTypes();
@@ -30,21 +28,21 @@ export class IndividualLimitsComponent implements OnInit {
 
   private getLeaveTypes() {
     this.leaveTypeApi.getAllLeaveTypes().subscribe(response => {
-      this.leaveTypeInfos = response.map(type => {
+      this.leaveTypeInfos = response.filter(type => type.limit !== null).map(type => {
         return {
           leaveType: type,
           limit: this.getLimit(type),
-        }
+        };
       });
       this.fillDataTypes();
     });
   }
 
   private getLimit(leaveType: LeaveTypeApiModel): Promise<string> {
-    if (leaveType.limit == null) return null;
+    if (leaveType.limit == null) { return null; }
     return this.userApi.getLimit(this.user.id, leaveType.id).toPromise().then(response => {
-      if (response != null) return response.limit + " (custom)";
-      return leaveType.limit + " (default)";
+      if (response != null) { return response.limit + ' (custom)'; }
+      return leaveType.limit + ' (default)';
     });
   }
 
@@ -52,7 +50,7 @@ export class IndividualLimitsComponent implements OnInit {
     this.dataSourceTypes = new MatTableDataSource<LeaveTypeInfo>(this.leaveTypeInfos);
     this.dataSourceTypes.paginator = this.TableTypesPaginator;
     this.dataSourceTypes.sortingDataAccessor = (item, property) => {
-      if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item)
+      if (property.includes('.')) { return property.split('.').reduce((o, i) => o[i], item); }
       return item[property];
     };
     setTimeout(() => this.dataSourceTypes.sort = this.TableTypesSort);
@@ -62,9 +60,9 @@ export class IndividualLimitsComponent implements OnInit {
     this.dataSourceTypes.filter = filterValue.trim().toLowerCase();
     this.dataSourceTypes.filterPredicate = (data: any, filter) => {
       const dataStr = JSON.stringify(data).toLowerCase();
-      return dataStr.indexOf(filter) != -1;
+      return dataStr.indexOf(filter) !== -1;
     };
-    //console.log(this.dataSource.filter);
+    // console.log(this.dataSource.filter);
   }
 
   openEditLimit(leaveType: LeaveTypeInfo) {
@@ -74,16 +72,16 @@ export class IndividualLimitsComponent implements OnInit {
           name: leaveType.leaveType.name,
           id: leaveType.leaveType.id,
           // take value from promise and extract integer at start
-          limit: leaveType.limit["__zone_symbol__value"].replace(/(^\d+)(.+$)/i, '$1')
+          limit: leaveType.limit['__zone_symbol__value'].replace(/(^\d+)(.+$)/i, '$1')
         }
       });
-    
+
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined && result !== "false") {
-        if (result === "") {
+      if (result !== undefined && result !== 'false') {
+        if (result === '') {
           this.adminApi.deleteLimit(this.user.id, leaveType.leaveType.id).subscribe(
             response => {
-              let index = this.leaveTypeInfos.findIndex(x => x.leaveType.id === leaveType.leaveType.id);
+              const index = this.leaveTypeInfos.findIndex(x => x.leaveType.id === leaveType.leaveType.id);
               this.leaveTypeInfos[index].limit = this.getLimit(leaveType.leaveType);
             }
           );
@@ -94,7 +92,7 @@ export class IndividualLimitsComponent implements OnInit {
 
           this.adminApi.updateLimit(body, this.user.id, leaveType.leaveType.id).subscribe(
             response => {
-              let index = this.leaveTypeInfos.findIndex(x => x.leaveType.id === leaveType.leaveType.id);
+              const index = this.leaveTypeInfos.findIndex(x => x.leaveType.id === leaveType.leaveType.id);
               this.leaveTypeInfos[index].limit = this.getLimit(leaveType.leaveType);
             }
           );
@@ -103,12 +101,8 @@ export class IndividualLimitsComponent implements OnInit {
     });
   }
 
-  userUpdatedNotify() {
-    this.userUpdatedEvent.emit(false);
-  }
-
   setMyStyles(color: string, hover: boolean) {
-    let styles;
+    let styles: any;
     if (color) {
       styles = {
         'box-shadow': 'inset ' + (hover ? '30px' : '10px') + ' 0px ' + color,
@@ -120,6 +114,6 @@ export class IndividualLimitsComponent implements OnInit {
 }
 
 interface LeaveTypeInfo {
-  leaveType: LeaveTypeApiModel,
-  limit?: Promise<string>,
+  leaveType: LeaveTypeApiModel;
+  limit?: Promise<string>;
 }
