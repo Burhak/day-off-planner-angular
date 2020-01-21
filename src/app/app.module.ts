@@ -3,7 +3,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatTabsModule, MatDatepickerModule, MatNativeDateModule,
-  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule, MatListModule, MatRadioModule, MatProgressSpinnerModule, MatBadgeModule } from '@angular/material';
+  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule, MatListModule, MatRadioModule, MatProgressSpinnerModule, MatBadgeModule, MAT_DATE_LOCALE } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -49,13 +49,15 @@ import {SettingDialogComponent} from './component/settings/setting-dialog/settin
 import { IndividualLimitsComponent } from './component/individual-limits/individual-limits.component';
 import { DialogLimitComponent } from './component/individual-limits/dialog-limit/dialog-limit.component';
 import { AddLeaveRequestComponent } from './component/add-leave-request/add-leave-request.component';
-import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
+import {SatDatepickerModule, SatNativeDateModule, DateAdapter} from 'saturn-datepicker';
 import {MatStepperModule} from '@angular/material/stepper';
 import { CalendarComponent } from './component/calendar/calendar.component';
 import { SelectUsersComponent } from './component/calendar/select-users/select-users.component';
 import { ApprovingComponent } from './component/approving/approving.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { ApprovalsComponent } from './component/approvals/approvals.component';
+import { CustomDateAdapter } from './util/date-adapter.util';
+import { Platform } from '@angular/cdk/platform';
 
 @NgModule({
   declarations: [
@@ -203,6 +205,7 @@ import { ApprovalsComponent } from './component/approvals/approvals.component';
     ], {onSameUrlNavigation: 'reload'})
   ],
   providers: [
+    { provide: DateAdapter, useClass: CustomDateAdapter, deps: [MAT_DATE_LOCALE, Platform] },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     {
       provide: BASE_PATH,
