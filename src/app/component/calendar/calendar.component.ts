@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ViewChild, Input, Renderer2 } from '@angular/core';
 import { DayPilot, DayPilotSchedulerComponent } from 'daypilot-pro-angular';
-import { LeaveRequestApiModel, UserApiModel, UserService, LeaveTypeService, LeaveService, LeaveTypeApiModel } from 'src/app/api';
+import { LeaveRequestApiModel, UserApiModel, UserService, LeaveTypeService, LeaveService, LeaveTypeApiModel, SettingService } from 'src/app/api';
 import { MatDialog, MatButton } from '@angular/material';
 import { SelectUsersComponent } from './select-users/select-users.component';
 
@@ -47,10 +47,14 @@ export class CalendarComponent implements AfterViewInit {
 
   public leaveTypesCache = {};
 
+  private workdayStart: number;
+  private workdayLength: number;
+
   constructor(
       private userApi: UserService,
       private leaveTypeApi: LeaveTypeService,
       private leaveApi: LeaveService,
+      private settingsApi: SettingService,
       private dialog: MatDialog,
       private renderer: Renderer2
   ) {
@@ -67,6 +71,15 @@ export class CalendarComponent implements AfterViewInit {
       }
     });
 
+    // load settings
+    this.settingsApi.getAllSettings().subscribe(response => {
+      this.workdayStart  = response.find(s => s.key === 'WORKDAY_START').value;
+      this.workdayLength = response.find(s => s.key === 'WORKDAY_LENGTH').value;
+    });
+  }
+
+  private totalMinutes(d: Date): number {
+    return 60 * d.getHours() + d.getMinutes();
   }
 
   ngAfterViewInit() {
@@ -98,8 +111,6 @@ export class CalendarComponent implements AfterViewInit {
       allUsers: this.allUsers
     };
 
-    console.log(data);
-
     this.dialog.open(SelectUsersComponent, { data, restoreFocus: false }).afterClosed().subscribe(result => {
       if (result === 'true') {
         this.displayedUsers = data.displayedUsers;
@@ -123,7 +134,7 @@ export class CalendarComponent implements AfterViewInit {
     let background = type.color;
 
     // stripes for PENDING
-    if (leaveRequest.status == LeaveRequestApiModel.StatusEnum.PENDING) {
+    if (leaveRequest.status === LeaveRequestApiModel.StatusEnum.PENDING) {
       background = `repeating-linear-gradient(135deg, ${type.color}, ${type.color} 5px, white 5px, white 10px)`;
     }
 
@@ -138,14 +149,32 @@ export class CalendarComponent implements AfterViewInit {
       cssClass: 'leave',
       id: leaveRequest.id,
       resource: leaveRequest.user,
-      start: new DayPilot.Date(leaveRequest.fromDate),
-      end: new DayPilot.Date(leaveRequest.toDate),
+      start: new DayPilot.Date(this.mapToWholeDay(leaveRequest.fromDate)),
+      end: new DayPilot.Date(this.mapToWholeDay(leaveRequest.toDate)),
       text: '',
       barHidden: true,
       backColor: background,
       borderColor: border
     };
   }
+
+  private mapToWholeDay(date: Date): Date {
+    const d = new Date(date);
+    d.setSeconds(0);
+    d.setMilliseconds(0);
+
+    const newMinutes = (1440 / (this.workdayLength * 60)) * (this.totalMinutes(d) - this.workdayStart * 60);
+
+    const hours = Math.floor(newMinutes / 60);
+    const minutes = newMinutes % 60;
+
+    d.setHours(hours, minutes);
+    return d;
+  }
+
+
+
+
 
   private afterRender() {
     this.scheduler.control.scrollTo(this.config.startDate);

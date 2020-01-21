@@ -36,12 +36,13 @@
           (colorPickerSelect)="pickColor($event)"
           [colorPicker]="color"
           [style.background]="color"
-          [cpOutputFormat]="hex"
-          [cpAlphaChannel]="disabled"
+          [cpOutputFormat]="'hex'"
+          [cpAlphaChannel]="'disabled'"
+          [cpSaveClickOutside]="false"
           [cpCancelButton]="true"
-          [cpCancelButtonClass]= "'button'"
+          [cpCancelButtonClass]= "'button mat-raised-button mat-button-base'"
           [cpOKButton]="true"
-          [cpOKButtonClass]= "'button'">
+          [cpOKButtonClass]= "'button mat-raised-button mat-button-base'">
         </div>
       </div>
 

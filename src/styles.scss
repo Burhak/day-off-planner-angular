@@ -45,16 +45,19 @@ button:focus {
 
 .mat-menu-content{
   padding: 0 !important;
-  width: fit-content !important;
+  min-width: fit-content !important;
 }
 
 .mat-menu-item{
-  background-color: rgb(52,73,94);
+  background-color: rgba(37, 55, 73, 1);
   color: rgb(255,255,255);
   border-radius: 2em;
   margin: 0.5em 0;
   font-weight: bold;
-  text-align: center !important;
+}
+
+.mat-menu-panel .mat-menu-item {
+  background: none;
 }
 
 .mat-list-base {
@@ -65,11 +68,22 @@ button:focus {
   background: rgb(49, 67, 85);
 }
 
-app-change-password, app-user-list, app-add-user-form, app-user-profile, app-leave-types, app-add-leave-type, app-leave-type, app-settings, app-add-leave-request, app-home, app-approving{
-  height: 100vh;
+app-change-password,
+app-user-list,
+app-add-user-form,
+app-user-profile,
+app-leave-types,
+app-add-leave-type,
+app-leave-type,
+app-settings,
+app-add-leave-request,
+app-home,
+app-dashboard,
+app-approving {
+  min-height: 100vh;
   width: 100%;
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
   background-color: rgb(245,245,245);
 }
 
@@ -80,6 +94,10 @@ mat-dialog-container{
   min-width: 33vw;
   width: fit-content !important;
   height: fit-content !important;
+}
+
+.mat-badge-content {
+  font-family: 'Roboto', sans-serif;
 }
 
 .mat-dialog-title{
@@ -114,4 +132,8 @@ mat-icon{
   font-size: 11px;
   margin-left: -5px;
   margin-top: 10px;
+}
+
+.noMargin{
+  margin: 0;
 }

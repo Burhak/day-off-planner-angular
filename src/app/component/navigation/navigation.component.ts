@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserInfoService } from 'src/app/service/user-info.service';
-import { AuthService } from '../../api';
+import { AuthService, LeaveService, LeaveRequestApiModel } from '../../api';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,20 @@ import { Router } from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor(public userService: UserInfoService, public authService: AuthService, public router: Router) { }
+  public pendingRequestsToApprove = 0;
+
+  constructor(
+      private leaveApi: LeaveService,
+      private authService: AuthService,
+      private router: Router,
+      public userService: UserInfoService
+  ) {
+    this.userService.currentUserPromise.then(user => {
+      this.leaveApi
+        .countLeaveRequests(null, null, [LeaveRequestApiModel.StatusEnum.PENDING], null, null, [user.id])
+        .subscribe(response => this.pendingRequestsToApprove = response);
+    });
+  }
 
 
   ngOnInit() {

@@ -1,4 +1,26 @@
-<div>
+<div class="scheduler">
   <daypilot-scheduler [config]="config" #scheduler></daypilot-scheduler>
   <button mat-button (click)="selectUsers()" id="select-users-btn" #select_users_btn>Select users</button>
+</div>
+
+<div class="legend">
+  <div class="legend-row">
+    <div class="legend-item">
+      <span class="min-padding">
+        <span class="style" id="approved"></span>
+        <span class="legend-item-label">Approved</span>
+      </span>
+
+      <span class="min-padding">
+        <span class="style" id="pending"></span>
+        <span class="legend-item-label">Pending</span>
+      </span>
+
+      <span *ngFor="let leaveType of leaveTypesCache | keyvalue" class="min-padding">
+        <span class="color" [ngStyle]="{'background-color':leaveType.value.color}"></span>
+        <span class="legend-item-label">{{leaveType.value.name}}</span>
+      </span>
+    </div>
+  </div>
+
 </div>

@@ -1,0 +1,18 @@
+<app-navigation></app-navigation>
+<app-error></app-error>
+
+<div class="pageContent">
+  <div class="dashboard">
+    <div class="dashboardCard">
+      <h1 class="title">Dashboard</h1>
+      <div class="approvals" *ngIf="isApprover">
+        <app-approvals></app-approvals>
+      </div>
+
+      <div class="calendar" *ngIf="userService.currentUser">
+        <h2>Calendar</h2>
+        <app-calendar [displayedUsers]="[userService.currentUser]"></app-calendar>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="content">
+  <h2 class="title">Leaves waiting for your approval</h2>
+  <div class="approvals">
+    <div class="card" *ngFor="let leave of leaveRequests" (click)="openApproval(leave)">
+      <div class="card-background"></div>
+      <div class="card-content">
+        <h3 class="noMargin">{{userCache[leave.user]?.firstName}} {{userCache[leave.user]?.lastName}} ({{leaveTypesCache[leave.leaveType].name}}) </h3>
+        <h5 class="noMargin">{{leave.fromDate | date: "mediumDate"}} - {{leave.toDate | date: "mediumDate"}}</h5>
+      </div>
+      <div class="hidden">
+        <h3></h3>
+        <h5></h5>
+      </div>
+    </div>
+  </div>
+</div>

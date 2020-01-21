@@ -1,0 +1,61 @@
+.card-background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgb(255,255,255);
+  box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
+  border-radius: 1em;
+  transition: all 300ms;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: rgb(44,62,80);
+}
+
+.title{
+  margin: 0 0 0.8em;
+}
+
+.card {
+  height: max-content;
+  position: relative;
+  margin: 0.5em auto;
+  display: block;
+
+  width: 80%;
+  cursor: pointer;
+  padding: 1.5em 2em;
+}
+
+.card:hover .card-background {
+  transform: scale(1.05, 1.05);
+}
+
+.card-background:hover {
+  transform: scale(1.05, 1.05);
+}
+
+.card-content {
+  position: absolute;
+  top: 0.85em;
+  color: rgb(44,62,80);;
+}
+
+.approvals{
+  background-color: rgb(245,245,245);
+  padding: 1em;
+  height:12em;
+  overflow-y:scroll;
+  border: 1px solid rgb(234, 234, 234);
+}
+
+::-webkit-scrollbar {
+  width: 2em;
+  background-color: rgb(238, 238, 238);
+}
+
+::-webkit-scrollbar-thumb:vertical{
+  background-color: rgb(44,62,80);
+}
