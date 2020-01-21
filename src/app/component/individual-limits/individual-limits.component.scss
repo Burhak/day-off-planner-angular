@@ -1,0 +1,116 @@
+.buttonGroup {
+  padding: 2em 0 1em;
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  width: 100%;
+  align-content: center;
+}
+
+:host {
+  background-color: rgb(245,245,245);
+}
+
+.pageContent {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(245,245,245);
+}
+
+.tableStyle{
+  width:100%;
+  margin:auto;
+}
+
+.leaveTypeList {
+  margin: 20px auto;
+  display: block;
+  padding: 2em 2em 1em;
+}
+
+.title {
+  margin: 0 0 0.2em;
+}
+
+tr {
+  background-color: rgb(245,245,245);
+  cursor: pointer;
+  height: fit-content !important;
+}
+
+td {
+  border: 1px solid rgb(220,220,220);
+  text-align: center !important;
+  padding: 0.5em 2em !important;
+}
+
+tr:hover {
+  background-color: rgba(52,73,94,0.1);
+}
+
+th {
+  text-align: center;
+  background-color: rgb(44,62,80);
+  color: white;
+  padding: 1em 2em !important;
+  align-content: center !important;
+  font-weight: bold !important;
+  font-size: 1em !important;
+}
+
+.leaveTypeName {
+  color: rgb(52,73,94);
+  font-weight: bold;
+}
+
+.addLeaveType {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addLeaveTypeText {
+  color: rgb(52,73,94);
+  font-weight: bold;
+  padding: 0 0.2em;
+}
+
+button {
+  background: rgb(52,73,94);
+  color: white;
+  font-weight: bold;
+  border-radius: 2em;
+  padding: 0.1em 1.5em;
+  float: right;
+}
+
+.backBtn {
+  margin: auto;
+}
+
+button:hover {
+  background: rgb(44,62,80);
+}
+
+
+a {
+  color: rgb(44,62,80);
+  cursor: pointer;
+}
+
+a:hover {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(44,62,80);
+}
+
+mat-form-field {
+  width: 100%;
+}

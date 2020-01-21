@@ -33,7 +33,7 @@ export class UserProfileComponent implements OnInit {
 
     let userId;
     if (this.router.getCurrentNavigation().extras.state != null) {
-      userId =  this.router.getCurrentNavigation().extras.state.userId;
+      userId = this.router.getCurrentNavigation().extras.state.userId;
       localStorage.setItem('userId', userId);
     } else {
       userId = localStorage.getItem('userId');

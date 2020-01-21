@@ -16,6 +16,7 @@ export class UpdateUserComponent implements OnInit {
   public approversSelectControl: FormControl = new FormControl();
   public isUserUpdated: boolean;
   public errorMsg = '';
+  public editingLimits = false;
 
   @Input() public user: UserApiModel;
 
@@ -45,6 +46,9 @@ export class UpdateUserComponent implements OnInit {
     this.userUpdatedNotify();
   }
 
+  openLimitsUser() {
+    this.editingLimits = true;
+  }
 
   createNewUser(event: any) {
     event.preventDefault();

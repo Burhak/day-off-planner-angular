@@ -1,55 +1,55 @@
 <app-navigation></app-navigation>
 <app-error></app-error>
 <div *ngIf="isLoaded" class="pageContent">
-<div *ngIf="!editingUser" class="userProfile">
-  <div class="userProfileCard">
-    <!-- <div class="title">
-      <h1>User profile</h1>
-    </div> -->
-    <div class="userProfileInfo">
-      <div class="mainUserInfo">
-        <img src="../../../assets/images/userIcon_dark.png">
-        <h2><strong>{{user?.firstName}} {{user?.lastName}}</strong></h2>
-        <h3>{{user?.jobDescription}}</h3>
-      </div>
-      <div class="otherUserInfo">
-        <div>
-          <div class="label">Email</div>
-          <h3>{{user?.email}}</h3>
+  <div *ngIf="!editingUser && !editingLimits" class="userProfile">
+    <div class="userProfileCard">
+      <!-- <div class="title">
+        <h1>User profile</h1>
+      </div> -->
+      <div class="userProfileInfo">
+        <div class="mainUserInfo">
+          <img src="../../../assets/images/userIcon_dark.png">
+          <h2><strong>{{user?.firstName}} {{user?.lastName}}</strong></h2>
+          <h3>{{user?.jobDescription}}</h3>
         </div>
-        <div>
-          <div class="label">Phone</div>
-          <h3>{{user?.phone}}</h3>
+        <div class="otherUserInfo">
+          <div>
+            <div class="label">Email</div>
+            <h3>{{user?.email}}</h3>
+          </div>
+          <div>
+            <div class="label">Phone</div>
+            <h3>{{user?.phone}}</h3>
+          </div>
         </div>
-      </div>
-      <div class="userRoles">
-        <div class="label">Supervisor</div>
-        <h3>
-          <div *ngIf="userSupervisor; else noSupervisor">
-            {{userSupervisor?.firstName}} {{userSupervisor?.lastName}}
-          </div>
-          <ng-template #noSupervisor>
-            -
-          </ng-template>
-        </h3>
-        <div class="label">Approvers</div>
-        <h3>
-          <div *ngIf="userApprovers.length!=0; else noApprovers">
-            <div *ngFor="let userApprover of userApprovers">{{userApprover?.firstName}} {{userApprover?.lastName}}</div>
-          </div>
-          <ng-template #noApprovers>
-            -
-          </ng-template>
-        </h3>
+        <div class="userRoles">
+          <div class="label">Supervisor</div>
+          <h3>
+            <div *ngIf="userSupervisor; else noSupervisor">
+              {{userSupervisor?.firstName}} {{userSupervisor?.lastName}}
+            </div>
+            <ng-template #noSupervisor>
+              -
+            </ng-template>
+          </h3>
+          <div class="label">Approvers</div>
+          <h3>
+            <div *ngIf="userApprovers.length!=0; else noApprovers">
+              <div *ngFor="let userApprover of userApprovers">{{userApprover?.firstName}} {{userApprover?.lastName}}</div>
+            </div>
+            <ng-template #noApprovers>
+              -
+            </ng-template>
+          </h3>
+        </div>
       </div>
     </div>
+    <div class="admin-options" *ngIf="userInfoService?.hasAdminPrivileges">
+      <button mat-menu-item (click)="openEditUser()">Edit</button>
+      <button mat-menu-item class="deleteBtn" (click)="openDialogDeleteUser(user)" disabled="{{deleteBtnDisabled}}">Delete</button>
+    </div>
   </div>
-  <div class="admin-options" *ngIf="userInfoService?.hasAdminPrivileges">
-    <button mat-menu-item (click)="openEditUser()">Edit</button>
-    <button mat-menu-item class="deleteBtn" (click)="openDialogDeleteUser(user)" disabled="{{deleteBtnDisabled}}">Delete</button>
-  </div>
-</div>
 
-<app-update-user *ngIf="editingUser" (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-update-user>
+  <app-update-user *ngIf="editingUser" (userUpdatedEvent)="receiveMessage($event)" [user]="user"></app-update-user>
 </div>
 
