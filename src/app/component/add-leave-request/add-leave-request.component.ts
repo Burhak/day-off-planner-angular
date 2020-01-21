@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import {
   LeaveRequestCreateApiModel,
   LeaveService,
@@ -8,6 +8,7 @@ import {
   SettingService
 } from '../../api';
 import { FormControl, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-add-leave-request',
@@ -15,6 +16,9 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./add-leave-request.component.scss']
 })
 export class AddLeaveRequestComponent implements OnInit {
+
+  @ViewChild('stepper', {static: false})
+  public stepper: MatStepper;
 
   public dateRange: any;
   public leaveTypesSelectControl: FormControl = new FormControl('', [Validators.required]);
@@ -116,6 +120,7 @@ export class AddLeaveRequestComponent implements OnInit {
   dateRangeChange(event: any) {
     this.dateRange = event;
     this.dateRangeControl.setValue(' '); // set valid formControl for rangeDatePicker
+    this.stepper.next();
   }
 
   hideMessage() {

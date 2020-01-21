@@ -2,7 +2,7 @@
 <app-error></app-error>
 <div class="pageContent">
   <div class="addLeaveRequest-form">
-    <h2 class="title">Add leave request</h2>
+    <h2 class="title">Create leave request</h2>
     <form (submit)="createLeaveRequest($event)">
 
       <mat-vertical-stepper [linear]="true" #stepper>
@@ -11,7 +11,7 @@
             <ng-template matStepLabel>Choose leave type</ng-template>
             <mat-form-field class="addLeaveReques-element">
               <mat-label>Leave type</mat-label>
-              <mat-select [formControl]="leaveTypesSelectControl" id="leaveTypes">
+              <mat-select [formControl]="leaveTypesSelectControl" id="leaveTypes" (selectionChange)="stepper.next()">
                 <mat-option *ngFor="let leaveType of leaveTypeList" [value]="{id: leaveType.id, name: leaveType.name}">
                   {{leaveType.name}}
                 </mat-option>
@@ -25,7 +25,6 @@
         <mat-step [stepControl]="dateRangeControl">
             <ng-template matStepLabel>Pick date range</ng-template>
             <div class="calendarContainer">
-              <h4 class="calendarTitle"><strong>Calendar</strong></h4>
               <sat-calendar [rangeMode]="true"
                             (dateRangesChange)="dateRangeChange($event)">
               </sat-calendar>
@@ -37,10 +36,9 @@
         <mat-step>
           <ng-template matStepLabel>Check your leave request</ng-template>
           <div class="leaveTypeConfirmation">
-            <h4><strong>Leave request</strong></h4>
-            <h5 class="noMargin"><strong> {{leaveTypesSelectControl.value.name}}</strong></h5>
+            <h4 class="noMargin"><strong> {{leaveTypesSelectControl.value.name}}</strong></h4>
             <span class="dateRange">
-                    <h6><strong>{{ dateRange?.begin | date }}
+                    <strong>{{ dateRange?.begin | date }}
                       <mat-form-field class="select">
                         <mat-select id="fromHour" name="fromHour" [ngModel]="workdayStart" [formControl]="fromHourSelectControl">
                           <mat-option *ngFor="let hour of possibleHours" [value]="hour" >
@@ -52,14 +50,14 @@
                       <span> - {{ dateRange?.end | date }} </span>
 
                       <mat-form-field class="select">
-                        <mat-select id="toHour" name="toHour" [ngModel]="workdayStart+workdayLength-1" [formControl]="toHourSelectControl">
-                          <mat-option *ngFor="let hour of possibleHours" [value]="hour">
-                            <span *ngIf="hour > 9">{{hour}}:00</span>
-                            <span *ngIf="hour <= 9">0{{hour}}:00</span>
+                        <mat-select id="toHour" name="toHour" [ngModel]="workdayStart+workdayLength" [formControl]="toHourSelectControl">
+                          <mat-option *ngFor="let hour of possibleHours" [value]="hour+1">
+                            <span *ngIf="hour > 8">{{hour+1}}:00</span>
+                            <span *ngIf="hour <= 8">0{{hour+1}}:00</span>
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
-                    </strong></h6>
+                    </strong>
             </span>
           </div>
         </mat-step>

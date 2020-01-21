@@ -35,11 +35,6 @@
   margin-top: 1em;
 }
 
-.calendarTitle{
-  margin: 0.4em 0;
-  text-align: center;
-}
-
 .buttonGroup{
   padding: 0 0 1em;
   float: left;
@@ -150,15 +145,6 @@ h1,h2,h3,h4,h5,h6{
   padding: 0;
 }
 
-.calendarTitle{
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgb(44, 62, 80);
-}
-
-
 .dateRange{
   text-align: left;
   margin: 0;
@@ -181,10 +167,6 @@ mat-icon{
 
 .leaveTypeConfirmation{
   padding: 1.5em 0 0;
-}
-
-.noMargin{
-  margin: 0;
 }
 
 .error-text{
