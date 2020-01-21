@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin: 5px 0 3px 0;
+  margin: 1em 1em 0;
 }
 
 .legend-item {
@@ -49,4 +49,8 @@
 #pending {
   border: 1px solid red;
   background: repeating-linear-gradient(135deg, red, red 5px, white 5px, white 10px);
+}
+
+.min-padding{
+  padding: 0.2em 0.4em;
 }
