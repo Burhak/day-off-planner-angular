@@ -56,6 +56,10 @@ button:focus {
   font-weight: bold;
 }
 
+.mat-menu-panel .mat-menu-item {
+  background: none;
+}
+
 .mat-list-base {
   outline: none;
 }

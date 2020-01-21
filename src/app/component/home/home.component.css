@@ -121,7 +121,6 @@ button {
   font-weight: bold;
   border-radius: 2em;
   padding: 0.1em 1.5em;
-  float: right;
 }
 
 .submitBtn {
@@ -209,5 +208,12 @@ mat-form-field {
 .notActiveIcon{
   color: rgb(200,200,200);
   transition: color 0.4s linear;
+}
+
+#add-leave-request-btn {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  padding: 0.5em 1em;
+  text-transform: uppercase;
 }
 

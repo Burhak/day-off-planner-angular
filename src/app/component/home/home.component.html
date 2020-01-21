@@ -4,7 +4,9 @@
 <div class="pageContent">
   <div class="leaveTypeList">
     <div [className]="isLeaveRequestShown ? 'showCard' : 'hideCard'">
-      <div class="leaveTypeCard">
+      <h1>Welcome to Day Off Planner</h1>
+      <button id="add-leave-request-btn" mat-raised-button type="button" (click)="addLeaveRequest()">New leave request</button>
+      <div class="leaveTypeCard" *ngIf="hasAnyLeaves; else noLeavesTemplate">
         <h2 class="title">Leave requests</h2>
         <div class="relative">
           <mat-form-field class="negGlobalCss dateFilter">
@@ -97,6 +99,13 @@
   </div>
 
 </div>
+
+<ng-template #noLeavesTemplate>
+  <div *ngIf="leavesChecked">
+    <h2 style="text-transform: uppercase; margin: 30px 0 10px;">You have no leave requests yet</h2>
+    <h3 style="text-transform: uppercase; margin: 0;">Get started by clicking the button above</h3>
+  </div>
+</ng-template>
 
 
 

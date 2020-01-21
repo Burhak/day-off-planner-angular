@@ -1,4 +1,4 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import {
   LeaveRequestCreateApiModel,
   LeaveService,
@@ -7,7 +7,7 @@ import {
   SettingApiModel,
   SettingService
 } from '../../api';
-import {FormControl, Validators} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-leave-request',
@@ -16,13 +16,13 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class AddLeaveRequestComponent implements OnInit {
 
-  public dateRange;
+  public dateRange: any;
   public leaveTypesSelectControl: FormControl = new FormControl('', [Validators.required]);
   public dateRangeControl: FormControl = new FormControl('', [Validators.required]);
   public leaveTypeList: Array<LeaveTypeApiModel> = [];
-  public isRequestCreated: boolean = false;
-  public errorMsg: string = '';
-  private buttonDisabled: boolean = false;
+  public isRequestCreated = false;
+  public errorMsg = '';
+  public buttonDisabled = false;
 
   public workdayStart: number;
   public workdayLength: number;
@@ -32,7 +32,12 @@ export class AddLeaveRequestComponent implements OnInit {
   public toHourSelectControl: FormControl = new FormControl();
 
 
-  constructor(private leaveTypeService: LeaveTypeService, private leaveService: LeaveService, private settingService: SettingService, private ngZone: NgZone) {
+  constructor(
+      private leaveTypeService: LeaveTypeService,
+      private leaveService: LeaveService,
+      private settingService: SettingService,
+      private ngZone: NgZone
+  ) {
     this.leaveTypeService.getAllLeaveTypes().subscribe((leaveTypes: LeaveTypeApiModel[]) => {
       this.leaveTypeList = leaveTypes;
     });
@@ -54,7 +59,7 @@ export class AddLeaveRequestComponent implements OnInit {
     });
   }
 
-  createLeaveRequest(event) {
+  createLeaveRequest(event: any) {
     event.preventDefault();
     if (!this.leaveTypesSelectControl.valid) {
       return;
@@ -64,18 +69,18 @@ export class AddLeaveRequestComponent implements OnInit {
       this.errorMsg = 'Date range was not selected';
       return;
     }
-    console.log(this.dateRange.begin + "-" + this.dateRange.end) ;
+    console.log(this.dateRange.begin + '-' + this.dateRange.end) ;
 
-    let tmpDateFrom: Date = new Date(this.dateRange.begin.getTime());
-    let tmpDateTo: Date = new Date(this.dateRange.end.getTime());
-    tmpDateFrom.setHours(this.fromHourSelectControl.value,0,0,0);
-    tmpDateTo.setHours(this.toHourSelectControl.value,0,0,0);
+    const tmpDateFrom: Date = new Date(this.dateRange.begin.getTime());
+    const tmpDateTo: Date = new Date(this.dateRange.end.getTime());
+    tmpDateFrom.setHours(this.fromHourSelectControl.value, 0, 0, 0);
+    tmpDateTo.setHours(this.toHourSelectControl.value, 0, 0, 0);
     console.log(tmpDateFrom) ;
     console.log(tmpDateTo) ;
 
-    let userTimezoneOffset = this.dateRange.begin.getTimezoneOffset() * 60000;
-    let dateFrom: Date = new Date(tmpDateFrom.getTime() - userTimezoneOffset);
-    let dateTo: Date = new Date(tmpDateTo.getTime() - userTimezoneOffset);
+    const userTimezoneOffset = this.dateRange.begin.getTimezoneOffset() * 60000;
+    const dateFrom: Date = new Date(tmpDateFrom.getTime() - userTimezoneOffset);
+    const dateTo: Date = new Date(tmpDateTo.getTime() - userTimezoneOffset);
     console.log(dateFrom) ;
     console.log(dateTo) ;
     const leaveRequest: LeaveRequestCreateApiModel = {
@@ -102,21 +107,19 @@ export class AddLeaveRequestComponent implements OnInit {
           this.ngZone.run(() => {
             this.errorMsg = 'Limit of this leave type has been exceeded!';
           });
-        } else throw error;
+        } else {
+          throw error;
+        }
       });
   }
 
-  dateRangeChange($event) {
-    this.dateRange = $event;
-    this.dateRangeControl.setValue(" "); //set valid formControl for rangeDatePicker
+  dateRangeChange(event: any) {
+    this.dateRange = event;
+    this.dateRangeControl.setValue(' '); // set valid formControl for rangeDatePicker
   }
 
   hideMessage() {
-    (function(that){
-      setTimeout(function() {
-        that.isRequestCreated = false;
-      }, 3000);
-    }(this));
+    setTimeout(() => this.isRequestCreated = false, 3000);
   }
 
 }

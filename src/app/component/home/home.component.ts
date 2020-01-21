@@ -3,7 +3,7 @@ import { LeaveTypeApiModel, LeaveTypeService, UserService, UserApiModel, LeaveSe
 import { MatPaginator, MatSort, MatTableDataSource, MatTabGroup } from '@angular/material';
 import { UserInfoService } from '../../service/user-info.service';
 import { FormControl } from '@angular/forms';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -32,6 +32,8 @@ export class HomeComponent implements OnInit {
   public dateControl: FormControl;
   public leaveTypesCache = {};
   public isLeaveRequestShown = true;
+  public hasAnyLeaves = false;
+  public leavesChecked = false;
 
   private userPromise: Promise<UserApiModel>;
   private user: UserApiModel;
@@ -44,7 +46,7 @@ export class HomeComponent implements OnInit {
       private router: Router
   ) {
     this.date = new Date();
-    this.date.setMonth(this.date.getMonth() - 6);
+    // this.date.setMonth(this.date.getMonth() - 6);
     this.dateControl = new FormControl(this.date);
   }
 
@@ -57,6 +59,12 @@ export class HomeComponent implements OnInit {
 
   async initData() {
     this.user = await this.userPromise;
+
+    this.hasAnyLeaves = await this.leavesApi
+        .countLeaveRequests(null, null, null, [this.user.id])
+        .toPromise()
+        .then(n => n !== 0);
+    this.leavesChecked = true;
 
     this.getLeaveTypes();
     this.getMyLeaves();
@@ -209,14 +217,14 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['addLeaveRequest'] );
   }
 
-  showLeaveTypes(){
-    if(this.isLeaveRequestShown) {
+  showLeaveTypes() {
+    if (this.isLeaveRequestShown) {
       this.isLeaveRequestShown = false;
     }
   }
 
-  showLeaveRequests(){
-    if(!this.isLeaveRequestShown) {
+  showLeaveRequests() {
+    if (!this.isLeaveRequestShown) {
       this.isLeaveRequestShown = true;
     }
   }
