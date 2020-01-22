@@ -1,9 +1,10 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { AdminService, LeaveTypeApiModel, LeaveTypeCreateApiModel, LeaveTypeService } from '../../api';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { DeleteLeaveTypeDialogComponent } from './delete-leave-type-dialog/delete-leave-type-dialog.component';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-leave-type',
@@ -14,34 +15,34 @@ export class LeaveTypeComponent implements OnInit {
 
   public leaveType: LeaveTypeApiModel;
   public form: FormGroup;
-  public isCheckboxChanged: boolean;
-  public isLeaveTypeUpdated: boolean;
-  public isColorChanged: boolean;
+  public isCheckboxChanged = false;
+  public isLeaveTypeUpdated = false;
+  public isColorChanged = false;
   public leaveTypeId: string;
   public errorMsg = '';
   public color = '';
 
   constructor(
       private router: Router,
+      private route: ActivatedRoute,
       private leaveTypeService: LeaveTypeService,
       private adminService: AdminService,
       private dialog: MatDialog,
       private ngZone: NgZone
   ) {
-    this.isLeaveTypeUpdated = false;
-    this.isCheckboxChanged = false;
-    this.isColorChanged = false;
-    if (this.router.getCurrentNavigation().extras.state != null) {
-      this.leaveTypeId =  this.router.getCurrentNavigation().extras.state.leaveTypeId;
-      localStorage.setItem('leaveTypeId', this.leaveTypeId);
-    } else {
-      this.leaveTypeId = localStorage.getItem('leaveTypeId');
-    }
-
-    this.leaveTypeService.getLeaveTypeById(this.leaveTypeId).subscribe((leaveType: LeaveTypeApiModel) => {
-      this.leaveType = leaveType;
-      this.color = leaveType.color;
-    });
+    this.route.paramMap
+      .pipe(switchMap(params =>this.leaveTypeService.getLeaveTypeById(params.get('id'))))
+      .subscribe(leaveType => {
+        this.leaveType = leaveType;
+        this.color = leaveType.color;
+      }, error => {
+        if (error.status === 404 || error.status === 400) {
+          console.error('Leave type not found');
+        } else {
+          throw error;
+        }
+        this.router.navigate(['']);
+      });
 
     this.form = new FormGroup({
       name: new FormControl('x', [Validators.required]),

@@ -41,7 +41,7 @@ export class NavigationComponent implements OnInit {
   }
 
   openUserProfile() {
-    this.router.navigate(['userProfile'], { state: { userId: this.userService.currentUser.id } });
+    this.router.navigate(['userProfile']);
   }
 
 }

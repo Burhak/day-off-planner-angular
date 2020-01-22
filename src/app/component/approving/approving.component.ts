@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LeaveRequestWithApprovalsApiModel, LeaveService, LeaveTypeApiModel, LeaveTypeService, UserApiModel, UserService, LeaveRequestApiModel } from 'src/app/api';
 import { UserInfoService } from 'src/app/service/user-info.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-approving',
@@ -30,24 +31,28 @@ export class ApprovingComponent implements OnInit {
 
   constructor(
       private router: Router,
+      private route: ActivatedRoute,
       private leaveApi: LeaveService,
       private userApi: UserService,
       private userService: UserInfoService,
       private leaveTypeApi: LeaveTypeService
   ) {
-
-      if (this.router.getCurrentNavigation().extras.state != null) {
-      this.leaveRequestId = this.router.getCurrentNavigation().extras.state.leaveRequestId;
-      localStorage.setItem('leaveRequestId', this.leaveRequestId);
-    } else {
-      this.leaveRequestId = localStorage.getItem('leaveRequestId');
-    }
-
-    this.loadData().then(() => this.loaded = true);
+    this.route.paramMap
+      .pipe(switchMap(params => this.leaveApi.getLeaveRequestByIdWithApprovals(params.get('id'))))
+      .subscribe(leaveRequest => {
+        this.leaveRequest = leaveRequest;
+        this.loadData().then(() => this.loaded = true);
+      }, error => {
+        if (error.status === 404 || error.status === 400) {
+          console.error('Leave request not found');
+        } else {
+          throw error;
+        }
+        this.router.navigate(['']);
+      });
   }
 
   private async loadData() {
-    this.leaveRequest = await this.leaveApi.getLeaveRequestByIdWithApprovals(this.leaveRequestId).toPromise();
     this.leaveType = await this.leaveTypeApi.getLeaveTypeById(this.leaveRequest.leaveRequest.leaveType).toPromise();
 
     this.user = await this.userApi.getUserById(this.leaveRequest.leaveRequest.user).toPromise();

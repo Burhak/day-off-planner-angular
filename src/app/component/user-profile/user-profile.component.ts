@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService, UserApiModel, UserService } from '../../api';
 import { UserInfoService } from '../../service/user-info.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { MatDialog } from '@angular/material';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,39 +16,42 @@ export class UserProfileComponent implements OnInit {
   public user: UserApiModel;
   public userSupervisor: UserApiModel;
   public userApprovers: Array<UserApiModel> = [];
-  public deleteBtnDisabled: boolean;
+  public deleteBtnDisabled = true;
   public editingUser = false;
-  public isLoaded: boolean;
+  public isLoaded = false;
 
   constructor(
       public userInfoService: UserInfoService,
       private userService: UserService,
-      private  adminService: AdminService,
+      private adminService: AdminService,
       public dialog: MatDialog,
-      private  router: Router
+      private router: Router,
+      private route: ActivatedRoute
     ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
-    this.isLoaded = false;
-    this.deleteBtnDisabled = true;
+    this.userInfoService.currentUserPromise.then(currentUser => {
+      this.route.paramMap
+        .pipe(switchMap(params => this.userService.getUserById(params.has('id') ? params.get('id') : currentUser.id)))
+        .subscribe(user => {
+          this.user = user;
+          this.getUserSupervisor(user.supervisor);
+          this.getUserApprovers(user.approvers);
 
-    let userId;
-    if (this.router.getCurrentNavigation().extras.state != null) {
-      userId = this.router.getCurrentNavigation().extras.state.userId;
-      localStorage.setItem('userId', userId);
-    } else {
-      userId = localStorage.getItem('userId');
-    }
-
-    this.userService.getUserById(userId).subscribe((user: UserApiModel) => {
-      this.user = user;
-      this.getUserSupervisor(user.supervisor);
-      this.getUserApprovers(user.approvers);
-
-      if (this.user.id !== this.userInfoService.currentUser.id) {
-        this.deleteBtnDisabled = false;
-      }
+          if (this.user.id !== this.userInfoService.currentUser.id) {
+            this.deleteBtnDisabled = false;
+          }
+          this.isLoaded = true;
+        }, error => {
+          if (error.status === 404 || error.status === 400) {
+            console.error('User was not found');
+          } else {
+            throw error;
+          }
+          this.router.navigate(['']);
+        });
     });
+
   }
 
   ngOnInit() {
@@ -70,7 +74,6 @@ export class UserProfileComponent implements OnInit {
         this.userApprovers.push(approver);
       });
     }
-    this.isLoaded = true;
   }
 
   openDialogDeleteUser(user: UserApiModel) {

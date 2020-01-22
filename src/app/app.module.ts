@@ -122,7 +122,7 @@ import { Platform } from '@angular/cdk/platform';
     MatProgressSpinnerModule,
     RouterModule.forRoot([
       {
-        path: 'approve',
+        path: 'approve/:id',
         component: ApprovingComponent,
         canActivate: [AuthGuad]
       },
@@ -159,6 +159,11 @@ import { Platform } from '@angular/cdk/platform';
         canActivate: [AuthGuad]
       },
       {
+        path: 'userProfile/:id',
+        component: UserProfileComponent,
+        canActivate: [AuthGuad, AdminGuard]
+      },
+      {
         path: 'changePassword',
         component: ChangePasswordComponent,
         canActivate: [AuthGuad]
@@ -179,7 +184,7 @@ import { Platform } from '@angular/cdk/platform';
         canActivate: [AuthGuad, AdminGuard]
       },
       {
-        path: 'admin/leaveType',
+        path: 'admin/leaveType/:id',
         component: LeaveTypeComponent,
         canActivate: [AuthGuad, AdminGuard]
       },

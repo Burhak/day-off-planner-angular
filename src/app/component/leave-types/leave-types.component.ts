@@ -46,8 +46,7 @@ export class LeaveTypesComponent implements OnInit {
   }
 
   openLeaveType(leaveTypeId: string) {
-    console.log(leaveTypeId);
-    this.router.navigate(['admin/leaveType'], { state: { leaveTypeId }});
+    this.router.navigate(['admin', 'leaveType', leaveTypeId]);
   }
 
   applyFilter(filterValue: string) {

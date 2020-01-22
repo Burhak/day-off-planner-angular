@@ -41,7 +41,7 @@ export class UserListComponent implements OnInit {
   }
 
   openUserProfile(user: UserApiModel) {
-    this.router.navigate(['userProfile'], { state: { userId: user.id } });
+    this.router.navigate(['userProfile', user.id]);
   }
 
   addUser() {

@@ -23,7 +23,7 @@ export class CalendarComponent implements AfterViewInit {
     days: DayPilot.Date.today().daysInYear(),
     infiniteScrollingEnabled: true,
     infiniteScrollingStepDays: 100,
-    startDate: DayPilot.Date.today().addDays(-14),
+    startDate: DayPilot.Date.today().addDays(-7),
     timeRangeSelectedHandling: 'Disabled',
     eventMoveHandling: 'Disabled',
     eventResizeHandling: 'Disabled',

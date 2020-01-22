@@ -45,7 +45,7 @@ export class ApprovalsComponent implements OnInit {
   }
 
   openApproval(leave: LeaveRequestApiModel) {
-    this.router.navigate(['approve'], { state: { leaveRequestId: leave.id } });
+    this.router.navigate(['approve', leave.id]);
   }
 
   ngOnInit() {

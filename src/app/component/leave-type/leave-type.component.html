@@ -1,6 +1,6 @@
 <app-navigation></app-navigation>
 <app-error></app-error>
-<div class="pageContent">
+<div *ngIf="leaveType" class="pageContent">
   <div class="addLeaveType-form">
     <h2>Leave type</h2>
     <form [formGroup]="form" (submit)="updateLeaveType($event)">
