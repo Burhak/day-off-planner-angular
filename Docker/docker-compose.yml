@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  web:
+    image: burhak/evo-day-off-planner-web
+    ports:
+      - '${PORT}:8080'
+    container_name: web
+    networks:
+      internal_network:
+        aliases:
+          - web
+
+networks:
+  internal_network:
+    name: internal_network
