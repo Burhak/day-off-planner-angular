@@ -58,6 +58,7 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { ApprovalsComponent } from './component/approvals/approvals.component';
 import { CustomDateAdapter } from './util/date-adapter.util';
 import { Platform } from '@angular/cdk/platform';
+import { DialogCancelRequestComponent } from './component/home/dialog-cancel-request/dialog-cancel-request.component';
 
 @NgModule({
   declarations: [
@@ -87,9 +88,10 @@ import { Platform } from '@angular/cdk/platform';
     DialogLimitComponent,
     ApprovingComponent,
     DashboardComponent,
-    ApprovalsComponent
+    ApprovalsComponent,
+    DialogCancelRequestComponent
   ],
-  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent, SelectUsersComponent, DialogLimitComponent],
+  entryComponents: [DeleteUserDialogComponent, DeleteLeaveTypeDialogComponent, SettingDialogComponent, SelectUsersComponent, DialogLimitComponent, DialogCancelRequestComponent],
   imports: [
     MatToolbarModule,
     MatCheckboxModule,

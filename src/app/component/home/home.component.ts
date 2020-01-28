@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LeaveTypeApiModel, LeaveTypeService, UserService, UserApiModel, LeaveService, LeaveRequestApiModel } from '../../api';
-import { MatPaginator, MatSort, MatTableDataSource, MatTabGroup } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatTabGroup, MatDialog } from '@angular/material';
 import { UserInfoService } from '../../service/user-info.service';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DialogCancelRequestComponent } from './dialog-cancel-request/dialog-cancel-request.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
@@ -21,7 +22,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('tabGroup', { static: false }) tabGroup: MatTabGroup;
 
   public displayedColumnsTypes: string[] = ['leaveType.name', 'leaveType.approvalNeeded', 'limit', 'carryover', 'requestedHours'];
-  public displayedColumnsLeaves: string[] = ['leaveType', 'fromDate', 'toDate', 'status'];
+  public displayedColumnsLeaves: string[] = ['leaveType', 'fromDate', 'toDate', 'status', 'cancel'];
   public dataSourceLeaves: MatTableDataSource<LeaveRequestApiModel>;
   public dataSourceTypes: MatTableDataSource<LeaveTypeInfo>;
   public isDataLoaded: boolean;
@@ -43,7 +44,8 @@ export class HomeComponent implements OnInit {
       private userApi: UserService,
       private userService: UserInfoService,
       private leavesApi: LeaveService,
-      private router: Router
+      private router: Router,
+      private dialog: MatDialog
   ) {
     this.date = new Date();
     // this.date.setMonth(this.date.getMonth() - 6);
@@ -227,6 +229,21 @@ export class HomeComponent implements OnInit {
     if (!this.isLeaveRequestShown) {
       this.isLeaveRequestShown = true;
     }
+  }
+
+  cancelDialog(leave: LeaveRequestApiModel) {
+    if (leave.status !== LeaveRequestApiModel.StatusEnum.APPROVED && leave.status !== LeaveRequestApiModel.StatusEnum.PENDING) {
+      return;
+    }
+    const dialogRef = this.dialog.open(DialogCancelRequestComponent, { data: { name: this.leaveTypesCache[leave.leaveType].name } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'true') {
+        this.leavesApi.cancelLeaveRequest(leave.id).subscribe(r => {
+          this.getMyLeaves();
+        });
+      }
+    });
   }
 }
 

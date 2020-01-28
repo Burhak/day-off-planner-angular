@@ -10,7 +10,6 @@
       </div>
 
       <div class="calendar" *ngIf="userService.currentUser">
-        <h2>Calendar</h2>
         <app-calendar [displayedUsers]="[userService.currentUser]"></app-calendar>
       </div>
     </div>
