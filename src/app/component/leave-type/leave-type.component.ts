@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { DeleteLeaveTypeDialogComponent } from './delete-leave-type-dialog/delete-leave-type-dialog.component';
 import { switchMap } from 'rxjs/operators';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
   selector: 'app-leave-type',
@@ -15,11 +16,7 @@ export class LeaveTypeComponent implements OnInit {
 
   public leaveType: LeaveTypeApiModel;
   public form: FormGroup;
-  public isCheckboxChanged = false;
-  public isLeaveTypeUpdated = false;
-  public isColorChanged = false;
-  public leaveTypeId: string;
-  public errorMsg = '';
+  public isUpdated = false;
   public color = '';
 
   constructor(
@@ -28,7 +25,7 @@ export class LeaveTypeComponent implements OnInit {
       private leaveTypeService: LeaveTypeService,
       private adminService: AdminService,
       private dialog: MatDialog,
-      private ngZone: NgZone
+      private messageService: MessageService
   ) {
     this.route.paramMap
       .pipe(switchMap(params =>this.leaveTypeService.getLeaveTypeById(params.get('id'))))
@@ -57,13 +54,12 @@ export class LeaveTypeComponent implements OnInit {
 
   pickColor(color: string) {
     this.color = color;
-    this.isColorChanged = true;
+    this.isUpdated = true;
   }
 
   updateLeaveType(event: any) {
     event.preventDefault();
     if (!this.form.valid) {
-      console.log(this.form.valid);
       return;
     }
 
@@ -75,29 +71,13 @@ export class LeaveTypeComponent implements OnInit {
       color: this.color,
     };
 
-    this.adminService.updateLeaveType(updatedLeaveType, this.leaveTypeId).subscribe(
-      response => {
-        this.isLeaveTypeUpdated = true;
-        this.hideMessage();
-        this.errorMsg = '';
-      }, error => {
-        if (error.status === 409) {
-          this.ngZone.run(() => {
-            this.errorMsg = 'Name already taken';
-          });
-        } else {
-          throw error;
-        }
-      }
-    );
-  }
-
-  hideMessage() {
-    setTimeout(() => this.isLeaveTypeUpdated = false, 3000);
+    this.adminService.updateLeaveType(updatedLeaveType, this.leaveType.id).subscribe(response => {
+      this.messageService.info('Leave type has been updated successfully');
+    });
   }
 
   onCheckboxChanged() {
-    this.isCheckboxChanged = true;
+    this.isUpdated = true;
   }
 
   openDialogDeleteLeaveType(leaveType: LeaveTypeApiModel) {

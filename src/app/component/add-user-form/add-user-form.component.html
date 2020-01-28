@@ -1,5 +1,4 @@
 <app-navigation></app-navigation>
-<app-error></app-error>
 <div class="pageContent">
   <div class="addUser-form">
       <h2>Add user</h2>
@@ -41,7 +40,7 @@
         <mat-form-field class="addUser-element">
           <input matInput
                  placeholder="Phone"
-                 id="phone">
+                 id="phone" formControlName="phone">
           <mat-hint></mat-hint>
         </mat-form-field>
 
@@ -78,19 +77,11 @@
 
         <mat-checkbox id="admin" name="admin" class="example-margin">Admin privileges</mat-checkbox>
 
-        <div class="text-danger text-center">
-          {{errorMsg}}
-        </div>
-
         <div class="buttonGroup">
           <button disabled="{{buttonDisabled}}" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
           <button mat-raised-button type="button" id="backBtn" class="backBtn" routerLink="/admin/userList">Back</button>
         </div>
       </form>
 
-  </div>
-
-  <div class="text-center">
-    <h6 class="message" [className]="isUserAdded ? 'messageVisible' : 'messageHidden'"> <mat-icon>check_circle_outline</mat-icon><span class="messageText">New user has been added successfully!</span></h6>
   </div>
 </div>

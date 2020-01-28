@@ -1,4 +1,3 @@
-<app-error></app-error>
 <div class="login-form">
   <img class="logo" src="../../assets/images/logo_light.png">
   <form [formGroup]="form" (submit)="loginUser($event)">
@@ -26,8 +25,6 @@
         Password is <strong>required</strong>
       </mat-error>
     </mat-form-field>
-
-    <div class="error-msg">{{errorMsg}}</div>
 
     <button mat-raised-button type="submit" class="submitBtn">Login</button>
 

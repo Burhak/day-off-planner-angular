@@ -3,6 +3,7 @@ import { AdminService, UserApiModel, UserCreateApiModel, UserService } from '../
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserInfoService } from 'src/app/service/user-info.service';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
   selector: 'app-add-user-form',
@@ -16,15 +17,13 @@ export class AddUserFormComponent implements OnInit {
   public posibleUserSupervisorsOrApprovers: Array<UserApiModel> = [];
   public supervisorSelectControl: FormControl = new FormControl();
   public approversSelectControl: FormControl = new FormControl();
-  public isUserAdded: boolean;
-  public errorMsg = '';
 
   constructor(
       private adminService: AdminService,
       private userService: UserService,
       private userInfoService: UserInfoService,
-      private router: Router,
-      private ngZone: NgZone
+      private messageService: MessageService,
+      private router: Router
   ) {
     this.userService.getAllUsers().subscribe((user: UserApiModel[]) => {
       this.posibleUserSupervisorsOrApprovers = user;
@@ -36,13 +35,14 @@ export class AddUserFormComponent implements OnInit {
     if (!this.userInfoService.hasAdminPrivileges) {
       this.router.navigate(['']);
     }
+
     this.form = new FormGroup({
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
+      phone: new FormControl(''),
       jobdescription: new FormControl('', [Validators.required])
     }, {updateOn: 'submit'});
-    this.isUserAdded = false;
     this.buttonDisabled = false;
   }
 
@@ -54,9 +54,9 @@ export class AddUserFormComponent implements OnInit {
   createNewUser(event: any, formDirective: any) {
     event.preventDefault();
     if (!this.form.valid) {
-      console.log(this.form.valid);
       return;
     }
+
     const newUser: UserCreateApiModel = {
       firstName: event.target.firstname.value,
       lastName: event.target.lastname.value,
@@ -69,35 +69,15 @@ export class AddUserFormComponent implements OnInit {
     };
 
     this.buttonDisabled = true;
-    this.adminService.createUser(newUser).subscribe(
-      response => {
-        console.log(response);
-        this.buttonDisabled = false;
-        this.isUserAdded = true;
-        this.hideMessage();
-        this.form.reset();
-        formDirective.resetForm();
-        this.errorMsg = '';
-      },
-      error => {
-        this.buttonDisabled = false;
-        this.isUserAdded = false;
-        console.log(error);
-        console.log(error.status);
-        if (error.status === 409) {
-          this.ngZone.run(() => {
-            this.errorMsg = 'Email already taken';
-          });
-        } else {
-          throw error;
-        }
-      }
-    );
-    console.log(newUser);
-  }
-
-  hideMessage() {
-    setTimeout(() => this.isUserAdded = false, 3000);
+    this.adminService.createUser(newUser).subscribe(response => {
+      this.messageService.info('New user has been added successfully');
+      this.buttonDisabled = false;
+      this.form.reset();
+      formDirective.resetForm();
+    }, error => {
+      this.buttonDisabled = false;
+      throw error;
+    });
   }
 
 }

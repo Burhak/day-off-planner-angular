@@ -24,7 +24,7 @@ export class UserProfileComponent implements OnInit {
       public userInfoService: UserInfoService,
       private userService: UserService,
       private adminService: AdminService,
-      public dialog: MatDialog,
+      private dialog: MatDialog,
       private router: Router,
       private route: ActivatedRoute
     ) {
@@ -79,7 +79,6 @@ export class UserProfileComponent implements OnInit {
   openDialogDeleteUser(user: UserApiModel) {
     const dialogRef = this.dialog.open(DeleteUserDialogComponent, {data: {userName: user.firstName + ' ' + user.lastName}});
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result === 'true') {
         this.deleteUser(user);
       }

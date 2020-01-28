@@ -1,7 +1,8 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService, LeaveTypeCreateApiModel } from '../../api';
 import { ColorUtils } from 'src/app/util/color.util';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
   selector: 'app-add-leave-type',
@@ -11,12 +12,10 @@ import { ColorUtils } from 'src/app/util/color.util';
 export class AddLeaveTypeComponent implements OnInit {
 
   public form: FormGroup;
-  public buttonDisabled: boolean;
-  public isLeaveTypeAdded: boolean;
-  public errorMsg = '';
+  public buttonDisabled = false;
   public color: string = ColorUtils.randomColor();
 
-  constructor(private adminService: AdminService, private ngZone: NgZone) {
+  constructor(private adminService: AdminService, private messageService: MessageService) {
 
   }
 
@@ -26,8 +25,6 @@ export class AddLeaveTypeComponent implements OnInit {
       limit: new FormControl('', [Validators.pattern('[0-9]+')]),
       carryover: new FormControl('', [Validators.pattern('[0-9]+')])
     }, {updateOn: 'submit'});
-    this.isLeaveTypeAdded = false;
-    this.buttonDisabled = false;
   }
 
   pickColor(color: string) {
@@ -48,28 +45,15 @@ export class AddLeaveTypeComponent implements OnInit {
     };
 
     this.buttonDisabled = true;
-    this.adminService.createLeaveType(newLeaveType).subscribe(
-      response => {
-        this.buttonDisabled = false;
-        this.isLeaveTypeAdded = true;
-        this.hideMessage();
-        this.form.reset();
-        formDirective.resetForm();
-        this.errorMsg = '';
-      }, error => {
-        this.buttonDisabled = false;
-        if (error.status === 409) {
-          this.ngZone.run(() => {
-            this.errorMsg = 'Name already taken';
-          });
-        } else {
-          throw error;
-        }
-      }
-    );
-  }
-
-  hideMessage() {
-    setTimeout(() => this.isLeaveTypeAdded = false, 3000);
+    this.adminService.createLeaveType(newLeaveType).subscribe(response => {
+      this.messageService.info('New leave type has been added successfully');
+      this.buttonDisabled = false;
+      this.form.reset();
+      this.color = ColorUtils.randomColor();
+      formDirective.resetForm();
+    }, error => {
+      this.buttonDisabled = false;
+      throw error;
+    });
   }
 }

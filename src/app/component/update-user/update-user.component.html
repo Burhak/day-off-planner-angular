@@ -83,8 +83,6 @@
           <br>
           <mat-checkbox id="admin" name="admin" class="example-margin" [checked]="user.admin">Admin privileges</mat-checkbox>
 
-          <div class="text-danger text-center">{{errorMsg}}</div>
-
           <div class="buttonGroup">
             <button disabled="{{buttonDisabled}}" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
             <button mat-raised-button (click)="userUpdatedNotify()" type="button" class="cancelBtn" >Cancel</button>

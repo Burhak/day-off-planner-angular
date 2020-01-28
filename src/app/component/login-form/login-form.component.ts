@@ -1,8 +1,9 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService as LoginService, UserLoginApiModel } from '../../api';
 import { Router } from '@angular/router';
 import { UserInfoService } from 'src/app/service/user-info.service';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
   selector: 'app-login-form',
@@ -12,9 +13,13 @@ import { UserInfoService } from 'src/app/service/user-info.service';
 export class LoginFormComponent implements OnInit {
 
   public form: FormGroup;
-  public errorMsg = '';
 
-  constructor(private apiService: LoginService, private userService: UserInfoService, private router: Router, private ngZone: NgZone) { }
+  constructor(
+      private apiService: LoginService,
+      private userService: UserInfoService,
+      private router: Router,
+      private messageService: MessageService
+  ) { }
 
   ngOnInit() {
     if (this.userService.isLoggedIn) {
@@ -28,7 +33,7 @@ export class LoginFormComponent implements OnInit {
 
   loginUser(event: any) {
     event.preventDefault();
-    this.errorMsg = '';
+
     if (!this.form.valid) {
       return;
     }
@@ -46,10 +51,8 @@ export class LoginFormComponent implements OnInit {
         this.router.navigate(['']);
       },
       error => {
-        console.log(error);
-        console.log(error.status);
         if (error.status === 401) {
-            this.ngZone.run(() => this.errorMsg = 'Invalid email or password');
+          this.messageService.error('Invalid email or password');
         } else {
           throw error;
         }

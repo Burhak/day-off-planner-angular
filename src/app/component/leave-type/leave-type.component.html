@@ -1,5 +1,4 @@
 <app-navigation></app-navigation>
-<app-error></app-error>
 <div *ngIf="leaveType" class="pageContent">
   <div class="addLeaveType-form">
     <h2>Leave type</h2>
@@ -48,18 +47,11 @@
 
       <mat-checkbox id="approvalNeeded" name="approvalNeeded" class="example-margin" [checked]="leaveType?.approvalNeeded" (click)="onCheckboxChanged()">Approval needed</mat-checkbox>
 
-      <div class="text-danger text-center">
-        {{errorMsg}}
-      </div>
-
       <div class="buttonGroup">
-        <button [disabled]="!(!form.pristine || isCheckboxChanged || isColorChanged)" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Update</button>
+        <button [disabled]="!(!form.pristine || isUpdated)" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Update</button>
         <button mat-raised-button id="cancelBtn" class="cancelBtn" type="button" routerLink="/admin/leaveTypes">Cancel</button>
         <button mat-raised-button id="deleteBtn" class="deleteBtn" type="button" (click)="openDialogDeleteLeaveType(leaveType)">Delete</button>
       </div>
     </form>
-  </div>
-  <div class="text-center">
-    <h6 class="message" [className]="isLeaveTypeUpdated ? 'messageVisible' : 'messageHidden'"> <mat-icon>check_circle_outline</mat-icon><span class="messageText">Leave type has been updated successfully!</span></h6>
   </div>
 </div>

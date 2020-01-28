@@ -21,7 +21,6 @@ export class ChangePasswordComponent implements OnInit {
   public form: FormGroup;
   public isPasswordChanged: boolean;
   public buttonDisabled: boolean;
-  public errorMsg = '';
   public errorMatcher = new CrossFieldErrorMatcher();
 
   constructor(private router: Router, private userService: UserService, private ngZone: NgZone) { }
@@ -42,7 +41,6 @@ export class ChangePasswordComponent implements OnInit {
 
   changePassword(event: any) {
     event.preventDefault();
-    this.errorMsg = '';
     if (!this.form.valid) {
       return;
     }
@@ -59,15 +57,7 @@ export class ChangePasswordComponent implements OnInit {
       },
       error => {
         this.buttonDisabled = false;
-        console.log(error);
-        console.log(error.status);
-        if (error.status === 403) {
-          this.ngZone.run(() => {
-            this.errorMsg = 'Invalid current password';
-          });
-        } else {
-          throw error;
-        }
+        throw error;
       }
     );
   }

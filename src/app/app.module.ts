@@ -3,13 +3,13 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatButtonModule, MatFormFieldModule, MatToolbarModule, MatTabsModule, MatDatepickerModule, MatNativeDateModule,
-  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule, MatListModule, MatRadioModule, MatProgressSpinnerModule, MatBadgeModule, MAT_DATE_LOCALE } from '@angular/material';
+  MatSelectModule, MatCheckboxModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatIconModule, MatDialogModule, MatListModule, MatRadioModule, MatProgressSpinnerModule, MatBadgeModule, MAT_DATE_LOCALE, MatSnackBarModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ColorPickerModule } from 'ngx-color-picker';
 
-import {DayPilotModule} from 'daypilot-pro-angular';
+import { DayPilotModule } from 'daypilot-pro-angular';
 
 import { environment } from '../environments/environment';
 
@@ -22,11 +22,9 @@ import {
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './component/login-form/login-form.component';
 import { NavigationComponent } from './component/navigation/navigation.component';
-import { AdminComponent } from './component/admin/admin.component';
 import { AddUserFormComponent } from './component/add-user-form/add-user-form.component';
 import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
 import { HomeComponent } from './component/home/home.component';
-import { ErrorComponent } from './component/error/error.component';
 
 import { AuthGuad } from './guard/auth.guard';
 import { AdminGuard } from './guard/admin.guard';
@@ -45,12 +43,12 @@ import { LeaveTypesComponent } from './component/leave-types/leave-types.compone
 import { LeaveTypeComponent } from './component/leave-type/leave-type.component';
 import { DeleteLeaveTypeDialogComponent } from './component/leave-type/delete-leave-type-dialog/delete-leave-type-dialog.component';
 import { SettingsComponent } from './component/settings/settings.component';
-import {SettingDialogComponent} from './component/settings/setting-dialog/setting-dialog.component';
+import { SettingDialogComponent } from './component/settings/setting-dialog/setting-dialog.component';
 import { IndividualLimitsComponent } from './component/individual-limits/individual-limits.component';
 import { DialogLimitComponent } from './component/individual-limits/dialog-limit/dialog-limit.component';
 import { AddLeaveRequestComponent } from './component/add-leave-request/add-leave-request.component';
-import {SatDatepickerModule, SatNativeDateModule, DateAdapter} from 'saturn-datepicker';
-import {MatStepperModule} from '@angular/material/stepper';
+import { SatDatepickerModule, SatNativeDateModule, DateAdapter } from 'saturn-datepicker';
+import { MatStepperModule } from '@angular/material/stepper';
 import { CalendarComponent } from './component/calendar/calendar.component';
 import { SelectUsersComponent } from './component/calendar/select-users/select-users.component';
 import { ApprovingComponent } from './component/approving/approving.component';
@@ -65,9 +63,7 @@ import { DialogCancelRequestComponent } from './component/home/dialog-cancel-req
     AppComponent,
     LoginFormComponent,
     NavigationComponent,
-    AdminComponent,
     AddUserFormComponent,
-    ErrorComponent,
     ResetPasswordComponent,
     HomeComponent,
     UserProfileComponent,
@@ -122,16 +118,12 @@ import { DialogCancelRequestComponent } from './component/home/dialog-cancel-req
     ColorPickerModule,
     DayPilotModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
     RouterModule.forRoot([
       {
         path: 'approve/:id',
         component: ApprovingComponent,
         canActivate: [AuthGuad]
-      },
-      {
-        path: 'admin',
-        component: AdminComponent,
-        canActivate: [AuthGuad, AdminGuard]
       },
       {
         path: 'admin/addUser',
@@ -141,10 +133,6 @@ import { DialogCancelRequestComponent } from './component/home/dialog-cancel-req
       {
         path: 'login',
         component: LoginFormComponent,
-      },
-      {
-        path: 'error',
-        component: ErrorComponent
       },
       {
         path: '',

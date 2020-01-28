@@ -1,5 +1,4 @@
 <app-navigation></app-navigation>
-<app-error></app-error>
 <div class="pageContent">
   <div class="addLeaveType-form">
     <h2>Add leave type</h2>
@@ -48,18 +47,11 @@
 
       <mat-checkbox id="approvalNeeded" name="approvalNeeded" class="example-margin">Approval needed</mat-checkbox>
 
-      <div class="text-danger text-center">
-        {{errorMsg}}
-      </div>
-
       <div class="buttonGroup">
         <button [disabled]="buttonDisabled" mat-raised-button type="submit" id="submitBtn" class="submitBtn">Confirm</button>
         <button mat-raised-button type="button" id="backBtn" class="backBtn" routerLink="/admin/leaveTypes">Back</button>
       </div>
 
     </form>
-  </div>
-  <div class="text-center">
-    <h6 class="message" [className]="isLeaveTypeAdded ? 'messageVisible' : 'messageHidden'"> <mat-icon>check_circle_outline</mat-icon><span class="messageText">New leave type has been added successfully!</span></h6>
   </div>
 </div>

@@ -10,13 +10,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class UpdateUserComponent implements OnInit {
 
   public form: FormGroup;
-  public buttonDisabled: boolean;
+  public buttonDisabled = false;
   public posibleUserSupervisorsOrApprovers: Array<UserApiModel> = [];
   public supervisorSelectControl: FormControl = new FormControl();
   public approversSelectControl: FormControl = new FormControl();
-  public isUserUpdated: boolean;
-  public errorMsg = '';
-  public editingLimits = false;
+  public isUserUpdated = false;
 
   @Input() public user: UserApiModel;
 
@@ -38,23 +36,16 @@ export class UpdateUserComponent implements OnInit {
       email: new FormControl('x@x', [Validators.required, Validators.email]),
       jobdescription: new FormControl('x', [Validators.required])
     }, { updateOn: 'submit' });
-    this.isUserUpdated = false;
-    this.buttonDisabled = false;
   }
 
   goBack() {
     this.userUpdatedNotify();
   }
 
-  openLimitsUser() {
-    this.editingLimits = true;
-  }
-
   createNewUser(event: any) {
     event.preventDefault();
     this.form.updateValueAndValidity();
     if (!this.form.valid) {
-      console.log(this.form.valid);
       return;
     }
 
@@ -70,24 +61,13 @@ export class UpdateUserComponent implements OnInit {
     };
 
     this.buttonDisabled = true;
-    this.adminService.updateUser(newUser, this.user.id).subscribe(
-      response => {
-        console.log(response);
-        this.buttonDisabled = false;
-        this.isUserUpdated = true;
-      },
-      error => {
-        this.buttonDisabled = false;
-        console.log(error);
-        console.log(error.status);
-        if (error.status === 409) {
-          this.ngZone.run(() => this.errorMsg = 'Email already taken');
-        } else {
-          throw error;
-        }
-      }
-    );
-    console.log(newUser);
+    this.adminService.updateUser(newUser, this.user.id).subscribe(response => {
+      this.buttonDisabled = false;
+      this.isUserUpdated = true;
+    }, error => {
+      this.buttonDisabled = false;
+      throw error;
+    });
   }
 
   userUpdatedNotify() {
