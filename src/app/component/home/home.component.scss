@@ -74,7 +74,6 @@
 
 tr {
   background-color: rgb(245,245,245);
-  cursor: pointer;
   height: fit-content !important;
 }
 
@@ -217,47 +216,9 @@ mat-form-field {
   text-transform: uppercase;
 }
 
-.XButton {
-  position: absolute;
-  width: 23px;
-  height: 23px;
-  border: 2px solid #eef5df;
-  background-color: rgb(44,62,80);
-  border-radius: 50%;
-  top: -23px;
-  right: 0px;
-}
-
-.XButton::before, .XButton::after {
-  position: absolute;
-  top: 10px;
-  left: 5px;
-  width: 13px;
-  height: 3px;
-  content: "";
-  background-color: rgb(180,180,180);
-}
-
-.XButton::before {
-  -ms-transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-.XButton::after {
-  -ms-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-.XButton:hover {
-  cursor: pointer;
-}
-
-  .XButton:hover::before, .XButton:hover::after {
-    background-color: rgb(255,255,255);
-  }
-
-.relative {
-  position: relative;
+.cancel {
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 3px;
+  line-height: normal;
 }

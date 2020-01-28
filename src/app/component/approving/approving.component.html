@@ -11,8 +11,6 @@
     </div>
   </div>
   <div class="grid-item item2 left">
-      <h1>Final rating</h1>
-
       <div class="votes">
         <h2 class="label">Supervisor</h2>
         <ng-container [ngTemplateOutlet]="approverTemplate" [ngTemplateOutletContext]="{approver: supervisor}"></ng-container>
@@ -38,7 +36,6 @@
   </div>
 
   <div class="grid-item item3 left">
-    <h1>Commentary</h1>
     <div class="messages">
       <div class="message" [ngClass]="message.approver === loggedUser.id ? 'my-message' : 'other-message'" *ngFor="let message of leaveRequest.messages">
         <span class="message-sender">{{approversCache[message.approver].firstName}} {{approversCache[message.approver].lastName}}</span>
@@ -55,7 +52,6 @@
   </div>
 
   <div class="grid-item item4 left">
-    <h1>Calendar</h1>
     <app-calendar [displayedUsers]="[user]"></app-calendar>
   </div>
 

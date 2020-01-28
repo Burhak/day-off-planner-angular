@@ -9,7 +9,7 @@ import { DialogCancelRequestComponent } from './dialog-cancel-request/dialog-can
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('tabGroup', { static: false }) tabGroup: MatTabGroup;
 
   public displayedColumnsTypes: string[] = ['leaveType.name', 'leaveType.approvalNeeded', 'limit', 'carryover', 'requestedHours'];
-  public displayedColumnsLeaves: string[] = ['leaveType', 'fromDate', 'toDate', 'status'];
+  public displayedColumnsLeaves: string[] = ['leaveType', 'fromDate', 'toDate', 'status', 'cancel'];
   public dataSourceLeaves: MatTableDataSource<LeaveRequestApiModel>;
   public dataSourceTypes: MatTableDataSource<LeaveTypeInfo>;
   public isDataLoaded: boolean;
@@ -231,7 +231,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  cancelDialog(leave) {
+  cancelDialog(leave: LeaveRequestApiModel) {
+    if (leave.status !== LeaveRequestApiModel.StatusEnum.APPROVED && leave.status !== LeaveRequestApiModel.StatusEnum.PENDING) {
+      return;
+    }
     const dialogRef = this.dialog.open(DialogCancelRequestComponent, { data: { name: this.leaveTypesCache[leave.leaveType].name } });
 
     dialogRef.afterClosed().subscribe(result => {

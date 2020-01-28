@@ -11,8 +11,6 @@ import { switchMap } from 'rxjs/operators';
 })
 export class ApprovingComponent implements OnInit {
 
-  private leaveRequestId: string;
-
   public loggedUser: UserApiModel;
   public leaveRequest: LeaveRequestWithApprovalsApiModel;
   public leaveType: LeaveTypeApiModel;
@@ -86,7 +84,7 @@ export class ApprovingComponent implements OnInit {
     }
 
     this.sending = true;
-    this.leaveApi.addMessage({message: this.typedMessage}, this.leaveRequestId).subscribe(response => {
+    this.leaveApi.addMessage({message: this.typedMessage}, this.leaveRequest.leaveRequest.id).subscribe(response => {
       this.leaveRequest = response;
       this.cacheApprovals();
       this.typedMessage = '';
@@ -95,14 +93,14 @@ export class ApprovingComponent implements OnInit {
   }
 
   approve(approval: boolean) {
-    this.leaveApi.approveLeaveRequest(this.leaveRequestId, approval).subscribe(response => {
+    this.leaveApi.approveLeaveRequest(this.leaveRequest.leaveRequest.id, approval).subscribe(response => {
       this.leaveRequest = response;
       this.cacheApprovals();
     });
   }
 
   forceApprove(approval: boolean) {
-    this.leaveApi.forceApproveLeaveRequest(this.leaveRequestId, approval).subscribe(response => {
+    this.leaveApi.forceApproveLeaveRequest(this.leaveRequest.leaveRequest.id, approval).subscribe(response => {
       this.leaveRequest = response;
       this.cacheApprovals();
     });
