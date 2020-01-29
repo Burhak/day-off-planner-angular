@@ -18,11 +18,13 @@ export class NavigationComponent implements OnInit {
       private router: Router,
       public userService: UserInfoService
   ) {
-    this.userService.currentUserPromise.then(user => {
-      this.leaveApi
-        .countLeaveRequests(null, null, [LeaveRequestApiModel.StatusEnum.PENDING], null, null, [user.id])
-        .subscribe(response => this.pendingRequestsToApprove = response);
-    });
+    if (this.userService.currentUserPromise) {
+      this.userService.currentUserPromise.then(user => {
+        this.leaveApi
+          .countLeaveRequests(null, null, [LeaveRequestApiModel.StatusEnum.PENDING], null, null, [user.id])
+          .subscribe(response => this.pendingRequestsToApprove = response);
+      });
+    }
   }
 
 
