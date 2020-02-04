@@ -27,14 +27,14 @@ tr{
 .pageContent {
   justify-content: center;
   align-items: center;
-  height: 100%;
   flex:1;
   display:flex;
   flex-direction:column;
+  background-color: rgb(245,245,245);
 }
 
 .leaveTypeList {
-  margin: 0 auto;
+  margin: 2em;
   display: block;
   width: fit-content;
 
