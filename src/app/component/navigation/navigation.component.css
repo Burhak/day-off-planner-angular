@@ -1,8 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap');
 
+.desktopView {
+  display: none;
+}
+
+.mobileView {
+  display: block;
+}
+
 header {
   background: rgb(44,62,80);
-  padding: 0.8em 1em 0.8em 0;
+  padding: 0.8em 0;
   box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
   overflow: hidden;
 }
@@ -13,14 +21,26 @@ header a {
 }
 
 .logo{
-  height: 4em;
+  height: 3em;
+  cursor: pointer;
+  outline: none;
+}
+
+.userIcon{
+  height: 3em;
   margin-left: 1em;
   cursor: pointer;
   outline: none;
 }
 
+.menuIcon{
+  height: 3em;
+  cursor: pointer;
+  outline: none;
+}
+
 .userImg{
-  height: 5em;
+  height: 3em;
   display: block;
   margin: 0 auto 0.5em;
 }
@@ -46,7 +66,7 @@ ul {
 }
 
 li {
-  height: 4em;
+  height: 3em;
   margin: 0 1em;
   color: white;
   font-weight: bold;
@@ -83,10 +103,54 @@ h3{
 }
 
 nav {
-  height: 4em
+  height: 3em
 }
 
 .adminPanelTitle{
   margin: 0.8em 4em 1em 1em;
   text-align: left;
 }
+
+.mobileMenuSection{
+  padding: 1em;
+  background-color: rgba(37, 55, 73, 1);
+  border-radius: 2em;
+}
+
+.mobileSectionTitle{
+  margin-bottom: 0.2em;
+}
+
+.noMargin{
+  margin: 0;
+  line-height: 35px;
+  height: 35px;
+}
+
+.noTopMargin{
+  margin-top: 0;
+}
+
+.smallHeight{
+  line-height: 38px;
+  height: 38px;
+  margin-bottom: 0;
+}
+
+
+/* Small Devices, Tablets, Medium Devices, Desktops, Large Devices, Wide Screens*/
+@media only screen and (min-width : 768px) {
+  .desktopView {
+    display: block;
+  }
+  .mobileView {
+    display: none;
+  }
+  .logo, .userIcon, .menuIcon, li, nav{
+    height: 4em;
+  }
+  .userImg{
+    height: 5em;
+  }
+}
+

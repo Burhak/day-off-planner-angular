@@ -1,7 +1,7 @@
 .addUser-form {
-  margin: 0 auto;
+  width: fit-content;
+  margin: 2em;
   display: block;
-  width: 90%;
   padding: 2em 2em 1em;
   background-color: rgb(255,255,255);
   box-shadow: 0.2em 0.2em 0.5em rgb(220,220,220);
@@ -86,17 +86,37 @@ h1, h2, h3, h4, h5, h6 {
 
 .form-container {
   display: grid;
-  grid-template-columns: auto 2em auto;
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    "left . right"
-    "left . right";
+  grid-template-columns: auto auto auto;
 }
 
-.left {
-  grid-area: left;
+.item1 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  width: 25em;
 }
 
-.right {
-  grid-area: right;
+.item2 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 3;
+  width: 25em;
+}
+
+/* Small Devices, Tablets, Medium Devices, Desktops, Large Devices, Wide Screens*/
+@media only screen and (min-width : 768px) {
+  .item1 {
+    width: 30vw;
+    min-width: 20em;
+  }
+  .item2 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    min-width: 15em;
+    width: fit-content;
+  }
 }

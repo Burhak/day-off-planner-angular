@@ -43,13 +43,13 @@
 }
 
 #approved {
-  border: 1px solid #FF495C;
-  background: #FF495C;
+  border: 1px solid rgb(44,62,80);
+  background: rgb(44,62,80);
 }
 
 #pending {
-  border: 1px solid red;
-  background: repeating-linear-gradient(135deg, #FF495C, #FF495C 5px, white 5px, white 10px);
+  border: 1px solid rgb(44,62,80);
+  background: repeating-linear-gradient(135deg, rgb(44,62,80), rgb(44,62,80) 5px, white 5px, white 10px);
 }
 
 .min-padding{

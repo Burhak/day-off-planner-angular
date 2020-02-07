@@ -3,7 +3,7 @@
 <div class="pageContent">
   <div class="leaveTypeList">
     <div [className]="isLeaveRequestShown ? 'showCard' : 'hideCard'">
-      <h1>Welcome to Day Off Planner</h1>
+      <h1 class="smallMargin">Welcome to Day Off Planner</h1>
       <button id="add-leave-request-btn" mat-raised-button type="button" (click)="addLeaveRequest()">New leave request</button>
       <div class="leaveTypeCard" *ngIf="hasAnyLeaves; else noLeavesTemplate">
         <h2 class="title">Leave requests</h2>
@@ -62,7 +62,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumnsLeaves"></tr>
           <tr mat-row *matRowDef="let leaves; columns: displayedColumnsLeaves;" (mouseenter)="leaves.hover=true" (mouseleave)="leaves.hover=false"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[10,15]" showFirstLastButtons #TableLeavesPaginator="matPaginator"></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5,10]" showFirstLastButtons #TableLeavesPaginator="matPaginator"></mat-paginator>
       </div>
     </div>
     <div [className]="isLeaveRequestShown ? 'hideCard' : 'showCard'">
