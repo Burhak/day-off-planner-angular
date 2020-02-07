@@ -1,13 +1,15 @@
-FROM node:10.15.3-alpine
+FROM node:10.15.3 AS build
 
 WORKDIR /app
 
 COPY . .
 
 RUN npm install --unsafe
-
 RUN npm run-script prod
 
-EXPOSE 8080
+FROM nginx:1.17.8
 
-CMD ["node", "server.js"]
+COPY Docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist/day-off-planner-angular-app /usr/share/nginx/html
+
+EXPOSE 80

@@ -4,7 +4,7 @@ services:
   web:
     image: burhak/evo-day-off-planner-web
     ports:
-      - '${PORT}:8080'
+      - '${PORT}:80'
     container_name: web
     networks:
       internal_network:
