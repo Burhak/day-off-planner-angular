@@ -46,7 +46,7 @@
           <ng-container matColumnDef="cancel">
             <th mat-header-cell *matHeaderCellDef ></th>
             <td mat-cell *matCellDef="let leave">
-              <button mat-raised-button type="button" class="cancel" *ngIf="leave.status === 'PENDING' || leave.status === 'APPROVED'" (click)="cancelDialog(leave)">
+              <button mat-raised-button type="button" class="cancel" *ngIf="canCancelRequest(leave)" (click)="cancelDialog(leave)">
                 CANCEL
               </button>
             </td>

@@ -245,6 +245,10 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+  canCancelRequest(leave: LeaveRequestApiModel): boolean {
+    return (new Date(leave.toDate) > new Date()) && (leave.status === 'PENDING' || leave.status === 'APPROVED');
+  }
 }
 
 interface LeaveTypeInfo {
